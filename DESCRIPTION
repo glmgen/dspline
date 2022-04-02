@@ -2,8 +2,11 @@ Package: dspline
 Title: Tools for computations with discrete splines
 Version: 0.0.0.9000
 Authors@R: 
-  person("Ryan", "Tibshirani", , "ryantibs@cmu.edu", 
-         role = c("aut", "cre"))
+  c(
+  person(given = "Ryan",
+         family = "Tibshirani",
+         role = c("aut", "cre"),
+         email = "ryantibs@cmu.edu"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
