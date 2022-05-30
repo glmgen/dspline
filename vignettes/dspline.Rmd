@@ -1,0 +1,108 @@
+---
+title: "Introduction to dspline"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# library(dspline)
+devtools::load_all()
+source("funs.R")
+```
+
+```{r}
+m = 5
+f = rnorm(m)
+z = rnorm(m)
+
+max(abs(divided_diff(f[1], z[1]) - f[1])) 
+max(abs(divided_diff(f[1:2], z[1:2]) - (f[1]-f[2])/(z[1]-z[2])))
+max(abs(divided_diff(f[1:3], z[1:3]) - ((f[1]-f[2])/(z[1]-z[2]) - (f[2]-f[3])/(z[2]-z[3]))/(z[1]-z[3])))
+
+i = sample(m)
+max(abs(divided_diff(f, z) - divided_diff(f[i], z[i])))
+max(abs(divided_diff(f, 1:m) - diff(f, diff = m-1) / factorial(m-1)))
+```
+
+```{r}
+m = 5
+f = rnorm(m)
+z = rnorm(m)
+g = f+1e-32
+.divided_diff(f, z)
+
+max(abs(f[1] - g[1]))
+max(abs(f[2]- (g[1]-g[2])/(z[1]-z[2])))
+max(abs(f[3] - ((g[1]-g[2])/(z[1]-z[2]) - (g[2]-g[3])/(z[2]-z[3])) / (z[1]-z[3])))
+
+i = sample(m)
+max(abs(f[m] - divided_diff(g[i], z[i])))
+```
+
+```{r}
+m = 5
+f = sample(m) # Integer vector!!!
+z = rnorm(m)
+g = f+1e-32
+.divided_diff(f, z)
+
+max(abs(f[1] - g[1]))
+max(abs(f[2]- (g[1]-g[2])/(z[1]-z[2])))
+max(abs(f[3] - ((g[1]-g[2])/(z[1]-z[2]) - (g[2]-g[3])/(z[2]-z[3])) / (z[1]-z[3])))
+
+i = sample(m)
+max(abs(f[m] - divided_diff(g[i], z[i])))
+```
+
+```{r}
+n = 10
+k = 2
+f = function(x) sin(x)
+xd = sort(runif(n))
+x = c(0, 0.5, 0.7, 1.1)
+d1 = discrete_deriv(f, k, xd, x)
+
+d2 = c()
+for (x0 in x) {
+  suppressWarnings({i = max(max(which(xd < x0)), 0)})
+  kk = min(k, i)
+  xx = c(xd[Seq(i-kk+1, i)], x0)
+  if (kk == 0) d2 = c(d2, f(x0))
+  else d2 = c(d2, getD(kk+1, kk, xx) %*% sapply(xx, f))
+}
+max(abs(d1 - d2))
+
+f1 = sapply(xd, f)
+max(abs(discrete_deriv(f, k, xd, xd) - getB(n, k, xd) %*% f1))
+```
+
+```{r}
+n = 10
+k = 2
+f = function(x) sin(x)
+xd = sort(runif(n))
+x = c(xd, 1.1)
+f1 = sapply(x, f)
+Df = discrete_deriv(c(f1[1:n], f1), k, xd, x)
+f2 = discrete_integ(c(Df[1:n], Df), k, xd, x)
+max(abs(f1 - f2))
+```
+
+```{r}
+devtools::load_all()
+source("funs.R")
+
+n = 10
+k = 2
+xd = sort(runif(n))
+H1 = getH(n, k, xd)
+H2 = matrix(0, n, n)
+for (i in 1:n) {
+  for (j in 1:n) {
+    H2[i,j] = rcpp_hj_fun(k, xd, j-1, xd[i])
+  }
+}
+max(abs(H1-H2))
+```

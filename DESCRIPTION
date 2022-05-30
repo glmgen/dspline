@@ -1,16 +1,19 @@
 Package: dspline
 Title: Tools for computations with discrete splines
-Version: 0.0.0.9000
-Authors@R: 
-  c(
-  person(given = "Ryan",
-         family = "Tibshirani",
-         role = c("aut", "cre"),
-         email = "ryantibs@cmu.edu"))
-Description: What the package does (one paragraph).
+Version: 1.0.0
+Authors@R: c(
+   person("Ryan", "Tibshirani", 
+          role = c("aut", "cre"),
+          email = "ryantibs@gmail.com"))
+Description: This package provides tools for computations relating to discrete
+    splines, such as discrete differentiation and integration, various matrix 
+		computations with discrete derivative or discrete spline bases matrices, and 
+		interpolation within discrete spline spaces.  
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
+LinkingTo: Rcpp
 Imports: 
+    Rcpp
