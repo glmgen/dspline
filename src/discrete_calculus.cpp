@@ -64,7 +64,7 @@ NumericVector rcpp_discrete_integ(NumericVector f, int k, NumericVector xd, Nume
 		// If x <= x_1, then return f(x)
 		if (i < 0) a[l] = f[f.size()-nx+l];
 	
-		// Else use linear combination form in equation (48) of Tibshirani (2020)
+		// Else use linear combination form in (48) of Tibshirani (2020)
 		else {
 			double b, sum = 0;
 			// Summands for x_1, ..., x_i

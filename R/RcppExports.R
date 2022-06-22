@@ -21,3 +21,15 @@ rcpp_discrete_integ <- function(f, k, xd, x) {
     .Call('_dspline_rcpp_discrete_integ', PACKAGE = 'dspline', f, k, xd, x)
 }
 
+rcpp_d_mat <- function(k, xd, tf_weighting, row_idx, ext) {
+    .Call('_dspline_rcpp_d_mat', PACKAGE = 'dspline', k, xd, tf_weighting, row_idx, ext)
+}
+
+rcpp_h_mat <- function(k, xd, di_weighting, col_idx) {
+    .Call('_dspline_rcpp_h_mat', PACKAGE = 'dspline', k, xd, di_weighting, col_idx)
+}
+
+rcpp_hx_mat <- function(k, xd, x, di_weighting, col_idx) {
+    .Call('_dspline_rcpp_hx_mat', PACKAGE = 'dspline', k, xd, x, di_weighting, col_idx)
+}
+

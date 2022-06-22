@@ -24,11 +24,25 @@ general) be a numeric vector, it cannot be computed in place (Rcpp performs
 an implicit cast and copy when it converts this to NumericVector type for
 use in C++).
 
-More details on the computations performed by individual functions below.
+Also, each "dot" function does not perform any error checking on its input
+arguments. Use with care. More details on the computations performed by
+individual functions are provided below.
 }
 \section{\code{.divided_diff()}}{
 
 Overwrites \code{f} with all lower-order divided differences: each element \code{f[i]}
 becomes the divided difference with respect to centers \code{z[1:i]}.
+}
+
+\section{\code{.d_mat_mult()}}{
+
+}
+
+\section{\code{.b_mat_mult()}}{
+
+}
+
+\section{\code{.h_mat_mult()}}{
+
 }
 

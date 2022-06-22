@@ -17,11 +17,20 @@
 #'   an implicit cast and copy when it converts this to NumericVector type for
 #'   use in C++).
 #'
-#' More details on the computations performed by individual functions below. 
+#' Also, each "dot" function does not perform any error checking on its input
+#'   arguments. Use with care. More details on the computations performed by
+#'   individual functions are provided below.    
 #'
 #' @section `.divided_diff()`:
 #' Overwrites `f` with all lower-order divided differences: each element `f[i]`
-#'   becomes the divided difference with respect to centers `z[1:i]`.  
+#'   becomes the divided difference with respect to centers `z[1:i]`.
+#'
+#' @section `.d_mat_mult()`:
+#'
+#' @section `.b_mat_mult()`:
+#'
+#' @section `.h_mat_mult()`:
+#' 
 #'
 NULL
 

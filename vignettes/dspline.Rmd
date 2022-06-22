@@ -12,6 +12,8 @@ devtools::load_all()
 source("funs.R")
 ```
 
+Divided differences
+
 ```{r}
 m = 5
 f = rnorm(m)
@@ -25,6 +27,8 @@ i = sample(m)
 max(abs(divided_diff(f, z) - divided_diff(f[i], z[i])))
 max(abs(divided_diff(f, 1:m) - diff(f, diff = m-1) / factorial(m-1)))
 ```
+
+In-place divided differences
 
 ```{r}
 m = 5
@@ -40,6 +44,8 @@ max(abs(f[3] - ((g[1]-g[2])/(z[1]-z[2]) - (g[2]-g[3])/(z[2]-z[3])) / (z[1]-z[3])
 i = sample(m)
 max(abs(f[m] - divided_diff(g[i], z[i])))
 ```
+
+Not supposed to work
 
 ```{r}
 m = 5
@@ -55,6 +61,8 @@ max(abs(f[3] - ((g[1]-g[2])/(z[1]-z[2]) - (g[2]-g[3])/(z[2]-z[3])) / (z[1]-z[3])
 i = sample(m)
 max(abs(f[m] - divided_diff(g[i], z[i])))
 ```
+
+Discrete derivatives
 
 ```{r}
 n = 10
@@ -78,6 +86,8 @@ f1 = sapply(xd, f)
 max(abs(discrete_deriv(f, k, xd, xd) - getB(n, k, xd) %*% f1))
 ```
 
+Discrete integrals
+
 ```{r}
 n = 10
 k = 2
@@ -90,10 +100,9 @@ f2 = discrete_integ(c(Df[1:n], Df), k, xd, x)
 max(abs(f1 - f2))
 ```
 
-```{r}
-devtools::load_all()
-source("funs.R")
+Falling factorial funs
 
+```{r}
 n = 10
 k = 2
 xd = sort(runif(n))
@@ -105,4 +114,62 @@ for (i in 1:n) {
   }
 }
 max(abs(H1-H2))
+```
+
+Construct D, B matrices
+
+```{r}
+n = 10
+k = 2
+xd = sort(runif(n))
+row_idx = sample(n-k, 4)
+D1 = d_mat(k, xd, row_idx = row_idx)
+D2 = getD(n, k, xd)[row_idx, ]
+max(abs(D1-D2))
+
+n = 10
+k = 2
+xd = sort(runif(n))
+row_idx = sample(n-k, 4)
+D1 = d_mat(k, xd, tf_weight = TRUE, row_idx = row_idx)
+D2 = getDtil(n, k, xd)[row_idx, ]
+max(abs(D1-D2))
+
+n = 10
+k = 2
+xd = sort(runif(n))
+row_idx = sample(n, 4)
+B1 = b_mat(k, xd, row_idx = row_idx)
+B2 = getB(n, k, xd)[row_idx, ]
+max(abs(B1-B2))
+
+n = 10
+k = 2
+xd = sort(runif(n))
+row_idx = sample(n, 4)
+B1 = b_mat(k, xd, tf_weight = TRUE, row_idx = row_idx)
+B2 = getBtil(n, k, xd)[row_idx, ]
+max(abs(B1-B2))
+```
+
+Construct H matrix
+
+```{r}
+devtools::load_all()
+source("funs.R")
+
+n = 10
+k = 2
+col_idx = sample(n, 4)
+xd = sort(runif(n))
+H1 = h_mat(k, xd, col_idx = col_idx)
+H2 = getH(n, k, xd)[, col_idx]
+max(abs(H1-H2))
+
+n = 10
+k = 2
+xd = sort(runif(n))
+H = h_mat(k, xd, di_weighting = TRUE)
+B = b_mat(k+1, xd)
+max(abs(H %*% B - diag(n)))
 ```

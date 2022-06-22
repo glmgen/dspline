@@ -75,6 +75,50 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_d_mat
+List rcpp_d_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool ext);
+RcppExport SEXP _dspline_rcpp_d_mat(SEXP kSEXP, SEXP xdSEXP, SEXP tf_weightingSEXP, SEXP row_idxSEXP, SEXP extSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
+    Rcpp::traits::input_parameter< bool >::type tf_weighting(tf_weightingSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type row_idx(row_idxSEXP);
+    Rcpp::traits::input_parameter< bool >::type ext(extSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_d_mat(k, xd, tf_weighting, row_idx, ext));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_h_mat
+List rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_idx);
+RcppExport SEXP _dspline_rcpp_h_mat(SEXP kSEXP, SEXP xdSEXP, SEXP di_weightingSEXP, SEXP col_idxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
+    Rcpp::traits::input_parameter< bool >::type di_weighting(di_weightingSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type col_idx(col_idxSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_h_mat(k, xd, di_weighting, col_idx));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_hx_mat
+NumericMatrix rcpp_hx_mat(int k, NumericVector xd, NumericVector x, bool di_weighting, IntegerVector col_idx);
+RcppExport SEXP _dspline_rcpp_hx_mat(SEXP kSEXP, SEXP xdSEXP, SEXP xSEXP, SEXP di_weightingSEXP, SEXP col_idxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< bool >::type di_weighting(di_weightingSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type col_idx(col_idxSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_hx_mat(k, xd, x, di_weighting, col_idx));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_dspline_rcpp_hj_fun", (DL_FUNC) &_dspline_rcpp_hj_fun, 4},
@@ -82,6 +126,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_dspline_rcpp_divided_diff", (DL_FUNC) &_dspline_rcpp_divided_diff, 2},
     {"_dspline_rcpp_discrete_deriv", (DL_FUNC) &_dspline_rcpp_discrete_deriv, 4},
     {"_dspline_rcpp_discrete_integ", (DL_FUNC) &_dspline_rcpp_discrete_integ, 4},
+    {"_dspline_rcpp_d_mat", (DL_FUNC) &_dspline_rcpp_d_mat, 5},
+    {"_dspline_rcpp_h_mat", (DL_FUNC) &_dspline_rcpp_h_mat, 4},
+    {"_dspline_rcpp_hx_mat", (DL_FUNC) &_dspline_rcpp_hx_mat, 5},
     {NULL, NULL, 0}
 };
 
