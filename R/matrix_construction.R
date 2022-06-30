@@ -61,7 +61,7 @@
 d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
   n = length(xd)
   if (is.null(row_idx)) row_idx = 1:(n-k)
-  obj = rcpp_d_mat(k, xd, tf_weighting, row_idx-1, FALSE)
+  obj = rcpp_b_mat(k, xd, tf_weighting, row_idx-1, TRUE)
   Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
                        dims = c(length(row_idx), n))
 }
@@ -139,7 +139,7 @@ d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
   n = length(xd)
   if (is.null(row_idx)) row_idx = 1:n
-  obj = rcpp_d_mat(k, xd, tf_weighting, row_idx-1, TRUE)
+  obj = rcpp_b_mat(k, xd, tf_weighting, row_idx-1, FALSE)
   Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
                        dims = c(length(row_idx), n))
 }
@@ -237,9 +237,8 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #'   discrete splines: Another look at trend filtering and related problems",
 #'   Section 6.3.
 #' @seealso [h_mat_mult()] for multiplying by the falling factorial basis
-#'   matrix, [hj_fun()] for evaluating a single falling factorial basis function
-#'   at a given query point, and [hx_mat()] for constructing evaluations of the
-#'   falling factorial basis at arbitrary query points. 
+#'   matrix and [hx_mat()] for constructing evaluations of the falling factorial
+#'   basis at arbitrary query points.    
 #' @export
 h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
   n = length(xd)

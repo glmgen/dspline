@@ -8,7 +8,7 @@
 #'   desired output.
 #'
 #' @details These functions should not be used unless you are intentionally
-#'   doing so for memory considerations, and are very careful nonetheless.
+#'   doing so for memory considerations and are nonetheless being very careful.  
 #'
 #' An **important warning:** each "dot" function only works as expected if its 
 #'   first argument is passed in as a vector of numeric type. If the first 
@@ -24,16 +24,19 @@
 #' @section `.divided_diff()`:
 #' Overwrites `f` with all lower-order divided differences: each element `f[i]`
 #'   becomes the divided difference with respect to centers `z[1:i]`.
-#'
-#' @section `.d_mat_mult()`:
-#'
+#' 
 #' @section `.b_mat_mult()`:
+#' Overwrites `v` with `B %*% v`, where `B` is the extended discrete derivative
+#'   matrix as returned by `b_mat()`. 
 #'
 #' @section `.h_mat_mult()`:
-#' 
+#' Overwrites `v` with `H %*% v`, where `H` is the falling factorial basis
+#'   matrix as returned by `h_mat()`.  
 #'
 NULL
 
 #' @rdname dot_functions
 #' @export
 .divided_diff <- rcpp_dot_divided_diff
+.b_mat_mult <- rcpp_dot_b_mat_mult
+.h_mat_mult <- rcpp_dot_h_mat_mult

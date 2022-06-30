@@ -100,22 +100,6 @@ f2 = discrete_integ(c(Df[1:n], Df), k, xd, x)
 max(abs(f1 - f2))
 ```
 
-Falling factorial funs
-
-```{r}
-n = 10
-k = 2
-xd = sort(runif(n))
-H1 = getH(n, k, xd)
-H2 = matrix(0, n, n)
-for (i in 1:n) {
-  for (j in 1:n) {
-    H2[i,j] = rcpp_hj_fun(k, xd, j-1, xd[i])
-  }
-}
-max(abs(H1-H2))
-```
-
 Construct D, B matrices
 
 ```{r}
@@ -123,17 +107,17 @@ n = 10
 k = 2
 xd = sort(runif(n))
 row_idx = sample(n-k, 4)
-D1 = d_mat(k, xd, row_idx = row_idx)
+D1 = b_mat(k, xd, row_idx = row_idx)
 D2 = getD(n, k, xd)[row_idx, ]
-max(abs(D1-D2))
+max(abs(D1 - D2))
 
 n = 10
 k = 2
 xd = sort(runif(n))
 row_idx = sample(n-k, 4)
-D1 = d_mat(k, xd, tf_weight = TRUE, row_idx = row_idx)
+D1 = b_mat(k, xd, tf_weight = TRUE, row_idx = row_idx)
 D2 = getDtil(n, k, xd)[row_idx, ]
-max(abs(D1-D2))
+max(abs(D1 - D2))
 
 n = 10
 k = 2
@@ -141,7 +125,7 @@ xd = sort(runif(n))
 row_idx = sample(n, 4)
 B1 = b_mat(k, xd, row_idx = row_idx)
 B2 = getB(n, k, xd)[row_idx, ]
-max(abs(B1-B2))
+max(abs(B1 - B2))
 
 n = 10
 k = 2
@@ -149,10 +133,29 @@ xd = sort(runif(n))
 row_idx = sample(n, 4)
 B1 = b_mat(k, xd, tf_weight = TRUE, row_idx = row_idx)
 B2 = getBtil(n, k, xd)[row_idx, ]
-max(abs(B1-B2))
+max(abs(B1 - B2))
 ```
 
 Construct H matrix
+
+```{r}
+n = 10
+k = 2
+col_idx = sample(n, 4)
+xd = sort(runif(n))
+H1 = h_mat(k, xd, col_idx = col_idx)
+H2 = getH(n, k, xd)[, col_idx]
+max(abs(H1 - H2))
+
+n = 10
+k = 2
+xd = sort(runif(n))
+H = h_mat(k, xd, di_weight = TRUE)
+B = b_mat(k+1, xd)
+max(abs(H %*% B - diag(n)))
+```
+
+Multiply by D matrix
 
 ```{r}
 devtools::load_all()
@@ -160,16 +163,106 @@ source("funs.R")
 
 n = 10
 k = 2
-col_idx = sample(n, 4)
 xd = sort(runif(n))
-H1 = h_mat(k, xd, col_idx = col_idx)
-H2 = getH(n, k, xd)[, col_idx]
-max(abs(H1-H2))
+v = rnorm(n)
+a1 = d_mat(k, xd) %*% v 
+a2 = d_mat_mult(v, k, xd)
+max(abs(a1 - a2))
 
+a1 = t(d_mat(k, xd)) %*% v[1:(n-k)]
+a2 = d_mat_mult(v[1:(n-k)], k, xd, transpose = TRUE)
+max(abs(a1 - a2))
+
+a1 = d_mat(k, xd, tf_weight = TRUE) %*% v
+a2 = d_mat_mult(v, k, xd, tf_weight = TRUE)
+max(abs(a1 - a2))
+
+a1 = t(d_mat(k, xd, tf_weight = TRUE)) %*% v[1:(n-k)]
+a2 = d_mat_mult(v[1:(n-k)], k, xd, tf_weight = TRUE, transpose = TRUE)
+max(abs(a1 - a2))
+```
+
+Multiply by B matrix
+
+```{r}
 n = 10
 k = 2
 xd = sort(runif(n))
-H = h_mat(k, xd, di_weighting = TRUE)
-B = b_mat(k+1, xd)
-max(abs(H %*% B - diag(n)))
+v = rnorm(n)
+a1 = b_mat(k, xd) %*% v 
+a2 = b_mat_mult(v, k, xd)
+max(abs(a1 - a2))
+
+a1 = t(b_mat(k, xd)) %*% v
+a2 = b_mat_mult(v, k, xd, transpose = TRUE)
+max(abs(a1 - a2))
+
+a1 = solve(b_mat(k, xd), v)
+a2 = b_mat_mult(v, k, xd, inverse = TRUE)
+max(abs(a1 - a2))
+
+a1 = solve(t(b_mat(k, xd)), v)
+a2 = b_mat_mult(v, k, xd, transpose = TRUE, inverse = TRUE)
+max(abs(a1 - a2))
+
+a1 = b_mat(k, xd, tf_weight = TRUE) %*% v
+a2 = b_mat_mult(v, k, xd, tf_weight = TRUE)
+max(abs(a1 - a2))
+
+a1 = t(b_mat(k, xd, tf_weight = TRUE)) %*% v
+a2 = b_mat_mult(v, k, xd, tf_weight = TRUE, transpose = TRUE)
+max(abs(a1 - a2))
+
+a1 = solve(b_mat(k, xd, tf_weight = TRUE), v)
+a2 = b_mat_mult(v, k, xd, tf_weight = TRUE, inverse = TRUE)
+max(abs(a1 - a2))
+
+a1 = solve(t(b_mat(k, xd, tf_weight = TRUE)), v)
+a2 = b_mat_mult(v, k, xd, tf_weight = TRUE, transpose = TRUE, inverse = TRUE)
+max(abs(a1 - a2))
+```
+
+Multiply by H matrix
+
+```{r}
+n = 10
+k = 2
+xd = sort(runif(n))
+v = rnorm(n)
+a1 = h_mat(k, xd) %*% v
+a2 = h_mat_mult(v, k, xd)
+max(abs(a1 - a2))
+
+a1 = t(h_mat(k, xd)) %*% v
+a2 = h_mat_mult(v, k, xd, transpose = TRUE)
+max(abs(a1 - a2))
+
+a1 = solve(h_mat(k, xd), v)
+a2 = h_mat_mult(v, k, xd, inverse = TRUE)
+max(abs(a1 - a2))
+
+a1 = solve(t(h_mat(k, xd)), v)
+a2 = h_mat_mult(v, k, xd, transpose = TRUE, inverse = TRUE)
+max(abs(a1 - a2))
+
+a1 = h_mat(k, xd, di_weight = TRUE) %*% v
+a2 = h_mat_mult(v, k, xd, di_weight = TRUE)
+max(abs(a1 - a2))
+
+a1 = t(h_mat(k, xd, di_weight = TRUE)) %*% v
+a2 = h_mat_mult(v, k, xd, di_weight = TRUE, transpose = TRUE)
+max(abs(a1 - a2))
+
+a1 = solve(h_mat(k, xd, di_weight = TRUE), v)
+a2 = h_mat_mult(v, k, xd, di_weight = TRUE, inverse = TRUE)
+max(abs(a1 - a2))
+
+a1 = solve(t(h_mat(k, xd, di_weight = TRUE)), v)
+a2 = h_mat_mult(v, k, xd, di_weight = TRUE, transpose = TRUE, inverse = TRUE)
+max(abs(a1 - a2))
+```
+
+```{r}
+devtools::load_all()
+source("funs.R")
 ```

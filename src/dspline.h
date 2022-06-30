@@ -8,6 +8,12 @@ using namespace Rcpp;
 // Simple utilities
 
 int fact(int k);
+void CumSum(NumericVector v, int i);
+void RevCumSum(NumericVector v, int i);
+void Diff(NumericVector v, int i);
+void RevDiff(NumericVector v, int i);
+void GapWeight(NumericVector v, int i, NumericVector xd);
+void InvGapWeight(NumericVector v, int i, NumericVector xd);
 
 /******************************************************************************/
 // Divided differences, discrete derivatives, and discrete integrals 
@@ -18,9 +24,18 @@ NumericVector rcpp_discrete_deriv(NumericVector f, int k, NumericVector xd, Nume
 NumericVector rcpp_discrete_integ(NumericVector f, int k, NumericVector xd, NumericVector x);
 
 /******************************************************************************/
+// Multiplication by discrete derivative and discrete spline basis matrices
+
+void rcpp_dot_b_mat_mult(NumericVector v, int k, NumericVector xd, bool tf_weighting, bool transpose, bool inverse);
+void rcpp_dot_h_mat_mult(NumericVector v, int k, NumericVector xd, bool di_weighting, bool transpose, bool inverse);
+NumericVector rcpp_d_mat_mult(NumericVector v, int k, NumericVector xd, bool tf_weighting, bool transpose);
+NumericVector rcpp_b_mat_mult(NumericVector v, int k, NumericVector xd, bool tf_weighting, bool transpose, bool inverse);
+NumericVector rcpp_h_mat_mult(NumericVector v, int k, NumericVector xd, bool di_weighting, bool transpose, bool inverse);
+
+/******************************************************************************/
 // Construction of discrete derivative and discrete spline basis matrices
 
-List rcpp_d_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool ext);
+List rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only);
 List rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_idx);
 List rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx);
 NumericMatrix rcpp_hx_mat(int k, NumericVector xd, NumericVector x, bool di_weighting, IntegerVector col_idx);
@@ -29,9 +44,9 @@ List rcpp_nx_mat(int k, NumericVector xd, NumericVector x, bool normalized, Inte
 /******************************************************************************/
 // Basis and weight functions 
 
-double rcpp_hj_fun(int k, NumericVector xd, int j, double x);
-double bij(int k, NumericVector xd, int i, int j);
 double dij(int k, NumericVector xd, int i, int j);
+double bij(int k, NumericVector xd, int i, int j);
+double hxj(int k, NumericVector xd, double x, int j);
 
 /******************************************************************************/
 

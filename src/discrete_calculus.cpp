@@ -69,13 +69,13 @@ NumericVector rcpp_discrete_integ(NumericVector f, int k, NumericVector xd, Nume
 			double b, sum = 0;
 			// Summands for x_1, ..., x_i
 			for (int j = 0; j <= i; j++) {
-				b = rcpp_hj_fun(k-1, xd, j, x[l]);
+				b = hxj(k-1, xd, x[l], j);
 				if (j >= k) b *= (xd[j] - xd[j-k]) / k;
 				b *= f[j];
 				sum += b;
 			}
 			// Summand for x
-			b = rcpp_hj_fun(k-1, xd, i+1, x[l]);
+			b = hxj(k-1, xd, x[l], i+1);
 			if (i+1 >= k) b *= (x[l] - xd[i+1-k]) / k;
 			b *= f[f.size()-nx+l];
 			sum += b;

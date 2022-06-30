@@ -6,12 +6,12 @@
 using namespace Rcpp; 
 
 // [[Rcpp::export]]
-List rcpp_d_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool ext) {
+List rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only) {
 	// Compute number of nonzero elements for D. We do so by computing nonzeros per
 	// row. Start by guessing k+1 nonzeros per row, then if needed, adjust for rows 
 	// that give lower order derivatives
 	int	n_row = row_idx.size(), N = n_row * (k+1);
-	if (ext) {
+	if (!d_only) {
 		for (int i = 0; i < n_row; i++) { 
 			if (row_idx[i] < k) N += (row_idx[i]+1 - k-1);
 		}
@@ -23,20 +23,20 @@ List rcpp_d_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_id
 	NumericVector xvec (N);
 	int l = 0, j_start, j_end;
 	for (int i = 0; i < n_row; i++) {
-		j_start = std::max(row_idx[i] - ext * k, 0);
-		j_end = row_idx[i] + (!ext * k);
+		j_start = std::max(row_idx[i] - (!d_only * k), 0);
+		j_end = row_idx[i] + (d_only * k);
 		for (int j = j_start; j <= j_end; j++) {
 			ivec[l] = i;
 			jvec[l] = j;
-			if (ext) xvec[l] = bij(k, xd, row_idx[i], j);
+			if (!d_only) xvec[l] = bij(k, xd, row_idx[i], j);
 			else xvec[l] = dij(k, xd, row_idx[i], j);
 
 			// Trend filtering weighting (only applies to k >= 0)
 			if (tf_weighting && k > 0) {
-				if (ext && row_idx[i] >= k) {
+				if (!d_only && row_idx[i] >= k) {
 					xvec[l] *= (xd[row_idx[i]] - xd[row_idx[i]-k]) / k; 
 				}
-				else if (!ext) {
+				else if (d_only) {
 					xvec[l] *= (xd[row_idx[i]+k] - xd[row_idx[i]]) / k; 
 				}
 			}
@@ -63,7 +63,7 @@ List rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_id
 		for (int i = col_idx[j]; i < n_row; i++) {
 			ivec[l] = i;
 			jvec[l] = j;
-			xvec[l] = rcpp_hj_fun(k, xd, col_idx[j], xd[i]);
+			xvec[l] = hxj(k, xd, xd[i], col_idx[j]);
 
 			// Discrete integration weighting
 			if (di_weighting && col_idx[j] >= k+1) {
@@ -83,7 +83,7 @@ NumericMatrix rcpp_hx_mat(int k, NumericVector xd, NumericVector x, bool di_weig
 	NumericMatrix H (n_row, n_col); 
 	for (int i = 0; i < n_row; i++) {
 		for (int j = 0; j < n_col; j++) {
-			H(i, j) = rcpp_hj_fun(k, xd, col_idx[j], x[i]);
+			H(i, j) = hxj(k, xd, x[i], col_idx[j]);
 
 			// Discrete integration weighting
 			if (di_weighting && col_idx[j] >= k+1) {

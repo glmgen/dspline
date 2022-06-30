@@ -106,7 +106,6 @@ Section 6.3.
 }
 \seealso{
 \code{\link[=h_mat_mult]{h_mat_mult()}} for multiplying by the falling factorial basis
-matrix, \code{\link[=hj_fun]{hj_fun()}} for evaluating a single falling factorial basis function
-at a given query point, and \code{\link[=hx_mat]{hx_mat()}} for constructing evaluations of the
-falling factorial basis at arbitrary query points.
+matrix and \code{\link[=hx_mat]{hx_mat()}} for constructing evaluations of the falling factorial
+basis at arbitrary query points.
 }

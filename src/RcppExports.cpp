@@ -10,20 +10,6 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// rcpp_hj_fun
-double rcpp_hj_fun(int k, NumericVector xd, int j, double x);
-RcppExport SEXP _dspline_rcpp_hj_fun(SEXP kSEXP, SEXP xdSEXP, SEXP jSEXP, SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
-    Rcpp::traits::input_parameter< int >::type j(jSEXP);
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_hj_fun(k, xd, j, x));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_dot_divided_diff
 void rcpp_dot_divided_diff(NumericVector f, NumericVector z);
 RcppExport SEXP _dspline_rcpp_dot_divided_diff(SEXP fSEXP, SEXP zSEXP) {
@@ -75,9 +61,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_d_mat
-List rcpp_d_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool ext);
-RcppExport SEXP _dspline_rcpp_d_mat(SEXP kSEXP, SEXP xdSEXP, SEXP tf_weightingSEXP, SEXP row_idxSEXP, SEXP extSEXP) {
+// rcpp_b_mat
+List rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only);
+RcppExport SEXP _dspline_rcpp_b_mat(SEXP kSEXP, SEXP xdSEXP, SEXP tf_weightingSEXP, SEXP row_idxSEXP, SEXP d_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -85,8 +71,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
     Rcpp::traits::input_parameter< bool >::type tf_weighting(tf_weightingSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type row_idx(row_idxSEXP);
-    Rcpp::traits::input_parameter< bool >::type ext(extSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_d_mat(k, xd, tf_weighting, row_idx, ext));
+    Rcpp::traits::input_parameter< bool >::type d_only(d_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_b_mat(k, xd, tf_weighting, row_idx, d_only));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -119,16 +105,97 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_dot_b_mat_mult
+void rcpp_dot_b_mat_mult(NumericVector v, int k, NumericVector xd, bool tf_weighting, bool transpose, bool inverse);
+RcppExport SEXP _dspline_rcpp_dot_b_mat_mult(SEXP vSEXP, SEXP kSEXP, SEXP xdSEXP, SEXP tf_weightingSEXP, SEXP transposeSEXP, SEXP inverseSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type v(vSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
+    Rcpp::traits::input_parameter< bool >::type tf_weighting(tf_weightingSEXP);
+    Rcpp::traits::input_parameter< bool >::type transpose(transposeSEXP);
+    Rcpp::traits::input_parameter< bool >::type inverse(inverseSEXP);
+    rcpp_dot_b_mat_mult(v, k, xd, tf_weighting, transpose, inverse);
+    return R_NilValue;
+END_RCPP
+}
+// rcpp_dot_h_mat_mult
+void rcpp_dot_h_mat_mult(NumericVector v, int k, NumericVector xd, bool di_weighting, bool transpose, bool inverse);
+RcppExport SEXP _dspline_rcpp_dot_h_mat_mult(SEXP vSEXP, SEXP kSEXP, SEXP xdSEXP, SEXP di_weightingSEXP, SEXP transposeSEXP, SEXP inverseSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type v(vSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
+    Rcpp::traits::input_parameter< bool >::type di_weighting(di_weightingSEXP);
+    Rcpp::traits::input_parameter< bool >::type transpose(transposeSEXP);
+    Rcpp::traits::input_parameter< bool >::type inverse(inverseSEXP);
+    rcpp_dot_h_mat_mult(v, k, xd, di_weighting, transpose, inverse);
+    return R_NilValue;
+END_RCPP
+}
+// rcpp_d_mat_mult
+NumericVector rcpp_d_mat_mult(NumericVector v, int k, NumericVector xd, bool tf_weighting, bool transpose);
+RcppExport SEXP _dspline_rcpp_d_mat_mult(SEXP vSEXP, SEXP kSEXP, SEXP xdSEXP, SEXP tf_weightingSEXP, SEXP transposeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type v(vSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
+    Rcpp::traits::input_parameter< bool >::type tf_weighting(tf_weightingSEXP);
+    Rcpp::traits::input_parameter< bool >::type transpose(transposeSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_d_mat_mult(v, k, xd, tf_weighting, transpose));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_b_mat_mult
+NumericVector rcpp_b_mat_mult(NumericVector v, int k, NumericVector xd, bool tf_weighting, bool transpose, bool inverse);
+RcppExport SEXP _dspline_rcpp_b_mat_mult(SEXP vSEXP, SEXP kSEXP, SEXP xdSEXP, SEXP tf_weightingSEXP, SEXP transposeSEXP, SEXP inverseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type v(vSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
+    Rcpp::traits::input_parameter< bool >::type tf_weighting(tf_weightingSEXP);
+    Rcpp::traits::input_parameter< bool >::type transpose(transposeSEXP);
+    Rcpp::traits::input_parameter< bool >::type inverse(inverseSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_b_mat_mult(v, k, xd, tf_weighting, transpose, inverse));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_h_mat_mult
+NumericVector rcpp_h_mat_mult(NumericVector v, int k, NumericVector xd, bool di_weighting, bool transpose, bool inverse);
+RcppExport SEXP _dspline_rcpp_h_mat_mult(SEXP vSEXP, SEXP kSEXP, SEXP xdSEXP, SEXP di_weightingSEXP, SEXP transposeSEXP, SEXP inverseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type v(vSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
+    Rcpp::traits::input_parameter< bool >::type di_weighting(di_weightingSEXP);
+    Rcpp::traits::input_parameter< bool >::type transpose(transposeSEXP);
+    Rcpp::traits::input_parameter< bool >::type inverse(inverseSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_h_mat_mult(v, k, xd, di_weighting, transpose, inverse));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_dspline_rcpp_hj_fun", (DL_FUNC) &_dspline_rcpp_hj_fun, 4},
     {"_dspline_rcpp_dot_divided_diff", (DL_FUNC) &_dspline_rcpp_dot_divided_diff, 2},
     {"_dspline_rcpp_divided_diff", (DL_FUNC) &_dspline_rcpp_divided_diff, 2},
     {"_dspline_rcpp_discrete_deriv", (DL_FUNC) &_dspline_rcpp_discrete_deriv, 4},
     {"_dspline_rcpp_discrete_integ", (DL_FUNC) &_dspline_rcpp_discrete_integ, 4},
-    {"_dspline_rcpp_d_mat", (DL_FUNC) &_dspline_rcpp_d_mat, 5},
+    {"_dspline_rcpp_b_mat", (DL_FUNC) &_dspline_rcpp_b_mat, 5},
     {"_dspline_rcpp_h_mat", (DL_FUNC) &_dspline_rcpp_h_mat, 4},
     {"_dspline_rcpp_hx_mat", (DL_FUNC) &_dspline_rcpp_hx_mat, 5},
+    {"_dspline_rcpp_dot_b_mat_mult", (DL_FUNC) &_dspline_rcpp_dot_b_mat_mult, 6},
+    {"_dspline_rcpp_dot_h_mat_mult", (DL_FUNC) &_dspline_rcpp_dot_h_mat_mult, 6},
+    {"_dspline_rcpp_d_mat_mult", (DL_FUNC) &_dspline_rcpp_d_mat_mult, 5},
+    {"_dspline_rcpp_b_mat_mult", (DL_FUNC) &_dspline_rcpp_b_mat_mult, 6},
+    {"_dspline_rcpp_h_mat_mult", (DL_FUNC) &_dspline_rcpp_h_mat_mult, 6},
     {NULL, NULL, 0}
 };
 

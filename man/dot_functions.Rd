@@ -15,7 +15,7 @@ desired output.
 }
 \details{
 These functions should not be used unless you are intentionally
-doing so for memory considerations, and are very careful nonetheless.
+doing so for memory considerations and are nonetheless being very careful.
 
 An \strong{important warning:} each "dot" function only works as expected if its
 first argument is passed in as a vector of numeric type. If the first
@@ -34,15 +34,15 @@ Overwrites \code{f} with all lower-order divided differences: each element \code
 becomes the divided difference with respect to centers \code{z[1:i]}.
 }
 
-\section{\code{.d_mat_mult()}}{
-
-}
-
 \section{\code{.b_mat_mult()}}{
 
+Overwrites \code{v} with \code{B \%*\% v}, where \code{B} is the extended discrete derivative
+matrix as returned by \code{b_mat()}.
 }
 
 \section{\code{.h_mat_mult()}}{
 
+Overwrites \code{v} with \code{H \%*\% v}, where \code{H} is the falling factorial basis
+matrix as returned by \code{h_mat()}.
 }
 
