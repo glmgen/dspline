@@ -12,7 +12,8 @@ design points \code{xd} adjoined with the query point(s) \code{x}.}
 
 \item{k}{Order for the discrete derivative calculation. Must be >= 0.}
 
-\item{xd}{Design points. Must be sorted in increasing order.}
+\item{xd}{Design points. Must be sorted in increasing order, and have length
+at least \code{k+1}.}
 
 \item{x}{Query point(s).}
 }

@@ -5,7 +5,7 @@
 #'
 #' @param f Function, or vector of function evaluations at the centers.
 #' @param z Centers for the divided difference calculation.
-#' @return Divided difference of `f` with respect to centers `z`. 
+#' @return Divided difference of `f` with respect to centers `z`.
 #'
 #' @details The divided difference of a function \eqn{f} with respect to centers
 #'   \eqn{z_1, \ldots, z_{k+1}} is defined recursively as:
@@ -32,6 +32,7 @@
 #' @export
 divided_diff <- function(f, z) {
   if (is.function(f)) f = sapply(z, f)
+  else check_length(f, length(z))
   rcpp_divided_diff(f, z)
 }
 
@@ -44,7 +45,8 @@ divided_diff <- function(f, z) {
 #' @param f Function, or vector of function evaluations at `c(xd, x)`, the
 #'   design points `xd` adjoined with the query point(s) `x`.
 #' @param k Order for the discrete derivative calculation. Must be >= 0. 
-#' @param xd Design points. Must be sorted in increasing order.
+#' @param xd Design points. Must be sorted in increasing order, and have length  
+#'   at least `k+1`. 
 #' @param x Query point(s).
 #' @return Discrete derivative of `f` of order `k`, with respect to design
 #'   points `xd`, evaluated at the query point(s) `x`.
@@ -85,7 +87,11 @@ divided_diff <- function(f, z) {
 #'   at design points. 
 #' @export
 discrete_deriv <- function(f, k, xd, x) {
+  check_nonneg_int(k)
+  check_sorted(xd)
+  check_length(xd, k+1, ">=")
   if (is.function(f)) f = sapply(c(xd, x), f)
+  else check_length(f, length(xd) + length(x))
   rcpp_discrete_deriv(f, k, xd, x)
 }
 
@@ -98,10 +104,11 @@ discrete_deriv <- function(f, k, xd, x) {
 #' @param f Function, or vector of function evaluations at `c(xd, x)`, the 
 #'   design points `xd` adjoined with the query point(s) `x`.
 #' @param k Order for the discrete integral calculation. Must be >= 0. 
-#' @param xd Design points. Must be sorted in increasing order.
+#' @param xd Design points. Must be sorted in increasing order, and have length  
+#'   at least `k+1`. 
 #' @param x Query point(s).
-#' @return Discrete integral of `f` of order `k`, with respect to design
-#'   points `xd`, evaluated at the query point(s) `x`.
+#' @return Discrete integral of `f` of order `k`, with respect to design points
+#'   `xd`, evaluated at the query point(s) `x`.
 #'
 #' @details The discrete integral operator of order \eqn{k}, with respect to
 #'   design points \eqn{x_1 < \ldots < x_n}, is denoted \eqn{S^k_n}. It is the
@@ -151,6 +158,10 @@ discrete_deriv <- function(f, k, xd, x) {
 #'   points. 
 #' @export
 discrete_integ <- function(f, k, xd, x) {
+  check_nonneg_int(k)
+  check_sorted(xd)
+  check_length(xd, k+1, ">=")
   if (is.function(f)) f = sapply(c(xd, x), f)
+  else check_length(f, length(xd) + length(x))
   rcpp_discrete_integ(f, k, xd, x)
 }

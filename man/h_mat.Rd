@@ -9,15 +9,19 @@ h_mat(k, xd, di_weighting = FALSE, col_idx = NULL)
 \arguments{
 \item{k}{Order for the falling factorial basis matrix. Must be >= 0.}
 
-\item{xd}{Design points. Must be sorted in increasing order.}
+\item{xd}{Design points. Must be sorted in increasing order, and have length
+at least \code{k+1}.}
 
 \item{di_weighting}{Should "discrete integration weighting" be used?
-Multiplication by such a weighted H gives discrete integrals at the
-design points; see details for more information. Default is \code{FALSE}.}
+Multiplication by such a weighted H gives discrete integrals at the design
+points; see details for more information. The default is \code{FALSE}.}
 
-\item{col_idx}{Vector of indexes, a subset of \code{1:n} where \code{n = length(xd)},
+\item{col_idx}{Vector of indices, a subset of \code{1:n} where \code{n = length(xd)},
 that indicates which columns of the falling factorial basis matrix should
-be returned. Default is \code{NULL}, which is taken to mean \code{1:n}.}
+be returned. The default is \code{NULL}, which is taken to mean \code{1:n}.}
+}
+\value{
+Sparse matrix of dimension \code{length(xd)} by \code{length(col_idx)}.
 }
 \description{
 Constructs H, the falling factorial basis matrix of a given order, with
@@ -88,15 +92,16 @@ discrete spline space corresponding to an arbitrary knot set \eqn{T
   \subseteq x_{(k+1):(n-1)}}. For more information, see Sections 4.1 and 8 of
 Tibshirani (2020).
 
-\strong{Note 1:} For solving linear systems in a discrete spline basis
-corresponding to an arbitrary knot set \eqn{T \subseteq x_{(k+1):(n-1)}},
+\strong{Note 1:} For computing the least squares projection onto a discrete spline
+space defined by an arbitrary knot set \eqn{T \subseteq x_{(k+1):(n-1)}},
 one should \strong{not} use the falling factorial basis, but instead use the
 discrete natural spline basis from \code{\link[=n_mat]{n_mat()}}, as the latter has \strong{much}
-better numerical properties (locally supported and well-conditioned).
+better numerical properties (locally supported and well-conditioned). See
+the help file for \code{\link[=dspline_solve]{dspline_solve()}} for more information.
 
 \strong{Note 2:} For multiplication of a given vector by \eqn{H^k_n}, one should
 \strong{not} form \eqn{H^k_n} with the current function and then carry out the
-multiplication, but instead use \code{\link[=h_mat_mult]{h_mat_mult()}}, as the latter wil be
+multiplication, but instead use \code{\link[=h_mat_mult]{h_mat_mult()}}, as the latter will be
 \strong{much} more efficient.
 }
 \references{

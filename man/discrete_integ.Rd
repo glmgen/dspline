@@ -12,13 +12,14 @@ design points \code{xd} adjoined with the query point(s) \code{x}.}
 
 \item{k}{Order for the discrete integral calculation. Must be >= 0.}
 
-\item{xd}{Design points. Must be sorted in increasing order.}
+\item{xd}{Design points. Must be sorted in increasing order, and have length
+at least \code{k+1}.}
 
 \item{x}{Query point(s).}
 }
 \value{
-Discrete integral of \code{f} of order \code{k}, with respect to design
-points \code{xd}, evaluated at the query point(s) \code{x}.
+Discrete integral of \code{f} of order \code{k}, with respect to design points
+\code{xd}, evaluated at the query point(s) \code{x}.
 }
 \description{
 Computes the discrete integral of a function (or vector of function

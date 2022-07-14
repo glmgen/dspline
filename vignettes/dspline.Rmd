@@ -1,5 +1,5 @@
 ---
-title: "Introduction to dspline"
+title: "Idspline tests 1"
 ---
 
 ```{r setup, include=FALSE}
@@ -107,7 +107,7 @@ n = 10
 k = 2
 xd = sort(runif(n))
 row_idx = sample(n-k, 4)
-D1 = b_mat(k, xd, row_idx = row_idx)
+D1 = d_mat(k, xd, row_idx = row_idx)
 D2 = getD(n, k, xd)[row_idx, ]
 max(abs(D1 - D2))
 
@@ -115,7 +115,7 @@ n = 10
 k = 2
 xd = sort(runif(n))
 row_idx = sample(n-k, 4)
-D1 = b_mat(k, xd, tf_weight = TRUE, row_idx = row_idx)
+D1 = d_mat(k, xd, tf_weight = TRUE, row_idx = row_idx)
 D2 = getDtil(n, k, xd)[row_idx, ]
 max(abs(D1 - D2))
 
@@ -158,9 +158,6 @@ max(abs(H %*% B - diag(n)))
 Multiply by D matrix
 
 ```{r}
-devtools::load_all()
-source("funs.R")
-
 n = 10
 k = 2
 xd = sort(runif(n))
@@ -260,6 +257,63 @@ max(abs(a1 - a2))
 a1 = solve(t(h_mat(k, xd, di_weight = TRUE)), v)
 a2 = h_mat_mult(v, k, xd, di_weight = TRUE, transpose = TRUE, inverse = TRUE)
 max(abs(a1 - a2))
+```
+
+Interpolation
+
+```{r}
+n = 10
+k = 2
+xd = sort(runif(n))
+x = seq(0, 1, length=100)
+v = xd^2 + 0.05 * rnorm(n)
+y1 = dspline_interp(v, k, xd, x, implicit = TRUE)
+y2 = dspline_interp(v, k, xd, x, implicit = FALSE)
+y3 = as.numeric(predict.tf.fitted(x, v, xd, k))
+max(abs(y1 - y2))
+max(abs(y2 - y3))
+```
+
+Newton interpolation
+
+```{r}
+k = 4
+n = k+1
+xd = sort(runif(n))
+v = xd^k
+x = seq(0, 1, length=100)
+y1 = dspline_interp(v, k, xd, x, implicit = TRUE)
+y2 = dspline_interp(v, k, xd, x, implicit = FALSE)
+y3 = newton_interp(v, xd, x)
+max(abs(y1 - y2))
+max(abs(y2 - y3))
+
+plot(xd, v)
+lines(x, y1)
+lines(x, y2, col=2)
+```
+
+Construct N matrix 
+
+```{r}
+n = 100
+k = 2
+knot_idx = sort(sample((k+1):(n-1), 4))
+xd = sort(runif(n))
+N1 = n_mat(k, xd, normalized = FALSE, knot_idx = knot_idx)
+N2 = dbs.evals.sk(k, xd, knot_idx)
+max(abs(N1 - N2))
+
+# apply(abs(N1 - N2), 2, max)
+# matplot(xd, N1, type = "o", lty = 1, pch = 20)
+# matplot(xd, N2, type = "o", lty = 1, pch = 20)
+
+H = h_mat(k, xd, col_idx = knot_idx+1)
+max(abs(qr.resid(qr(N1), H)))
+max(abs(qr.resid(qr(N2), H)))
+
+N1 = n_mat(k, xd, knot_idx = knot_idx)
+matplot(xd, N1, type = "o", lty = 1, pch = 20)
 ```
 
 ```{r}

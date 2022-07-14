@@ -5,9 +5,7 @@
 #include "dspline.h"
 using namespace Rcpp; 
 
-// [[Rcpp::export]]
-void rcpp_dot_divided_diff(NumericVector f, NumericVector z) {
-	int n = f.size();
+void dot_divided_diff(NumericVector f, NumericVector z, int n) {
   for (int i = 0; i < n; i++) {
 		for (int j = n-1; j >= i+1; j--) {
 			f[j] = (f[j] - f[j-1]) / (z[j] - z[j-i-1]);
@@ -16,11 +14,20 @@ void rcpp_dot_divided_diff(NumericVector f, NumericVector z) {
 	return;
 }
 
+double divided_diff(NumericVector f, NumericVector z, int n) {
+	NumericVector f_copy = clone(f);
+	dot_divided_diff(f_copy, z, n);
+	return f_copy[n-1];
+}
+
+// [[Rcpp::export]]
+void rcpp_dot_divided_diff(NumericVector f, NumericVector z) {
+	return dot_divided_diff(f, z, f.size());
+}
+
 // [[Rcpp::export]]
 double rcpp_divided_diff(NumericVector f, NumericVector z) {
-	NumericVector f_copy = clone(f);
-	rcpp_dot_divided_diff(f_copy, z);
-	return f_copy[f_copy.size()-1];
+	return divided_diff(f, z, f.size());
 }
 
 // [[Rcpp::export]]

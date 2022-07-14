@@ -17,7 +17,8 @@ void InvGapWeight(NumericVector v, int i, NumericVector xd);
 
 /******************************************************************************/
 // Divided differences, discrete derivatives, and discrete integrals 
-
+void dot_divided_diff(NumericVector f, NumericVector z, int n);
+double divided_diff(NumericVector f, NumericVector z, int n);
 void rcpp_dot_divided_diff(NumericVector f, NumericVector z);
 double rcpp_divided_diff(NumericVector f, NumericVector z);
 NumericVector rcpp_discrete_deriv(NumericVector f, int k, NumericVector xd, NumericVector x);
@@ -38,15 +39,27 @@ NumericVector rcpp_h_mat_mult(NumericVector v, int k, NumericVector xd, bool di_
 List rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only);
 List rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_idx);
 List rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx);
-NumericMatrix rcpp_hx_mat(int k, NumericVector xd, NumericVector x, bool di_weighting, IntegerVector col_idx);
+
+/******************************************************************************/
+// Evaluation of falling factorial and discrete B-spline bases 
+
+List rcpp_hx_mat(int k, NumericVector xd, NumericVector x, bool di_weighting, IntegerVector col_idx);
 List rcpp_nx_mat(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx);
 
 /******************************************************************************/
 // Basis and weight functions 
 
+double newton_poly(NumericVector z, double x, int n);
 double dij(int k, NumericVector xd, int i, int j);
 double bij(int k, NumericVector xd, int i, int j);
 double hxj(int k, NumericVector xd, double x, int j);
+void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVector i_vec, IntegerVector j_vec, NumericVector x_vec, int& l);
+
+/******************************************************************************/
+// Interpolation within polynomial and discrete spline spaces
+
+NumericVector rcpp_newton_interp(NumericVector v, NumericVector z, NumericVector x);
+NumericVector rcpp_dspline_interp(NumericVector v, int k, NumericVector xd, NumericVector x, bool implicit);
 
 /******************************************************************************/
 

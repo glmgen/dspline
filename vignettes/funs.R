@@ -338,7 +338,7 @@ dbs.evals.sk = function(k, x, jj, xright=NULL, tol=1e-10) {
 
 dbs.local.interp.left = function(k, jj, i, x, y, tol=1e-10) {
   n = length(x)
-  B = getBtil(n,k+1,x)
+  B = getB(n,k+1,x)
 
   # Interpolate between point i+1 and last knot
   if (jj[i]-k+1 > i+1) {
@@ -361,7 +361,7 @@ dbs.local.interp.left = function(k, jj, i, x, y, tol=1e-10) {
 
 dbs.local.interp = function(k, jj, x, y, tol=1e-10) {
   n = length(x)
-  B = getBtil(n,k+1,x)
+  B = getB(n,k+1,x)
   
   # Interpolate between first knot and second knot
   if (jj[2] > jj[1]+1) {

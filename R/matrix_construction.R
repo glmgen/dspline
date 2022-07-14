@@ -4,13 +4,16 @@
 #' to given design points.
 #'
 #' @param k Order for the discrete derivative matrix. Must be >= 0.
-#' @param xd Design points. Must be sorted in increasing order.
+#' @param xd Design points. Must be sorted in increasing order, and have length  
+#'   at least `k+1`. 
 #' @param tf_weighting Should "trend filtering weighting" be used? This is a
 #'   weighting of the discrete derivatives that is implicit in trend filtering;
-#'   see details for more information. Default is `FALSE`.
-#' @param row_idx Vector of indexes, a subset of `1:(n-k)` where `n =
-#'   length(xd)`, that indicates which rows of the discrete derivative matrix 
-#'   should be returned. Default is `NULL`, which is taken to mean `1:(n-k)`.  
+#'   see details for more information. The default is `FALSE`.
+#' @param row_idx Vector of indices, a subset of `1:(n-k)` where `n =
+#'   length(xd)`, that indicates which rows of the discrete derivative matrix
+#'   should be returned. The default is `NULL`, which is taken to mean
+#'   `1:(n-k)`.
+#' @return Sparse matrix of dimension `length(row_idx)` by `length(xd)`.
 #' 
 #' @details The discrete derivative matrix of order \eqn{k}, with respect to
 #'   design points \eqn{x_1 < \ldots < x_n}, is denoted \eqn{D^k_n}. It has
@@ -59,8 +62,12 @@
 #'   and [d_mat_mult()] for multiplying by the discrete derivative matrix. 
 #' @export
 d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
+  check_nonneg_int(k)
+  check_length(xd, k+1, ">=")
+  check_sorted(xd)
   n = length(xd)
   if (is.null(row_idx)) row_idx = 1:(n-k)
+  else check_range(row_idx, 1:(n-k))
   obj = rcpp_b_mat(k, xd, tf_weighting, row_idx-1, TRUE)
   Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
                        dims = c(length(row_idx), n))
@@ -72,13 +79,15 @@ d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #' respect to given design points.
 #'
 #' @param k Order for the extended discrete derivative matrix. Must be >= 0.
-#' @param xd Design points. Must be sorted in increasing order.
+#' @param xd Design points. Must be sorted in increasing order, and have length  
+#'   at least `k+1`. 
 #' @param tf_weighting Should "trend filtering weighting" be used? This is a
 #'   weighting of the discrete derivatives that is implicit in trend filtering;
-#'   see details for more information. Default is `FALSE`.
-#' @param row_idx Vector of indexes, a subset of `1:n` where `n = length(xd)`,
+#'   see details for more information. The default is `FALSE`.
+#' @param row_idx Vector of indices, a subset of `1:n` where `n = length(xd)`,
 #'   that indicates which rows of the extended discrete derivative matrix should
-#'   be returned. Default is `NULL`, which is taken to mean `1:n`.
+#'   be returned. The default is `NULL`, which is taken to mean `1:n`.
+#' @return Sparse matrix of dimension `length(row_idx)` by `length(xd)`.
 #' 
 #' @details The extended discrete derivative matrix of order \eqn{k}, with
 #'   respect to design points \eqn{x_1 < \ldots < x_n}, is denoted \eqn{B^k_n}.
@@ -137,8 +146,12 @@ d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #'   [b_mat_mult()] for multiplying by the extended discrete derivative matrix.  
 #' @export
 b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
+  check_nonneg_int(k)
+  check_length(xd, k+1, ">=")
+  check_sorted(xd)
   n = length(xd)
   if (is.null(row_idx)) row_idx = 1:n
+  else check_range(row_idx, 1:n)
   obj = rcpp_b_mat(k, xd, tf_weighting, row_idx-1, FALSE)
   Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
                        dims = c(length(row_idx), n))
@@ -150,13 +163,15 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #' respect to given design points.
 #'
 #' @param k Order for the falling factorial basis matrix. Must be >= 0.
-#' @param xd Design points. Must be sorted in increasing order.
-#' @param di_weighting Should "discrete integration weighting" be used? 
-#'   Multiplication by such a weighted H gives discrete integrals at the 
-#'   design points; see details for more information. Default is `FALSE`.
-#' @param col_idx Vector of indexes, a subset of `1:n` where `n = length(xd)`,
+#' @param xd Design points. Must be sorted in increasing order, and have length  
+#'   at least `k+1`. 
+#' @param di_weighting Should "discrete integration weighting" be used?
+#'   Multiplication by such a weighted H gives discrete integrals at the design
+#'   points; see details for more information. The default is `FALSE`. 
+#' @param col_idx Vector of indices, a subset of `1:n` where `n = length(xd)`,
 #'   that indicates which columns of the falling factorial basis matrix should
-#'   be returned. Default is `NULL`, which is taken to mean `1:n`. 
+#'   be returned. The default is `NULL`, which is taken to mean `1:n`.
+#' @return Sparse matrix of dimension `length(xd)` by `length(col_idx)`.
 #' 
 #' @details The falling factorial basis matrix of order \eqn{k}, with respect to 
 #'   design points \eqn{x_1 < \ldots < x_n}, is denoted \eqn{H^k_n}. Its entries
@@ -222,15 +237,16 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #'   \subseteq x_{(k+1):(n-1)}}. For more information, see Sections 4.1 and 8 of
 #'   Tibshirani (2020).
 #' 
-#' **Note 1:** For solving linear systems in a discrete spline basis
-#'   corresponding to an arbitrary knot set \eqn{T \subseteq x_{(k+1):(n-1)}},
+#' **Note 1:** For computing the least squares projection onto a discrete spline
+#'   space defined by an arbitrary knot set \eqn{T \subseteq x_{(k+1):(n-1)}},
 #'   one should **not** use the falling factorial basis, but instead use the
 #'   discrete natural spline basis from [n_mat()], as the latter has **much**
-#'   better numerical properties (locally supported and well-conditioned).
+#'   better numerical properties (locally supported and well-conditioned). See
+#'   the help file for [dspline_solve()] for more information. 
 #' 
 #' **Note 2:** For multiplication of a given vector by \eqn{H^k_n}, one should
 #'   **not** form \eqn{H^k_n} with the current function and then carry out the
-#'   multiplication, but instead use [h_mat_mult()], as the latter wil be
+#'   multiplication, but instead use [h_mat_mult()], as the latter will be
 #'   **much** more efficient.
 #' 
 #' @references Tibshirani (2020), "Divided differences, falling factorials, and
@@ -241,9 +257,73 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #'   basis at arbitrary query points.    
 #' @export
 h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
+  check_nonneg_int(k)
+  check_length(xd, k+1, ">=")
+  check_sorted(xd)
   n = length(xd)
   if (is.null(col_idx)) col_idx = 1:n
+  else check_range(col_idx, 1:n)
   obj = rcpp_h_mat(k, xd, di_weighting, col_idx-1)
   Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
                        dims = c(n, length(col_idx)))
+}
+
+#' Construct N matrix
+#'
+#' Constructs N, the discrete B-spline basis matrix of a given order, with
+#' respect to given design points and given knot points.
+#'
+#' @param k Order for the discrete B-spline basis matrix. Must be >= 0. 
+#' @param xd Design points. Must be sorted in increasing order, and have length  
+#'   at least `k+1`.
+#' @param normalized Should the discrete B-spline basis vectors be normalized to
+#'   attain a maximum value of 1 over the design points? Default is `TRUE`. 
+#' @param knot_idx Vector of indices, a subset of `(k+1):(n-1)` where `n =
+#'   length(xd)`, that indicates which design points should be used as knot
+#'   points for the discrete B-splines. Must be sorted in increasing order. The
+#'   default is `NULL`, which is taken to mean `(k+1):(n-1)` as in the
+#'   "canonical" discrete spline space (though in this case the returned N
+#'   matrix will be trivial: it will be the identity matrix). See details.
+#' @param x_bdry Boundary design points that extend the original sequence of
+#'   design points `xd` beyond the largest one, and are used in the construction 
+#'   of the discrete B-spline basis. Must have length `k+1`, and any choice will
+#'   result in the same discrete B-splines. The default is `NULL`, which means
+#'   that the boundary design points will be formed by extending the largest
+#'   orginal design point by constant multiples of `max(diff(xd))`, the largest
+#'   gap between original design points.
+#' @return Sparse matrix of dimension `length(xd)` by `length(knot_idx) + k+1`. 
+#' 
+#' @details TODO
+#' 
+#' @references Tibshirani (2020), "Divided differences, falling factorials, and
+#'   discrete splines: Another look at trend filtering and related problems",
+#'   Sections 6, 8.2, and 8.3.
+#' @seealso [nx_mat()] for constructing evaluations of the discrete B-spline
+#'   basis at arbitrary query points.    
+#' @export
+n_mat <- function(k, xd, normalized = TRUE, knot_idx = NULL, xd_bdry = NULL) { 
+  check_nonneg_int(k)
+  check_length(xd, k+1, ">=")
+  check_sorted(xd)
+  n = length(xd)
+  if (is.null(knot_idx)) {
+    knot_idx = (k+1):(n-1)
+  }
+  else {
+    check_range(knot_idx, (k+1):(n-1))
+    check_sorted(knot_idx)
+  }
+  if (is.null(xd_bdry)) {
+    xd_bdry = max(xd) + (1:(k+1)) * max(diff(xd))
+  }
+  else {
+    check_length(xd_bdry, k+1)
+  }
+
+  knot_idx = c(knot_idx, n:(n+k)) 
+  xd = c(xd, xd_bdry)
+  obj = rcpp_n_mat(k, xd, normalized, knot_idx-1) 
+  Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
+                       dims = c(n, length(knot_idx)))
+
 }

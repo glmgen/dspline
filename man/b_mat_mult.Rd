@@ -10,17 +10,22 @@ b_mat_mult(v, k, xd, tf_weighting = FALSE, transpose = FALSE, inverse = FALSE)
 \item{v}{Vector to be multiplied by B, the extended discrete derivative
 matrix.}
 
-\item{k}{Order for the extended discrete derivative matrix.}
+\item{k}{Order for the extended discrete derivative matrix. Must be >= 0.}
 
-\item{xd}{Design points. Must be sorted in increasing order.}
+\item{xd}{Design points. Must be sorted in increasing order, and have length
+at least \code{k+1}.}
 
 \item{tf_weighting}{Should "trend filtering weighting" be used? This is a
 weighting of the discrete derivatives that is implicit in trend filtering;
-see details for more information. Default is \code{FALSE}.}
+see details for more information. The default is \code{FALSE}.}
 
-\item{transpose}{Multiply by the transpose of B? Default is \code{FALSE}.}
+\item{transpose}{Multiply by the transpose of B? The default is \code{FALSE}.}
 
-\item{inverse}{Multiply by the inverse of B? Default is \code{FALSE}.}
+\item{inverse}{Multiply by the inverse of B? The default is \code{FALSE}.}
+}
+\value{
+Product of the extended discrete derivative matrix B and the input
+vector \code{v}.
 }
 \description{
 Multiplies a given vector by B, the extended discrete derivative matrix of a

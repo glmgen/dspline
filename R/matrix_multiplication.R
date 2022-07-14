@@ -4,12 +4,14 @@
 #' order, with respect to given design points.  
 #'
 #' @param v Vector to be multiplied by D, the discrete derivative matrix. 
-#' @param k Order for the discrete derivative matrix.
-#' @param xd Design points. Must be sorted in increasing order.
+#' @param k Order for the discrete derivative matrix. Must be >= 0.
+#' @param xd Design points. Must be sorted in increasing order, and have length  
+#'   at least `k+1`. 
 #' @param tf_weighting Should "trend filtering weighting" be used? This is a
 #'   weighting of the discrete derivatives that is implicit in trend filtering;
-#'   see details for more information. Default is `FALSE`.
-#' @param transpose Multiply by the transpose of D? Default is `FALSE`.
+#'   see details for more information. The default is `FALSE`. 
+#' @param transpose Multiply by the transpose of D? The default is `FALSE`.
+#' @return Product of the discrete derivative matrix D and the input vector `v`.
 #' 
 #' @details The discrete derivative matrix of order \eqn{k}, with respect to
 #'   design points \eqn{x_1 < \ldots < x_n}, is denoted \eqn{D^k_n}. It has
@@ -49,6 +51,11 @@
 #'   matrix, and [d_mat()] for constructing the discrete derivative matrix.
 #' @export
 d_mat_mult <- function(v, k, xd, tf_weighting = FALSE, transpose = FALSE) {
+  check_nonneg_int(k)
+  check_sorted(xd)
+  check_length(xd, k+1, ">=")
+  if (!transpose) check_length(v, length(xd))
+  else check_length(v, length(xd) - k)
   rcpp_d_mat_mult(v, k, xd, tf_weighting, transpose)
 }
 
@@ -59,13 +66,16 @@ d_mat_mult <- function(v, k, xd, tf_weighting = FALSE, transpose = FALSE) {
 #'
 #' @param v Vector to be multiplied by B, the extended discrete derivative
 #'   matrix.  
-#' @param k Order for the extended discrete derivative matrix.
-#' @param xd Design points. Must be sorted in increasing order.
+#' @param k Order for the extended discrete derivative matrix. Must be >= 0.
+#' @param xd Design points. Must be sorted in increasing order, and have length  
+#'   at least `k+1`. 
 #' @param tf_weighting Should "trend filtering weighting" be used? This is a
 #'   weighting of the discrete derivatives that is implicit in trend filtering;
-#'   see details for more information. Default is `FALSE`.
-#' @param transpose Multiply by the transpose of B? Default is `FALSE`.
-#' @param inverse Multiply by the inverse of B? Default is `FALSE`. 
+#'   see details for more information. The default is `FALSE`. 
+#' @param transpose Multiply by the transpose of B? The default is `FALSE`.
+#' @param inverse Multiply by the inverse of B? The default is `FALSE`. 
+#' @return Product of the extended discrete derivative matrix B and the input
+#'   vector `v`. 
 #' 
 #' @details The extended discrete derivative matrix of order \eqn{k}, with
 #'   respect to design points \eqn{x_1 < \ldots < x_n}, is denoted
@@ -113,6 +123,10 @@ d_mat_mult <- function(v, k, xd, tf_weighting = FALSE, transpose = FALSE) {
 #' @export
 b_mat_mult <- function(v, k, xd, tf_weighting = FALSE, transpose = FALSE,
                        inverse = FALSE) {
+  check_nonneg_int(k)
+  check_sorted(xd)
+  check_length(xd, k+1, ">=")
+  check_length(v, length(xd))
   rcpp_b_mat_mult(v, k, xd, tf_weighting, transpose, inverse)
 }
 
@@ -122,13 +136,15 @@ b_mat_mult <- function(v, k, xd, tf_weighting = FALSE, transpose = FALSE,
 #' order, with respect to given design points.
 #'
 #' @param v Vector to be multiplied by H, the falling factorial basis matrix.
-#' @param k Order for the falling factorial basis matrix.
-#' @param xd Design points. Must be sorted in increasing order.
+#' @param k Order for the falling factorial basis matrix. Must be >= 0.
+#' @param xd Design points. Must be sorted in increasing order, and have length  
+#'   at least `k+1`. 
 #' @param di_weighting Should "discrete integration weighting" be used? 
 #'   Multiplication by such a weighted H gives discrete integrals at the 
-#'   design points; see details for more information. Default is `FALSE`. 
-#' @param transpose Multiply by the transpose of H? Default is `FALSE`.
-#' @param inverse Multiply by the inverse of H? Default is `FALSE`. 
+#'   design points; see details for more information. The default is `FALSE`.  
+#' @param transpose Multiply by the transpose of H? The default is `FALSE`. 
+#' @param inverse Multiply by the inverse of H? The default is `FALSE`. 
+#' @return Product of falling factorial basis matrix H and the input vector `v`.
 #' 
 #' @details The falling factorial basis matrix of order \eqn{k}, with respect to
 #'   design points \eqn{x_1 < \ldots < x_n}, is denoted \eqn{H^k_n}. Its entries
@@ -179,5 +195,9 @@ b_mat_mult <- function(v, k, xd, tf_weighting = FALSE, transpose = FALSE,
 #' @export
 h_mat_mult <- function(v, k, xd, di_weighting = FALSE, transpose = FALSE,
                        inverse = FALSE) {
+  check_nonneg_int(k)
+  check_sorted(xd)
+  check_length(xd, k+1, ">=")
+  check_length(v, length(xd))
   rcpp_h_mat_mult(v, k, xd, di_weighting, transpose, inverse)
 }

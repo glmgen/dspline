@@ -9,15 +9,19 @@ b_mat(k, xd, tf_weighting = FALSE, row_idx = NULL)
 \arguments{
 \item{k}{Order for the extended discrete derivative matrix. Must be >= 0.}
 
-\item{xd}{Design points. Must be sorted in increasing order.}
+\item{xd}{Design points. Must be sorted in increasing order, and have length
+at least \code{k+1}.}
 
 \item{tf_weighting}{Should "trend filtering weighting" be used? This is a
 weighting of the discrete derivatives that is implicit in trend filtering;
-see details for more information. Default is \code{FALSE}.}
+see details for more information. The default is \code{FALSE}.}
 
-\item{row_idx}{Vector of indexes, a subset of \code{1:n} where \code{n = length(xd)},
+\item{row_idx}{Vector of indices, a subset of \code{1:n} where \code{n = length(xd)},
 that indicates which rows of the extended discrete derivative matrix should
-be returned. Default is \code{NULL}, which is taken to mean \code{1:n}.}
+be returned. The default is \code{NULL}, which is taken to mean \code{1:n}.}
+}
+\value{
+Sparse matrix of dimension \code{length(row_idx)} by \code{length(xd)}.
 }
 \description{
 Constructs B, the extended discrete derivative matrix of a given order, with

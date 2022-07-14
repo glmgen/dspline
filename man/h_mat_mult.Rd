@@ -9,17 +9,21 @@ h_mat_mult(v, k, xd, di_weighting = FALSE, transpose = FALSE, inverse = FALSE)
 \arguments{
 \item{v}{Vector to be multiplied by H, the falling factorial basis matrix.}
 
-\item{k}{Order for the falling factorial basis matrix.}
+\item{k}{Order for the falling factorial basis matrix. Must be >= 0.}
 
-\item{xd}{Design points. Must be sorted in increasing order.}
+\item{xd}{Design points. Must be sorted in increasing order, and have length
+at least \code{k+1}.}
 
 \item{di_weighting}{Should "discrete integration weighting" be used?
 Multiplication by such a weighted H gives discrete integrals at the
-design points; see details for more information. Default is \code{FALSE}.}
+design points; see details for more information. The default is \code{FALSE}.}
 
-\item{transpose}{Multiply by the transpose of H? Default is \code{FALSE}.}
+\item{transpose}{Multiply by the transpose of H? The default is \code{FALSE}.}
 
-\item{inverse}{Multiply by the inverse of H? Default is \code{FALSE}.}
+\item{inverse}{Multiply by the inverse of H? The default is \code{FALSE}.}
+}
+\value{
+Product of falling factorial basis matrix H and the input vector \code{v}.
 }
 \description{
 Multiplies a given vector by H, the falling factorial basis matrix of a given

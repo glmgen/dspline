@@ -17,6 +17,14 @@ rcpp_discrete_integ <- function(f, k, xd, x) {
     .Call('_dspline_rcpp_discrete_integ', PACKAGE = 'dspline', f, k, xd, x)
 }
 
+rcpp_newton_interp <- function(v, z, x) {
+    .Call('_dspline_rcpp_newton_interp', PACKAGE = 'dspline', v, z, x)
+}
+
+rcpp_dspline_interp <- function(v, k, xd, x, implicit) {
+    .Call('_dspline_rcpp_dspline_interp', PACKAGE = 'dspline', v, k, xd, x, implicit)
+}
+
 rcpp_b_mat <- function(k, xd, tf_weighting, row_idx, d_only) {
     .Call('_dspline_rcpp_b_mat', PACKAGE = 'dspline', k, xd, tf_weighting, row_idx, d_only)
 }
@@ -25,8 +33,16 @@ rcpp_h_mat <- function(k, xd, di_weighting, col_idx) {
     .Call('_dspline_rcpp_h_mat', PACKAGE = 'dspline', k, xd, di_weighting, col_idx)
 }
 
+rcpp_n_mat <- function(k, xd, normalized, knot_idx) {
+    .Call('_dspline_rcpp_n_mat', PACKAGE = 'dspline', k, xd, normalized, knot_idx)
+}
+
 rcpp_hx_mat <- function(k, xd, x, di_weighting, col_idx) {
     .Call('_dspline_rcpp_hx_mat', PACKAGE = 'dspline', k, xd, x, di_weighting, col_idx)
+}
+
+rcpp_nx_mat <- function(k, xd, x, normalized, knot_idx) {
+    .Call('_dspline_rcpp_nx_mat', PACKAGE = 'dspline', k, xd, x, normalized, knot_idx)
 }
 
 rcpp_dot_b_mat_mult <- function(v, k, xd, tf_weighting, transpose, inverse) {
