@@ -53,7 +53,8 @@ alternative representations for the discrete differentiation, see Section
 \strong{Note:} for calculating discrete derivatives at the design points
 themselves, which could be achieved by taking \code{x = xd} in the current
 function, one should instead use \code{\link[=b_mat_mult]{b_mat_mult()}} or \code{\link[=d_mat_mult]{d_mat_mult()}}, as these
-will be more efficient.
+will be more efficient (both will be linear-time, but the latter functions
+will be faster).
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

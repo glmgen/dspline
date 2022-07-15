@@ -53,7 +53,8 @@
 #' **Note:** For multiplication of a given vector by \eqn{D^k_n}, instead of
 #'   forming \eqn{D^k_n} with the current function and then carrying out the
 #'   multiplication, one should instead use [d_mat_mult()], as this will be more
-#'   efficient.
+#'   efficient (both will be linear time, but the latter saves the cost of
+#'   forming any matrix in the first place).
 #' 
 #' @references Tibshirani (2020), "Divided differences, falling factorials, and
 #'   discrete splines: Another look at trend filtering and related problems",
@@ -137,7 +138,8 @@ d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #' **Note:** For multiplication of a given vector by \eqn{B^k_n}, instead of
 #'   forming \eqn{B^k_n} with the current function and then carrying out the
 #'   multiplication, one should instead use [b_mat_mult()], as this will be more
-#'   efficient.
+#'   efficient (both will be linear time, but the latter saves the cost of
+#'   forming any matrix in the first place).
 #' 
 #' @references Tibshirani (2020), "Divided differences, falling factorials, and
 #'   discrete splines: Another look at trend filtering and related problems",
@@ -174,12 +176,12 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #' @return Sparse matrix of dimension `length(xd)` by `length(col_idx)`.
 #' 
 #' @details The falling factorial basis matrix of order \eqn{k}, with respect to 
-#'   design points \eqn{x_1 < \ldots < x_n}, is denoted \eqn{H^k_n}. Its entries
-#'   are defined as:
+#'   design points \eqn{x_1 < \ldots < x_n}, is denoted \eqn{H^k_n}. It has
+#'   dimension \eqn{n \times n}, and its entries are defined as:
 #'   \deqn{
 #'   (H^k_n)_{ij} = h^k_j(x_i),
 #'   }
-#'   \eqn{h^k_1, \ldots, h^k_n} are the falling factorial basis functions,
+#'   where \eqn{h^k_1, \ldots, h^k_n} are the falling factorial basis functions,
 #'   defined as:
 #'   \deqn{
 #'   \begin{aligned}
@@ -238,16 +240,16 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #'   Tibshirani (2020).
 #' 
 #' **Note 1:** For computing the least squares projection onto a discrete spline
-#'   space defined by an arbitrary knot set \eqn{T \subseteq x_{(k+1):(n-1)}},
+#'   space defined by an arbitrary knot set \eqn{T \subseteq x_{(k+1):(n-1)}},  
 #'   one should **not** use the falling factorial basis, but instead use the
 #'   discrete natural spline basis from [n_mat()], as the latter has **much**
-#'   better numerical properties (locally supported and well-conditioned). See
-#'   the help file for [dspline_solve()] for more information. 
+#'   better numerical properties in general. The help file for [dspline_solve()]
+#'   gives more information.   
 #' 
 #' **Note 2:** For multiplication of a given vector by \eqn{H^k_n}, one should
 #'   **not** form \eqn{H^k_n} with the current function and then carry out the
 #'   multiplication, but instead use [h_mat_mult()], as the latter will be
-#'   **much** more efficient.
+#'   **much** more efficient (quadratic-time versus linear-time).
 #' 
 #' @references Tibshirani (2020), "Divided differences, falling factorials, and
 #'   discrete splines: Another look at trend filtering and related problems",
@@ -293,11 +295,38 @@ h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
 #'   gap between original design points.
 #' @return Sparse matrix of dimension `length(xd)` by `length(knot_idx) + k+1`. 
 #' 
-#' @details TODO
-#' 
+#' @details The discrete B-spline basis matrix of order \eqn{k}, with respect to  
+#'   design points \eqn{x_1 < \ldots < x_n}, and knot set \eqn{T \subseteq
+#'   x_{(k+1):(n-1)}} is denoted \eqn{N^k_T}. It has dimension \eqn{(|T|+k+1)
+#'   \times n}, and its entries are given by:
+#'   \deqn{
+#'   (N^k_T)_{ij} = \eta^k_j(x_i),
+#'   }
+#'   where \eqn{\eta^k_1, \ldots, \eta^k_m} are discrete B-spline (DB-spline)
+#'   basis functions and \eqn{m = |T|+k+1}. As is suggested by their name, the 
+#'   DB-spline functions are linearly independent and span the space of
+#'   discrete splines with knots at \eqn{T}. Each DB-spline \eqn{\eta^k_j} has a
+#'   key local support property: it is supported on an interval containing at
+#'   most \eqn{k+2} adjacent knots. The functions \eqn{\eta^k_1, \ldots,
+#'   \eta^k_m} are, in general, not available in closed-form, and are defined by
+#'   setting up and solving a sequence of locally-defined linear systems. For
+#'   any knot set \eqn{T}, computation of the evaluations of all DB-splines at
+#'   the design points can be done in \eqn{O(nk^2)} operations; see Sections 7, 
+#'   8.2, and 8.3 of Tibshirani (2020) for details.
+#'
+#' When \eqn{T = x_{(k+1):(n-1)}}, the knot set corresponding to the "canonical"
+#'   discrete spline space (spanned by the falling factorial basis functions
+#'   \eqn{h^k_1, \ldots, h^k_n} whose evaluations make up the falling factorial
+#'   basis matrix \eqn{H^k_n}; see the help file for [h_mat()]), the DB-spline
+#'   basis matrix, which we denote by \eqn{N^k_n}, is trivial: it equals the
+#'   \eqn{n \times n} identity matrix, \eqn{N^k_n = I_n}. Therefore DB-splines
+#'   are really *only* useful for knot sets \eqn{T} that are proper subsets of
+#'   \eqn{x_{(k+1):(n-1)}}. Specification of the knot set \eqn{T} is done via
+#'   the argument `knot_idx`. 
+#'
 #' @references Tibshirani (2020), "Divided differences, falling factorials, and
 #'   discrete splines: Another look at trend filtering and related problems",
-#'   Sections 6, 8.2, and 8.3.
+#'   Sections 7, 8.2, and 8.3.
 #' @seealso [nx_mat()] for constructing evaluations of the discrete B-spline
 #'   basis at arbitrary query points.    
 #' @export

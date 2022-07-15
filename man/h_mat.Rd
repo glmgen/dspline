@@ -29,12 +29,12 @@ respect to given design points.
 }
 \details{
 The falling factorial basis matrix of order \eqn{k}, with respect to
-design points \eqn{x_1 < \ldots < x_n}, is denoted \eqn{H^k_n}. Its entries
-are defined as:
+design points \eqn{x_1 < \ldots < x_n}, is denoted \eqn{H^k_n}. It has
+dimension \eqn{n \times n}, and its entries are defined as:
 \deqn{
   (H^k_n)_{ij} = h^k_j(x_i),
   }
-\eqn{h^k_1, \ldots, h^k_n} are the falling factorial basis functions,
+where \eqn{h^k_1, \ldots, h^k_n} are the falling factorial basis functions,
 defined as:
 \deqn{
   \begin{aligned}
@@ -96,13 +96,13 @@ Tibshirani (2020).
 space defined by an arbitrary knot set \eqn{T \subseteq x_{(k+1):(n-1)}},
 one should \strong{not} use the falling factorial basis, but instead use the
 discrete natural spline basis from \code{\link[=n_mat]{n_mat()}}, as the latter has \strong{much}
-better numerical properties (locally supported and well-conditioned). See
-the help file for \code{\link[=dspline_solve]{dspline_solve()}} for more information.
+better numerical properties in general. The help file for \code{\link[=dspline_solve]{dspline_solve()}}
+gives more information.
 
 \strong{Note 2:} For multiplication of a given vector by \eqn{H^k_n}, one should
 \strong{not} form \eqn{H^k_n} with the current function and then carry out the
 multiplication, but instead use \code{\link[=h_mat_mult]{h_mat_mult()}}, as the latter will be
-\strong{much} more efficient.
+\strong{much} more efficient (quadratic-time versus linear-time).
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

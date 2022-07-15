@@ -76,7 +76,8 @@ further discussion.
 \strong{Note:} For multiplication of a given vector by \eqn{B^k_n}, instead of
 forming \eqn{B^k_n} with the current function and then carrying out the
 multiplication, one should instead use \code{\link[=b_mat_mult]{b_mat_mult()}}, as this will be more
-efficient.
+efficient (both will be linear time, but the latter saves the cost of
+forming any matrix in the first place).
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

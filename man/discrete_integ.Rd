@@ -65,7 +65,7 @@ relationship to discrete differentiation), see Section 3.2 of Tibshirani
 \strong{Note:} for calculating discrete integrals at the design points themselves,
 which could be achieved by taking \code{x = xd} in the current function, one
 should instead use \code{\link[=h_mat_mult]{h_mat_mult()}} with \code{di_weighting = TRUE}, as this will
-be \strong{much} more efficient.
+be \strong{much} more efficient (quadratic-time versus linear-time).
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

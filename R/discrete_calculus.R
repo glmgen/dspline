@@ -77,7 +77,8 @@ divided_diff <- function(f, z) {
 #' **Note:** for calculating discrete derivatives at the design points
 #'   themselves, which could be achieved by taking `x = xd` in the current
 #'   function, one should instead use [b_mat_mult()] or [d_mat_mult()], as these
-#'   will be more efficient.
+#'   will be more efficient (both will be linear-time, but the latter functions
+#'   will be faster).
 #'
 #' @references Tibshirani (2020), "Divided differences, falling factorials, and
 #'   discrete splines: Another look at trend filtering and related problems",
@@ -148,7 +149,7 @@ discrete_deriv <- function(f, k, xd, x) {
 #' **Note:** for calculating discrete integrals at the design points themselves,
 #'   which could be achieved by taking `x = xd` in the current function, one
 #'   should instead use [h_mat_mult()] with `di_weighting = TRUE`, as this will
-#'   be **much** more efficient.
+#'   be **much** more efficient (quadratic-time versus linear-time).
 #'
 #' @references Tibshirani (2020), "Divided differences, falling factorials, and 
 #'   discrete splines: Another look at trend filtering and related problems",
