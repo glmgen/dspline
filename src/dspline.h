@@ -43,8 +43,8 @@ List rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx
 /******************************************************************************/
 // Evaluation of falling factorial and discrete B-spline bases 
 
-List rcpp_hx_mat(int k, NumericVector xd, NumericVector x, bool di_weighting, IntegerVector col_idx);
-List rcpp_nx_mat(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx);
+List rcpp_h_eval(int k, NumericVector xd, NumericVector x, bool di_weighting, IntegerVector col_idx);
+List rcpp_n_eval(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx);
 
 /******************************************************************************/
 // Basis and weight functions 

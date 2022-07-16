@@ -33,8 +33,8 @@ gap between original design points.}
 Sparse matrix of dimension \code{length(xd)} by \code{length(knot_idx) + k+1}.
 }
 \description{
-Constructs N, the discrete B-spline basis matrix of a given order, with
-respect to given design points and given knot points.
+Constructs the discrete B-spline basis matrix of a given order, with respect
+to given design points and given knot points.
 }
 \details{
 The discrete B-spline basis matrix of order \eqn{k}, with respect to
@@ -54,7 +54,9 @@ most \eqn{k+2} adjacent knots. The functions \eqn{\eta^k_1, \ldots,
 setting up and solving a sequence of locally-defined linear systems. For
 any knot set \eqn{T}, computation of the evaluations of all DB-splines at
 the design points can be done in \eqn{O(nk^2)} operations; see Sections 7,
-8.2, and 8.3 of Tibshirani (2020) for details.
+8.2, and 8.3 of Tibshirani (2020) for details. The current function uses a
+sparse QR decomposition from the Eigen::SparseQR module in C++ in order to
+solve the local linear systems.
 
 When \eqn{T = x_{(k+1):(n-1)}}, the knot set corresponding to the "canonical"
 discrete spline space (spanned by the falling factorial basis functions

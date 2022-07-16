@@ -88,14 +88,10 @@ void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVecto
 		// Add remaining entries only if t-k >= j_col+1
 		if (t-k >= j_col+1) {
 			// Compute row indices i such that i+k is NOT one of first j_col-1 knots
+			IntegerVector I0 = Range(k, t-1);
 			IntegerVector I (t-k-j_col);
-			int	counter = 0;
-			for (int i = 0; i < t-k; i++) {
-				if (std::find(knot_idx.begin(), knot_idx.begin()+j_col, i+k) == knot_idx.begin()+j_col) {
-					I[counter] = i;
-					counter++;
-				}
-			}
+			std::set_difference(I0.begin(), I0.end(), knot_idx.begin(), knot_idx.begin()+j_col, I.begin());
+			for (int p = 0; p < t-k-j_col; p++) I[p] -= k;
 
 			// Compute column indices that correspond to the unknown indices in N_j
 			IntegerVector J = Range(j_col+1, t-k);
@@ -196,14 +192,10 @@ void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVecto
 		// Add more entries between second and last knot
 		if (t-k >= t2+1) {
 			// Compute row indices i such that i+k is NOT one of the local knots
+			IntegerVector I0 = Range(t2+1, t-1);
 			IntegerVector I (t-k-t2);
-			int	counter = 0;
-			for (int i = t2-k+1; i < t-k; i++) {
-				if (std::find(knot_idx.begin()+j_col-k+1, knot_idx.begin()+j_col, i+k) == knot_idx.begin()+j_col) {
-					I[counter] = i;
-					counter++;
-				}
-			}
+			std::set_difference(I0.begin(), I0.end(), knot_idx.begin()+j_col-k+1, knot_idx.begin()+j_col, I.begin());
+			for (int p = 0; p < t-k-t2; p++) I[p] -= k;
 
 			// Compute column indices that correspond to the unknown indices between
 			// second and last knot

@@ -6,7 +6,7 @@
 using namespace Rcpp; 
 
 // [[Rcpp::export]]
-List rcpp_hx_mat(int k, NumericVector xd, NumericVector x, bool di_weighting, IntegerVector col_idx) {
+List rcpp_h_eval(int k, NumericVector xd, NumericVector x, bool di_weighting, IntegerVector col_idx) {
 	int n_row = x.size(), n_col = col_idx.size();
 	NumericMatrix H (n_row, n_col); 
 	for (int i = 0; i < n_row; i++) {
@@ -31,7 +31,7 @@ List rcpp_hx_mat(int k, NumericVector xd, NumericVector x, bool di_weighting, In
 }
 
 // [[Rcpp::export]]
-List rcpp_nx_mat(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx) {
+List rcpp_n_eval(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx) {
 	int N = 0;
 	IntegerVector i_vec (N);
 	IntegerVector j_vec (N);

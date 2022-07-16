@@ -17,15 +17,15 @@ Multiplication by such a weighted H gives discrete integrals at the design
 points; see details for more information. The default is \code{FALSE}.}
 
 \item{col_idx}{Vector of indices, a subset of \code{1:n} where \code{n = length(xd)},
-that indicates which columns of the falling factorial basis matrix should
-be returned. The default is \code{NULL}, which is taken to mean \code{1:n}.}
+that indicates which columns of the constructed matrix should be
+returned. The default is \code{NULL}, which is taken to mean \code{1:n}.}
 }
 \value{
 Sparse matrix of dimension \code{length(xd)} by \code{length(col_idx)}.
 }
 \description{
-Constructs H, the falling factorial basis matrix of a given order, with
-respect to given design points.
+Constructs the falling factorial basis matrix of a given order, with respect
+to given design points.
 }
 \details{
 The falling factorial basis matrix of order \eqn{k}, with respect to

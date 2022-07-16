@@ -1,7 +1,7 @@
 #' Construct D matrix
 #'
-#' Constructs D, the discrete derivative matrix of a given order, with respect
-#' to given design points.
+#' Constructs the discrete derivative matrix of a given order, with respect to
+#' given design points. 
 #'
 #' @param k Order for the discrete derivative matrix. Must be >= 0.
 #' @param xd Design points. Must be sorted in increasing order, and have length  
@@ -10,9 +10,8 @@
 #'   weighting of the discrete derivatives that is implicit in trend filtering;
 #'   see details for more information. The default is `FALSE`.
 #' @param row_idx Vector of indices, a subset of `1:(n-k)` where `n =
-#'   length(xd)`, that indicates which rows of the discrete derivative matrix
-#'   should be returned. The default is `NULL`, which is taken to mean
-#'   `1:(n-k)`.
+#'   length(xd)`, that indicates which rows of the constructed matrix should be
+#'   returned. The default is `NULL`, which is taken to mean `1:(n-k)`.
 #' @return Sparse matrix of dimension `length(row_idx)` by `length(xd)`.
 #' 
 #' @details The discrete derivative matrix of order \eqn{k}, with respect to
@@ -76,8 +75,8 @@ d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 
 #' Construct B matrix
 #'
-#' Constructs B, the extended discrete derivative matrix of a given order, with
-#' respect to given design points.
+#' Constructs the extended discrete derivative matrix of a given order, with
+#' respect to given design points. 
 #'
 #' @param k Order for the extended discrete derivative matrix. Must be >= 0.
 #' @param xd Design points. Must be sorted in increasing order, and have length  
@@ -86,8 +85,8 @@ d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #'   weighting of the discrete derivatives that is implicit in trend filtering;
 #'   see details for more information. The default is `FALSE`.
 #' @param row_idx Vector of indices, a subset of `1:n` where `n = length(xd)`,
-#'   that indicates which rows of the extended discrete derivative matrix should
-#'   be returned. The default is `NULL`, which is taken to mean `1:n`.
+#'   that indicates which rows of the constructed matrix should be returned. The
+#'   default is `NULL`, which is taken to mean `1:n`.
 #' @return Sparse matrix of dimension `length(row_idx)` by `length(xd)`.
 #' 
 #' @details The extended discrete derivative matrix of order \eqn{k}, with
@@ -161,8 +160,8 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 
 #' Construct H matrix
 #'
-#' Constructs H, the falling factorial basis matrix of a given order, with
-#' respect to given design points.
+#' Constructs the falling factorial basis matrix of a given order, with respect
+#' to given design points. 
 #'
 #' @param k Order for the falling factorial basis matrix. Must be >= 0.
 #' @param xd Design points. Must be sorted in increasing order, and have length  
@@ -171,8 +170,8 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #'   Multiplication by such a weighted H gives discrete integrals at the design
 #'   points; see details for more information. The default is `FALSE`. 
 #' @param col_idx Vector of indices, a subset of `1:n` where `n = length(xd)`,
-#'   that indicates which columns of the falling factorial basis matrix should
-#'   be returned. The default is `NULL`, which is taken to mean `1:n`.
+#'   that indicates which columns of the constructed matrix should be
+#'   returned. The default is `NULL`, which is taken to mean `1:n`.
 #' @return Sparse matrix of dimension `length(xd)` by `length(col_idx)`.
 #' 
 #' @details The falling factorial basis matrix of order \eqn{k}, with respect to 
@@ -272,8 +271,8 @@ h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
 
 #' Construct N matrix
 #'
-#' Constructs N, the discrete B-spline basis matrix of a given order, with
-#' respect to given design points and given knot points.
+#' Constructs the discrete B-spline basis matrix of a given order, with respect
+#' to given design points and given knot points. 
 #'
 #' @param k Order for the discrete B-spline basis matrix. Must be >= 0. 
 #' @param xd Design points. Must be sorted in increasing order, and have length  
@@ -293,7 +292,8 @@ h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
 #'   that the boundary design points will be formed by extending the largest
 #'   orginal design point by constant multiples of `max(diff(xd))`, the largest
 #'   gap between original design points.
-#' @return Sparse matrix of dimension `length(xd)` by `length(knot_idx) + k+1`. 
+#' @return Sparse matrix of dimension `length(xd)` by `length(knot_idx) + k +
+#'   1`.  
 #' 
 #' @details The discrete B-spline basis matrix of order \eqn{k}, with respect to  
 #'   design points \eqn{x_1 < \ldots < x_n}, and knot set \eqn{T \subseteq
@@ -312,7 +312,9 @@ h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
 #'   setting up and solving a sequence of locally-defined linear systems. For
 #'   any knot set \eqn{T}, computation of the evaluations of all DB-splines at
 #'   the design points can be done in \eqn{O(nk^2)} operations; see Sections 7, 
-#'   8.2, and 8.3 of Tibshirani (2020) for details.
+#'   8.2, and 8.3 of Tibshirani (2020) for details. The current function uses a
+#'   sparse QR decomposition from the Eigen::SparseQR module in C++ in order to
+#'   solve the local linear systems. 
 #'
 #' When \eqn{T = x_{(k+1):(n-1)}}, the knot set corresponding to the "canonical"
 #'   discrete spline space (spanned by the falling factorial basis functions

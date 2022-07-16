@@ -17,14 +17,14 @@ weighting of the discrete derivatives that is implicit in trend filtering;
 see details for more information. The default is \code{FALSE}.}
 
 \item{row_idx}{Vector of indices, a subset of \code{1:n} where \code{n = length(xd)},
-that indicates which rows of the extended discrete derivative matrix should
-be returned. The default is \code{NULL}, which is taken to mean \code{1:n}.}
+that indicates which rows of the constructed matrix should be returned. The
+default is \code{NULL}, which is taken to mean \code{1:n}.}
 }
 \value{
 Sparse matrix of dimension \code{length(row_idx)} by \code{length(xd)}.
 }
 \description{
-Constructs B, the extended discrete derivative matrix of a given order, with
+Constructs the extended discrete derivative matrix of a given order, with
 respect to given design points.
 }
 \details{
