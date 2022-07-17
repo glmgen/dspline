@@ -1,5 +1,5 @@
 ---
-title: "Idspline tests 1"
+title: "dspline tests"
 ---
 
 ```{r setup, include=FALSE}
@@ -7,8 +7,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-# library(dspline)
-devtools::load_all()
+library(dspline)
 source("funs.R")
 ```
 
@@ -350,7 +349,7 @@ matplot(x, N2, type = "l", lty = 1, ylim = ylim)
 matplot(xd, N1, type = "p", pch = 19, add = TRUE)
 ```
 
-Least squares solve
+Least squares projection
 
 ```{r}
 n = 500
