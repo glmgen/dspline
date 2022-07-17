@@ -80,7 +80,7 @@ List rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_id
 List rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx) {
 	// Compute number of nonzero elements for N. We do so by computing nonzeros
 	// per column (discrete B-spline basis vector)
-	int N = 0, n_row = xd.size() - k - 1, n_col = knot_idx.size();
+	int n_row = xd.size() - k - 1, n_col = knot_idx.size(), N = 0; 
 	for (int j = 0; j < n_col; j++) {
 		if (j < k+1) N += knot_idx[j] + 1; // First k+1 functions
 		else if (j < n_col-k-1) N += knot_idx[j] - knot_idx[j-k-1] + 1; 
@@ -105,5 +105,38 @@ List rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx
 		}
 	}
 	
+	return List::create(Named("i") = i_vec, Named("j") = j_vec, Named("x") = x_vec);
+}
+
+/******************************************************************************/
+// Evaluation of falling factorial basis at arbitrary query points
+
+// [[Rcpp::export]]
+List rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx) {
+	// Compute number of nonzero elements for H. We do so by computing nonzeros 
+	// per column (falling factorial basis vector). Along the way we compute the
+	// index of the smallest nonzero evaluation per column
+	int n_row = x.size(), n_col = col_idx.size(), N = n_row * n_col;
+	IntegerVector I (n_col);
+	for (int j = 0; j < n_col; j++) {
+		// Find the index of smallest nonzero query evaluation for h_j 
+		I[j] = std::upper_bound(x.begin(), x.end(), xd[col_idx[j]-1]) - x.begin();
+		N -= I[j];
+	}
+
+	// Now construct H in sparse triplet format
+	IntegerVector i_vec (N);
+	IntegerVector j_vec (N);
+	NumericVector x_vec (N);
+	int l = 0;
+	for (int j = 0; j < n_col; j++) {
+		for (int i = I[j]; i < n_row; i++) {
+			i_vec[l] = i;
+			j_vec[l] = j;
+			x_vec[l] = hxj(k, xd, x[i], col_idx[j]);
+			l++;
+		}
+	}
+
 	return List::create(Named("i") = i_vec, Named("j") = j_vec, Named("x") = x_vec);
 }

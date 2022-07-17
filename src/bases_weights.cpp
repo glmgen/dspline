@@ -63,6 +63,7 @@ double hxj(int k, NumericVector xd, double x, int j) {
 }
 
 /******************************************************************************/
+// Workhorse for computing discrete B-spline evaluations
 
 #include <RcppEigen.h>
 #include <Eigen/Sparse>
@@ -79,7 +80,7 @@ void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVecto
 
 	// First k+1 basis vectors
 	if (j_col < k+1) {
-		// Add entry where the basis vector N_j equals 1
+		// Add entry where the basis vector equals 1
 		i_vec[l] = j_col;
 		j_vec[l] = j_col;
 		x_vec[l] = 1;
@@ -93,7 +94,7 @@ void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVecto
 			std::set_difference(I0.begin(), I0.end(), knot_idx.begin(), knot_idx.begin()+j_col, I.begin());
 			for (int p = 0; p < t-k-j_col; p++) I[p] -= k;
 
-			// Compute column indices that correspond to the unknown indices in N_j
+			// Compute column indices that correspond to unknown indices
 			IntegerVector J = Range(j_col+1, t-k);
 
 			// Step 1a: form appropriate matrix D
@@ -140,7 +141,7 @@ void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVecto
 		int t1 = knot_idx[j_col-k-1];
 		int t2 = knot_idx[j_col-k];
 
-		// Add entry where basis vector N_j equals 1
+		// Add entry where basis vector equals 1
 		i_vec[l] = t2;
 		j_vec[l] = j_col;
 		x_vec[l] = 1;

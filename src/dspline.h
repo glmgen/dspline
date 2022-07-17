@@ -41,10 +41,9 @@ List rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_id
 List rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx);
 
 /******************************************************************************/
-// Evaluation of falling factorial and discrete B-spline bases 
+// Evaluation of falling factorial at arbitrary query points
 
-List rcpp_h_eval(int k, NumericVector xd, NumericVector x, bool di_weighting, IntegerVector col_idx);
-List rcpp_n_eval(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx);
+List rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx);
 
 /******************************************************************************/
 // Basis and weight functions 
@@ -53,6 +52,10 @@ double newton_poly(NumericVector z, double x, int n);
 double dij(int k, NumericVector xd, int i, int j);
 double bij(int k, NumericVector xd, int i, int j);
 double hxj(int k, NumericVector xd, double x, int j);
+
+/******************************************************************************/
+// Workhorse for computing discrete B-spline evaluations
+
 void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVector i_vec, IntegerVector j_vec, NumericVector x_vec, int& l);
 
 /******************************************************************************/

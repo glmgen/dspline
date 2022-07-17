@@ -37,12 +37,8 @@ rcpp_n_mat <- function(k, xd, normalized, knot_idx) {
     .Call('_dspline_rcpp_n_mat', PACKAGE = 'dspline', k, xd, normalized, knot_idx)
 }
 
-rcpp_h_eval <- function(k, xd, x, di_weighting, col_idx) {
-    .Call('_dspline_rcpp_h_eval', PACKAGE = 'dspline', k, xd, x, di_weighting, col_idx)
-}
-
-rcpp_n_eval <- function(k, xd, x, normalized, knot_idx) {
-    .Call('_dspline_rcpp_n_eval', PACKAGE = 'dspline', k, xd, x, normalized, knot_idx)
+rcpp_h_eval <- function(k, xd, x, col_idx) {
+    .Call('_dspline_rcpp_h_eval', PACKAGE = 'dspline', k, xd, x, col_idx)
 }
 
 rcpp_dot_b_mat_mult <- function(v, k, xd, tf_weighting, transpose, inverse) {
