@@ -333,9 +333,6 @@ matplot(x, Hx, type = "l", lty = 1, add = TRUE)
 Evaluate N basis
 
 ```{r}
-devtools::load_all()
-source("funs.R")
-
 n = 100
 k = 2
 knot_idx = sort(sample((k+1):(n-1), 4))
@@ -353,27 +350,22 @@ matplot(x, N2, type = "l", lty = 1, ylim = ylim)
 matplot(xd, N1, type = "p", pch = 19, add = TRUE)
 ```
 
+Least squares solve
+
 ```{r}
-set.seed(0)
-n = 16
-e = runif(n,-1/(2.5*(n+1)),1/(2.5*(n+1)))
-x = 1:n/(n+1) + e
+devtools::load_all()
+
+n = 500
 k = 2
+knot_idx = sort(sample((k+1):(n-1), 100))
+xd = sort(runif(n))
+v = rnorm(n)
 
-n0 = 1000
-x0 = seq(0,1,length=n0)
+obj1 = dspline_solve(v, k, xd, knot_idx = knot_idx, basis = "N")
+obj2 = dspline_solve(v, k, xd, knot_idx = knot_idx, basis = "B")
+obj3 = dspline_solve(v, k, xd, knot_idx = knot_idx, basis = "H")
 
-jj = c(3,5,8,11,13) 
-N = length(jj)+k+1
-Nmat = matrix(0,n0,N)
-Amat = dbs.Amat.sk(k,x,jj)
-for (j in 1:N) {
-  Nmat[,j] = predict.tf.basis.sk(x0,Amat[,j],x,k,jj)
-}
-
-N1 = n_mat(k, x, normalized = FALSE, knot_idx = jj)
-N2 = n_eval(k, x, x0, knot_idx = jj, N = N1)
-
-
-max(abs(N2 - Nmat))
+max(abs(obj2$sol - obj3$sol)) / sum(abs(obj2$sol))
+sum((v - obj1$fit)^2) - sum((v - obj2$fit)^2)
+sum((v - obj1$fit)^2) - sum((v - obj3$fit)^2)
 ```

@@ -4,7 +4,7 @@
 \alias{n_eval}
 \title{Evaluate N basis}
 \usage{
-n_eval(k, xd, x, normalized = TRUE, knot_idx = NULL, xd_bdry = NULL, N = NULL)
+n_eval(k, xd, x, normalized = TRUE, knot_idx = NULL, N = NULL)
 }
 \arguments{
 \item{k}{Order for the discrete B-spline basis. Must be >= 0.}
@@ -15,7 +15,7 @@ at least \code{k+1}.}
 \item{x}{Query points. Must be sorted in increasing order.}
 
 \item{normalized}{Should the discrete B-spline basis vectors be normalized to
-attain a maximum value of 1 over the design points? Default is \code{TRUE}.}
+attain a maximum value of 1 over the design points? The default is \code{TRUE}.}
 
 \item{knot_idx}{Vector of indices, a subset of \code{(k+1):(n-1)} where \code{n = length(xd)}, that indicates which design points should be used as knot
 points for the discrete B-splines. Must be sorted in increasing order. The
@@ -24,16 +24,8 @@ default is \code{NULL}, which is taken to mean \code{(k+1):(n-1)}.}
 \item{N}{Matrix of discrete B-spline evaluations at the design points. The
 default is \code{NULL}, which means that this is precomputed before constructing
 the matrix of discrete B-spline evaluations at the query points. If \code{Nd} is
-non-\code{NULL}, then the arguments \code{knot_idx} and \code{x_bdry} will be ignored
-(since these would only be needed to construct N at the design points).}
-
-\item{x_bdry}{Boundary design points that extend the original sequence of
-design points \code{xd} beyond the largest one, and are used in the construction
-of the discrete B-spline basis. Must have length \code{k+1}, and any choice will
-result in the same discrete B-splines. The default is \code{NULL}, which means
-that the boundary design points will be formed by extending the largest
-orginal design point by constant multiples of \code{max(diff(xd))}, the largest
-gap between original design points.}
+non-\code{NULL}, then the argument \code{normalized} will be ignored (as this would
+have only been used to construct N at the design points).}
 }
 \value{
 Sparse matrix of dimension \code{length(x)} by \code{length(knot_idx) + k + 1}.
@@ -60,8 +52,8 @@ generally available in closed-form. Therefore, the current function (unlike
 discrete B-spline basis at the design points. If the argument \code{Nd} is
 non-\code{NULL}, then it will use this as the matrix of evaluations at the
 design points; if \code{Nd} is \code{NULL}, then it will call \code{\link[=n_mat]{n_mat()}} to produce
-such a matrix, and will pass along the arguments \code{normalized}, \code{knot_idx},
-\code{x_bdry} accordingly.
+such a matrix, and will pass to this function the arguments \code{normalized}
+and \code{knot_idx} accordingly.
 
 After obtaining the matrix of discrete B-spline evaluations at the design
 points, the fast interpolation scheme from \code{\link[=dspline_interp]{dspline_interp()}} is used to

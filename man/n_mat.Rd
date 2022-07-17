@@ -4,7 +4,7 @@
 \alias{n_mat}
 \title{Construct N matrix}
 \usage{
-n_mat(k, xd, normalized = TRUE, knot_idx = NULL, xd_bdry = NULL)
+n_mat(k, xd, normalized = TRUE, knot_idx = NULL)
 }
 \arguments{
 \item{k}{Order for the discrete B-spline basis matrix. Must be >= 0.}
@@ -13,21 +13,13 @@ n_mat(k, xd, normalized = TRUE, knot_idx = NULL, xd_bdry = NULL)
 at least \code{k+1}.}
 
 \item{normalized}{Should the discrete B-spline basis vectors be normalized to
-attain a maximum value of 1 over the design points? Default is \code{TRUE}.}
+attain a maximum value of 1 over the design points? The default is \code{TRUE}.}
 
 \item{knot_idx}{Vector of indices, a subset of \code{(k+1):(n-1)} where \code{n = length(xd)}, that indicates which design points should be used as knot
 points for the discrete B-splines. Must be sorted in increasing order. The
 default is \code{NULL}, which is taken to mean \code{(k+1):(n-1)} as in the
 "canonical" discrete spline space (though in this case the returned N
 matrix will be trivial: it will be the identity matrix). See details.}
-
-\item{x_bdry}{Boundary design points that extend the original sequence of
-design points \code{xd} beyond the largest one, and are used in the construction
-of the discrete B-spline basis. Must have length \code{k+1}, and any choice will
-result in the same discrete B-splines. The default is \code{NULL}, which means
-that the boundary design points will be formed by extending the largest
-orginal design point by constant multiples of \code{max(diff(xd))}, the largest
-gap between original design points.}
 }
 \value{
 Sparse matrix of dimension \code{length(xd)} by \code{length(knot_idx) + k + 1}.

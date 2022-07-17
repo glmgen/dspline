@@ -49,23 +49,16 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
 #'   at least `k+1`.
 #' @param x Query points. Must be sorted in increasing order.
 #' @param normalized Should the discrete B-spline basis vectors be normalized to
-#'   attain a maximum value of 1 over the design points? Default is `TRUE`. 
+#'   attain a maximum value of 1 over the design points? The default is `TRUE`.
 #' @param knot_idx Vector of indices, a subset of `(k+1):(n-1)` where `n =
 #'   length(xd)`, that indicates which design points should be used as knot
 #'   points for the discrete B-splines. Must be sorted in increasing order. The
 #'   default is `NULL`, which is taken to mean `(k+1):(n-1)`.
-#' @param x_bdry Boundary design points that extend the original sequence of
-#'   design points `xd` beyond the largest one, and are used in the construction 
-#'   of the discrete B-spline basis. Must have length `k+1`, and any choice will
-#'   result in the same discrete B-splines. The default is `NULL`, which means
-#'   that the boundary design points will be formed by extending the largest
-#'   orginal design point by constant multiples of `max(diff(xd))`, the largest
-#'   gap between original design points.
 #' @param N Matrix of discrete B-spline evaluations at the design points. The
 #'   default is `NULL`, which means that this is precomputed before constructing
 #'   the matrix of discrete B-spline evaluations at the query points. If `Nd` is
-#'   non-`NULL`, then the arguments `knot_idx` and `x_bdry` will be ignored
-#'   (since these would only be needed to construct N at the design points).
+#'   non-`NULL`, then the argument `normalized` will be ignored (as this would
+#'   have only been used to construct N at the design points).
 #' @return Sparse matrix of dimension `length(x)` by `length(knot_idx) + k + 1`.
 #' 
 #' @details The discrete B-spline basis functions of order \eqn{k}, defined with 
@@ -85,8 +78,8 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
 #'   discrete B-spline basis at the design points. If the argument `Nd` is
 #'   non-`NULL`, then it will use this as the matrix of evaluations at the
 #'   design points; if `Nd` is `NULL`, then it will call [n_mat()] to produce
-#'   such a matrix, and will pass along the arguments `normalized`, `knot_idx`,
-#'   `x_bdry` accordingly.
+#'   such a matrix, and will pass to this function the arguments `normalized`
+#'   and `knot_idx` accordingly.
 #'
 #' After obtaining the matrix of discrete B-spline evaluations at the design
 #'   points, the fast interpolation scheme from [dspline_interp()] is used to 
@@ -95,10 +88,9 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
 #' @seealso [n_mat()] for constructing evaluations of the discrete B-spline
 #'   basis at the design points.  
 #' @export
-n_eval <- function(k, xd, x, normalized = TRUE, knot_idx = NULL, xd_bdry = NULL,
-                   N = NULL) {
+n_eval <- function(k, xd, x, normalized = TRUE, knot_idx = NULL, N = NULL) {
   if (is.null(N)) {
-    N = n_mat(x, xd, normalized, knot_idx, xd_bdry)
+    N = n_mat(x, xd, normalized, knot_idx)
   }
   else {
     check_nonneg_int(k)

@@ -80,7 +80,7 @@ discrete splines: Another look at trend filtering and related problems",
 Section 5.
 }
 \seealso{
-\code{\link[=dspline_solve]{dspline_solve()}} for solving for the coefficients in a least
-squares projection onto a "custom" space of discrete splines (defined by a
-custom knot set \eqn{T \subseteq x_{(k+1):(n-1)}}).
+\code{\link[=dspline_solve]{dspline_solve()}} for the least squares projection onto a "custom"
+space of discrete splines (defined by a custom knot set \eqn{T \subseteq 
+  x_{(k+1):(n-1)}}).
 }

@@ -18,6 +18,20 @@ check_length <- function(x, n, op = c("==", ">=", "<=")) {
   }
 }
 
+check_rows <- function(x, n) {
+  args = as.character(as.list(match.call())[-1])
+  if (nrow(x) != n) {
+    rlang::abort(sprintf("`nrow(%s)` must equal `%s`.", args[1], args[2]))
+  }
+}
+
+check_cols <- function(x, n) {
+  args = as.character(as.list(match.call())[-1])
+  if (ncol(x) != n) {
+    rlang::abort(sprintf("`ncol(%s)` must equal `%s`.", args[1], args[2]))
+  }
+}
+
 check_range <- function(x, rg) {
   args = as.character(as.list(match.call())[-1])
   if (!(min(x) >= min(rg) && max(x) <= max(rg))) {

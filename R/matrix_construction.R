@@ -278,20 +278,13 @@ h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
 #' @param xd Design points. Must be sorted in increasing order, and have length  
 #'   at least `k+1`.
 #' @param normalized Should the discrete B-spline basis vectors be normalized to
-#'   attain a maximum value of 1 over the design points? Default is `TRUE`. 
+#'   attain a maximum value of 1 over the design points? The default is `TRUE`.
 #' @param knot_idx Vector of indices, a subset of `(k+1):(n-1)` where `n =
 #'   length(xd)`, that indicates which design points should be used as knot
 #'   points for the discrete B-splines. Must be sorted in increasing order. The
 #'   default is `NULL`, which is taken to mean `(k+1):(n-1)` as in the
 #'   "canonical" discrete spline space (though in this case the returned N
 #'   matrix will be trivial: it will be the identity matrix). See details.
-#' @param x_bdry Boundary design points that extend the original sequence of
-#'   design points `xd` beyond the largest one, and are used in the construction 
-#'   of the discrete B-spline basis. Must have length `k+1`, and any choice will
-#'   result in the same discrete B-splines. The default is `NULL`, which means
-#'   that the boundary design points will be formed by extending the largest
-#'   orginal design point by constant multiples of `max(diff(xd))`, the largest
-#'   gap between original design points.
 #' @return Sparse matrix of dimension `length(xd)` by `length(knot_idx) + k +
 #'   1`.  
 #' 
@@ -332,7 +325,7 @@ h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
 #' @seealso [nx_mat()] for constructing evaluations of the discrete B-spline
 #'   basis at arbitrary query points.    
 #' @export
-n_mat <- function(k, xd, normalized = TRUE, knot_idx = NULL, xd_bdry = NULL) { 
+n_mat <- function(k, xd, normalized = TRUE, knot_idx = NULL) { 
   check_nonneg_int(k)
   check_length(xd, k+1, ">=")
   check_sorted(xd)
@@ -344,15 +337,9 @@ n_mat <- function(k, xd, normalized = TRUE, knot_idx = NULL, xd_bdry = NULL) {
     check_range(knot_idx, (k+1):(n-1))
     check_sorted(knot_idx)
   }
-  if (is.null(xd_bdry)) {
-    xd_bdry = max(xd) + (1:(k+1)) * max(diff(xd))
-  }
-  else {
-    check_length(xd_bdry, k+1)
-  }
 
   knot_idx = c(knot_idx, n:(n+k)) 
-  xd = c(xd, xd_bdry)
+  xd = c(xd, max(xd) + (1:(k+1)) * max(diff(xd)))
   
   obj = rcpp_n_mat(k, xd, normalized, knot_idx-1) 
   Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,

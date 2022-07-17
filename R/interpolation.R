@@ -62,9 +62,9 @@
 #' @references Tibshirani (2020), "Divided differences, falling factorials, and
 #'   discrete splines: Another look at trend filtering and related problems",
 #'   Section 5.
-#' @seealso [dspline_solve()] for solving for the coefficients in a least
-#'   squares projection onto a "custom" space of discrete splines (defined by a
-#'   custom knot set \eqn{T \subseteq x_{(k+1):(n-1)}}).  
+#' @seealso [dspline_solve()] for the least squares projection onto a "custom"
+#'   space of discrete splines (defined by a custom knot set \eqn{T \subseteq 
+#'   x_{(k+1):(n-1)}}).   
 #' @export
 dspline_interp <- function(v, k, xd, x, implicit = TRUE) {
   check_nonneg_int(k)
