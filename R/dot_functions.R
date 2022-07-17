@@ -1,6 +1,6 @@
 #' @rdname dot_functions
 #' @name dot_functions
-#' @title In place computations
+#' @title In-place computations
 #' 
 #' @description Each "dot" function accepts arguments as in its "non-dot"
 #'   counterpart, but peforms computations in place, overwriting the first input
@@ -38,5 +38,11 @@ NULL
 #' @rdname dot_functions
 #' @export
 .divided_diff <- rcpp_dot_divided_diff
+
+#' @rdname dot_functions
+#' @export
 .b_mat_mult <- rcpp_dot_b_mat_mult
+
+#' @rdname dot_functions
+#' @export
 .h_mat_mult <- rcpp_dot_h_mat_mult

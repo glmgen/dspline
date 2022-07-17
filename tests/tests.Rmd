@@ -353,8 +353,6 @@ matplot(xd, N1, type = "p", pch = 19, add = TRUE)
 Least squares solve
 
 ```{r}
-devtools::load_all()
-
 n = 500
 k = 2
 knot_idx = sort(sample((k+1):(n-1), 100))

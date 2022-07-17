@@ -1,4 +1,4 @@
-# Complications arising with in place operations between R and Rcpp. If you want
+# Complications arising with in-place operations between R and Rcpp. If you want
 # to do something in place in Rcpp, then you can do it, but: 
 # 1. Beware of implicit copying: int-to-float conversion for NumericVector makes 
 #    a copy! So it won't be modified by reference.

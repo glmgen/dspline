@@ -3,9 +3,15 @@
 \name{dot_functions}
 \alias{dot_functions}
 \alias{.divided_diff}
-\title{In place computations}
+\alias{.b_mat_mult}
+\alias{.h_mat_mult}
+\title{In-place computations}
 \usage{
 .divided_diff(f, z)
+
+.b_mat_mult(v, k, xd, tf_weighting, transpose, inverse)
+
+.h_mat_mult(v, k, xd, di_weighting, transpose, inverse)
 }
 \description{
 Each "dot" function accepts arguments as in its "non-dot"

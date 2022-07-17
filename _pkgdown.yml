@@ -1,0 +1,53 @@
+destination: docs/
+
+home:
+  links:
+    - text: Ryan Tibshirani
+      href: https://www.stat.cmu.edu/~ryantibs/
+    - text: Discrete splines paper
+      href: https://www.stat.cmu.edu/~ryantibs/papers/dspline.pdf
+
+repo:
+  url:
+    home: https://github.com/ryantibs/dspline/tree/main/
+    source: https://github.com/ryantibs/dspline/blob/main/
+    issue: https://github.com/ryantibs/dspline/issues
+    user: https://github.com/
+
+reference:
+- title: Discrete calculus
+  desc: Divided differencing, discrete differentiation, and discrete integration.
+- contents:
+  - divided_diff
+  - discrete_deriv
+  - discrete_integ
+- title: Matrix multiplication
+  desc: Multiplication by discrete derivative and falling factorial basis matrices.
+- contents:
+  - d_mat_mult
+  - b_mat_mult
+  - h_mat_mult
+- title: Matrix construction
+  desc: Construction of discrete derivative and discrete spline basis matrices.
+- contents:
+  - d_mat
+  - b_mat
+  - h_mat
+  - n_mat
+- title: Basis evaluation
+  desc: Evaluation of falling factorial and discrete B-spline basis functions.
+- contents:
+  - h_eval
+  - n_eval
+- title: Interpolation
+  desc: Interpolation within the "canonical" space of discrete splines.
+- contents:
+  - dspline_interp
+- title: Projection
+  desc: Least squares projection onto "custom" spaces of discrete splines.
+- contents:
+  - dspline_solve
+- title: In-place operations
+  desc: Divided differencing and matrix multiplication using in-place operations.
+- contents: 
+  - dot_functions
