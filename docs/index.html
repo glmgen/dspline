@@ -68,7 +68,16 @@
 <div class="section level1">
 <div class="page-header"><h1 id="dspline">dspline<a class="anchor" aria-label="anchor" href="#dspline"></a>
 </h1></div>
-<p>Tools for computations with discrete splines</p>
+<p>These are <em>not</em> B-splines:</p>
+<p><img src="reference/figures/db-spline.png"></p>
+<p>They are called <em>discrete</em> B-splines. These span a function spaced called <strong>discrete splines</strong>, which are analogous to splines, but defined in terms of a suitable discrete notion of smoothness.</p>
+<ul>
+<li><p>Discrete splines have continuous <em>discrete</em> derivatives at their knots (rather than continuous derivatives, as splines do).</p></li>
+<li><p>They have important computational properties, like the fact that interpolation within the space of discrete splines can be done in <em>constant-time</em>.</p></li>
+<li><p>They are intimately connected to trend filtering (they provide the basis representation that underlies the trend filtering estimator).</p></li>
+</ul>
+<p>For more background, see the paper: <a href="https://www.stat.cmu.edu/~ryantibs/papers/dspline.pdf" class="external-link">“Divided Differences, Falling Factorials, and Discrete Splines: Another Look at Trend Filtering and Related Problems”</a>.</p>
+<p>The <code>dspline</code> package provides tools for computations with discrete splines. The core routines are written in C++ for efficiency. See the <a href="https://ryantibs.github.io/dspline/reference/index.html" class="external-link">reference index</a> for a summary of the tools that are available. <!-- and the getting started guide and vignettes a for examples. --></p>
 </div>
   </div>
 
@@ -77,7 +86,6 @@
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/ryantibs/dspline/tree/main/" class="external-link">Browse source code</a></li>
-<li><a href="https://www.stat.cmu.edu/~ryantibs/" class="external-link">Ryan Tibshirani</a></li>
 <li><a href="https://www.stat.cmu.edu/~ryantibs/papers/dspline.pdf" class="external-link">Discrete splines paper</a></li>
 </ul>
 </div>

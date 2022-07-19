@@ -2,8 +2,6 @@ destination: docs/
 
 home:
   links:
-    - text: Ryan Tibshirani
-      href: https://www.stat.cmu.edu/~ryantibs/
     - text: Discrete splines paper
       href: https://www.stat.cmu.edu/~ryantibs/papers/dspline.pdf
 
