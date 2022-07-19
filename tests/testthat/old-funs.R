@@ -140,12 +140,14 @@ getDtil = function(n, k, x=1:n/n) {
 ## Prediction functions
 
 predict.tf.fitted = function(newx,beta,x,k) {
+  n = length(x)
   B = getBtil(n,k+1,x)
   alpha = B %*% beta
   return(predict.tf.basis(newx,alpha,x,k))
 }
 
 predict.tf.basis = function(newx,alpha,x,k) {
+  n = length(x)
   jj = (k+1):(n-1)
   H = evalH(newx,k,jj,x)
   return(H %*% alpha)

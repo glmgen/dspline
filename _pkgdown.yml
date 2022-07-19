@@ -47,7 +47,7 @@ reference:
   desc: Least squares projection onto "custom" spaces of discrete splines.
 - contents:
   - dspline_solve
-- title: In-place operations
+- title: In-place computations
   desc: Divided differencing and matrix multiplication using in-place operations.
 - contents: 
   - dot_functions

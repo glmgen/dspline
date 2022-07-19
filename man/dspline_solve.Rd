@@ -35,13 +35,13 @@ Projects a sequence of values onto the space of discrete splines a given
 order, with respect to given design points, and given knot points.
 }
 \details{
-This function minimizes least squares criterion
+This function minimizes the least squares criterion
 \deqn{
   \|v - M \beta\|_2^2
   }
 over coefficient vectors \eqn{\beta}; that is, it computes
 \deqn{
-  \beta = (M^T M)^{-1} M^T v
+  \hat\beta = (M^T M)^{-1} M^T v
   }
 for a vector \eqn{v} and basis matrix \eqn{M}. The basis matrix \eqn{M} is
 specified via the \code{basis} argument, which allows for three options. The
@@ -67,11 +67,11 @@ conditioning than that using the discrete B-spline representation. However,
 it is essentially always preferable to the \code{"H"} option, and it produces
 the same solution (coefficients in the falling factorial basis expansion).
 
-\strong{Note 1:} the basis matrix can also be passed in directly via the \code{mat}
-argument (which savse on the cost of computing it in the first place). But
-even when \code{mat} not missing, the \code{basis} argument must still be used to
-specify which type of basis matrix is being passed in, as the downstream
-computations differ depending on the type.
+\strong{Note 1:} the basis matrix to be used in the least squares problem can be
+passed in directly via the \code{mat} argument (which saves on the cost of
+computing it in the first place). Even when \code{mat} not missing, the \code{basis}
+argument must still be used to specify which type of basis matrix is being
+passed in, as the downstream computations differ depending on the type.
 
 \strong{Note 2:} when \code{mat} is not missing and \code{basis = "B"}, the matrix being
 passed in must be the \strong{entire} extended discrete derivative matrix, as

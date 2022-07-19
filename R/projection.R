@@ -20,13 +20,13 @@
 #'   least squares fit; and `mat`: the basis matrix used for the least squares 
 #'   problem (only present if the input argument `mat` is missing).
 #' 
-#' @details This function minimizes least squares criterion
+#' @details This function minimizes the least squares criterion
 #'   \deqn{
 #'   \|v - M \beta\|_2^2
 #'   }
 #'   over coefficient vectors \eqn{\beta}; that is, it computes
 #'   \deqn{
-#'   \beta = (M^T M)^{-1} M^T v
+#'   \hat\beta = (M^T M)^{-1} M^T v
 #'   }
 #'   for a vector \eqn{v} and basis matrix \eqn{M}. The basis matrix \eqn{M} is
 #'   specified via the `basis` argument, which allows for three options. The
@@ -52,11 +52,11 @@
 #'   it is essentially always preferable to the `"H"` option, and it produces
 #'   the same solution (coefficients in the falling factorial basis expansion). 
 #'
-#' **Note 1:** the basis matrix can also be passed in directly via the `mat`
-#'   argument (which savse on the cost of computing it in the first place). But
-#'   even when `mat` not missing, the `basis` argument must still be used to
-#'   specify which type of basis matrix is being passed in, as the downstream
-#'   computations differ depending on the type.
+#' **Note 1:** the basis matrix to be used in the least squares problem can be
+#'   passed in directly via the `mat` argument (which saves on the cost of
+#'   computing it in the first place). Even when `mat` not missing, the `basis`
+#'   argument must still be used to specify which type of basis matrix is being
+#'   passed in, as the downstream computations differ depending on the type.
 #'
 #' **Note 2:** when `mat` is not missing and `basis = "B"`, the matrix being
 #'   passed in must be the **entire** extended discrete derivative matrix, as

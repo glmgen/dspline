@@ -97,13 +97,13 @@ problem (only present if the input argument <code>mat</code> is missing).</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>This function minimizes least squares criterion
+    <p>This function minimizes the least squares criterion
 $$
   \|v - M \beta\|_2^2
   $$
 over coefficient vectors \(\beta\); that is, it computes
 $$
-  \beta = (M^T M)^{-1} M^T v
+  \hat\beta = (M^T M)^{-1} M^T v
   $$
 for a vector \(v\) and basis matrix \(M\). The basis matrix \(M\) is
 specified via the <code>basis</code> argument, which allows for three options. The
@@ -126,11 +126,11 @@ leads to a banded linear system, this system tends to have worse
 conditioning than that using the discrete B-spline representation. However,
 it is essentially always preferable to the <code>"H"</code> option, and it produces
 the same solution (coefficients in the falling factorial basis expansion).</p>
-<p><strong>Note 1:</strong> the basis matrix can also be passed in directly via the <code>mat</code>
-argument (which savse on the cost of computing it in the first place). But
-even when <code>mat</code> not missing, the <code>basis</code> argument must still be used to
-specify which type of basis matrix is being passed in, as the downstream
-computations differ depending on the type.</p>
+<p><strong>Note 1:</strong> the basis matrix to be used in the least squares problem can be
+passed in directly via the <code>mat</code> argument (which saves on the cost of
+computing it in the first place). Even when <code>mat</code> not missing, the <code>basis</code>
+argument must still be used to specify which type of basis matrix is being
+passed in, as the downstream computations differ depending on the type.</p>
 <p><strong>Note 2:</strong> when <code>mat</code> is not missing and <code>basis = "B"</code>, the matrix being
 passed in must be the <strong>entire</strong> extended discrete derivative matrix, as
 returned by <code><a href="b_mat.html">b_mat()</a></code> with <code>row_idx = NULL</code> (the default), and not some

@@ -1,0 +1,1 @@
+Rscript make.R $@
