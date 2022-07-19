@@ -18,9 +18,9 @@ within the space of discrete splines can be done in *constant-time*.
   representation that underlies the trend filtering estimator). 
 
 For more background, see the paper:
-  ["Divided Differences, Falling Factorials, and Discrete Splines:
-  Another Look at Trend Filtering and Related
-  Problems"](https://www.stat.cmu.edu/~ryantibs/papers/dspline.pdf).
+  ["Divided differences, falling factorials, and discrete splines:
+  Another look at trend filtering and related
+  problems"](https://www.stat.cmu.edu/~ryantibs/papers/dspline.pdf).
 
 The `dspline` package provides tools for computations with discrete splines. The
 core routines are written in C++ for efficiency. See the
