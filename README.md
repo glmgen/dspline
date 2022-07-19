@@ -4,7 +4,7 @@ These are *not* B-splines:
 
 ![](man/figures/db-spline.png)
 
-They are called *discrete* B-splines. These span a function spaced called
+These are called *discrete* B-splines. They span a function spaced called
 **discrete splines**, which are analogous to splines, but defined in terms of 
 a suitable discrete notion of smoothness. 
 
