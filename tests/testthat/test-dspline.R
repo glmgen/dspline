@@ -276,11 +276,14 @@ test_that("Evaluate N basis", {
   xd = sort(runif(n))
   x = seq(0, 1, length=100)
 
-  N1 = n_mat(k, xd, knot_idx = knot_idx)
-  N2 = as.matrix(n_eval(k, xd, x, knot_idx = knot_idx, N = N1))
-  N3 = matrix(0, length(x), ncol(N2))
-  for (j in 1:ncol(N3)) N3[,j] = dspline_interp(N1[,j], k, xd, x)
-  expect_equal(N2, N3, tolerance = tol, ignore_attr = TRUE)
+  # n_mat already tested against dbs.evals.sk previously
+  N_xd = n_mat(k, xd, knot_idx = knot_idx)
+  N_x0 = as.matrix(n_eval(k, xd, x, knot_idx = knot_idx))
+  N_x1 = as.matrix(n_eval(k, xd, x, knot_idx = knot_idx, N = N_xd))
+  N_x2 = matrix(0, length(x), ncol(N_x1))
+  for (j in 1:ncol(N_x2)) N_x2[,j] = dspline_interp(N_xd[,j], k, xd, x)
+  expect_equal(N_x0, N_x1, tolerance = tol, ignore_attr = TRUE)
+  expect_equal(N_x0, N_x2, tolerance = tol, ignore_attr = TRUE)
 })
 
 test_that("Projection", {
