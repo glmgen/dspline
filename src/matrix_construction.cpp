@@ -119,8 +119,13 @@ List rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx
   int n_row = x.size(), n_col = col_idx.size(), N = n_row * n_col;
   IntegerVector I (n_col);
   for (int j = 0; j < n_col; j++) {
-    // Find the index of smallest nonzero query evaluation for h_j
-    I[j] = std::upper_bound(x.begin(), x.end(), xd[col_idx[j]-1]) - x.begin();
+    if (col_idx[j] < k+1) {
+      // Evaluate all entries for polynomial basis functions
+      I[j] = 0;
+    } else {
+      // Find the index of smallest nonzero query evaluation for h_j
+      I[j] = std::upper_bound(x.begin(), x.end(), xd[col_idx[j]-1]) - x.begin();
+    }
     N -= I[j];
   }
 
