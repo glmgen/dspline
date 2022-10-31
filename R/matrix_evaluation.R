@@ -90,7 +90,7 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
 #' @export
 n_eval <- function(k, xd, x, normalized = TRUE, knot_idx = NULL, N = NULL) {
   if (is.null(N)) {
-    N = n_mat(x, xd, normalized, knot_idx)
+    N = n_mat(k, xd, normalized, knot_idx)
   }
   else {
     check_nonneg_int(k)
