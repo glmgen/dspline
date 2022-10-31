@@ -256,7 +256,7 @@ test_that("Construct N matrix", {
 test_that("Evaluate H basis", {
   n = 10
   k = 2
-  col_idx = sample((k+2):n, 4)
+  col_idx = c(sample(1:(k+1), 2), sample((k+2):n, 4))
   xd = sort(runif(n))
   x = seq(0, 1, length=100)
   H = h_mat(k, xd, col_idx = col_idx)
