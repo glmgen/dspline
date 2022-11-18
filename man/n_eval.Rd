@@ -23,7 +23,7 @@ default is \code{NULL}, which is taken to mean \code{(k+1):(n-1)}.}
 
 \item{N}{Matrix of discrete B-spline evaluations at the design points. The
 default is \code{NULL}, which means that this is precomputed before constructing
-the matrix of discrete B-spline evaluations at the query points. If \code{Nd} is
+the matrix of discrete B-spline evaluations at the query points. If \code{N} is
 non-\code{NULL}, then the argument \code{normalized} will be ignored (as this would
 have only been used to construct N at the design points).}
 }
@@ -49,9 +49,9 @@ matrix has a corresponding row with entries:
 Unlike the falling factorial basis, the discrete B-spline basis is not
 generally available in closed-form. Therefore, the current function (unlike
 \code{\link[=h_eval]{h_eval()}}) will first check if it should precompute the evaluations of the
-discrete B-spline basis at the design points. If the argument \code{Nd} is
+discrete B-spline basis at the design points. If the argument \code{N} is
 non-\code{NULL}, then it will use this as the matrix of evaluations at the
-design points; if \code{Nd} is \code{NULL}, then it will call \code{\link[=n_mat]{n_mat()}} to produce
+design points; if \code{N} is \code{NULL}, then it will call \code{\link[=n_mat]{n_mat()}} to produce
 such a matrix, and will pass to this function the arguments \code{normalized}
 and \code{knot_idx} accordingly.
 

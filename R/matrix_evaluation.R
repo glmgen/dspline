@@ -56,7 +56,7 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
 #'   default is `NULL`, which is taken to mean `(k+1):(n-1)`.
 #' @param N Matrix of discrete B-spline evaluations at the design points. The
 #'   default is `NULL`, which means that this is precomputed before constructing
-#'   the matrix of discrete B-spline evaluations at the query points. If `Nd` is
+#'   the matrix of discrete B-spline evaluations at the query points. If `N` is
 #'   non-`NULL`, then the argument `normalized` will be ignored (as this would
 #'   have only been used to construct N at the design points).
 #' @return Sparse matrix of dimension `length(x)` by `length(knot_idx) + k + 1`.
@@ -75,9 +75,9 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
 #' Unlike the falling factorial basis, the discrete B-spline basis is not
 #'   generally available in closed-form. Therefore, the current function (unlike
 #'   [h_eval()]) will first check if it should precompute the evaluations of the
-#'   discrete B-spline basis at the design points. If the argument `Nd` is
+#'   discrete B-spline basis at the design points. If the argument `N` is
 #'   non-`NULL`, then it will use this as the matrix of evaluations at the
-#'   design points; if `Nd` is `NULL`, then it will call [n_mat()] to produce
+#'   design points; if `N` is `NULL`, then it will call [n_mat()] to produce
 #'   such a matrix, and will pass to this function the arguments `normalized`
 #'   and `knot_idx` accordingly.
 #'
@@ -90,7 +90,7 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
 #' @export
 n_eval <- function(k, xd, x, normalized = TRUE, knot_idx = NULL, N = NULL) {
   if (is.null(N)) {
-    N = n_mat(x, xd, normalized, knot_idx)
+    N = n_mat(k, xd, normalized, knot_idx)
   }
   else {
     check_nonneg_int(k)
