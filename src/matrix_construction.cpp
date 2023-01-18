@@ -5,6 +5,8 @@
 #include "dspline.h"
 using namespace Rcpp;
 
+// [[Rcpp::interfaces(r, cpp)]]
+
 // [[Rcpp::export]]
 List rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only) {
   // Compute number of nonzero elements for D. We do so by computing nonzeros

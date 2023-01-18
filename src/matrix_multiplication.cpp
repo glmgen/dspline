@@ -5,6 +5,8 @@
 #include "dspline.h"
 using namespace Rcpp;
 
+// [[Rcpp::interfaces(r, cpp)]]
+
 // [[Rcpp::export]]
 void rcpp_dot_b_mat_mult(NumericVector v, int k, NumericVector xd, bool tf_weighting, bool transpose, bool inverse) {
   if (!transpose && !inverse) {
