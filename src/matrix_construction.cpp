@@ -2,11 +2,19 @@
 // Construction of discrete derivative and discrete spline basis matrices
 
 #include <Rcpp.h>
+#include <RcppEigen.h>
+#include <Eigen/Sparse>
 #include "dspline.h"
+
+// [[Rcpp::depends(RcppEigen)]]
+
+typedef Eigen::Triplet<double> T;
+
 using namespace Rcpp;
+using Eigen::SparseMatrix;
 
 // [[Rcpp::export]]
-List rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only) {
+Eigen::SparseMatrix<double> rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only) {
   // Compute number of nonzero elements for D. We do so by computing nonzeros
   // per row (discrete derivative vector). Start by guessing k+1 nonzeros per
   // row, then if needed, adjust for rows that give lower order derivatives
@@ -18,66 +26,67 @@ List rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_id
   }
 
   // Now construct D in sparse triplet format
-  IntegerVector i_vec (N);
-  IntegerVector j_vec (N);
-  NumericVector x_vec (N);
+  std::vector<T> b_list;
+  b_list.reserve(N);
   int l = 0, j_start, j_end;
+  double x;
   for (int i = 0; i < n_row; i++) {
     j_start = std::max(row_idx[i] - (!d_only * k), 0);
     j_end = row_idx[i] + (d_only * k);
     for (int j = j_start; j <= j_end; j++) {
-      i_vec[l] = i;
-      j_vec[l] = j;
-      if (!d_only) x_vec[l] = bij(k, xd, row_idx[i], j);
-      else x_vec[l] = dij(k, xd, row_idx[i], j);
+      if (!d_only) x = bij(k, xd, row_idx[i], j);
+      else x = dij(k, xd, row_idx[i], j);
 
       // Trend filtering weighting (only applies to k >= 0)
       if (tf_weighting && k > 0) {
         if (!d_only && row_idx[i] >= k) {
-          x_vec[l] *= (xd[row_idx[i]] - xd[row_idx[i]-k]) / k;
+          x *= (xd[row_idx[i]] - xd[row_idx[i]-k]) / k;
         }
         else if (d_only) {
-          x_vec[l] *= (xd[row_idx[i]+k] - xd[row_idx[i]]) / k;
+          x *= (xd[row_idx[i]+k] - xd[row_idx[i]]) / k;
         }
       }
+      b_list.push_back(T(i, j, x));
       l++;
     }
   }
-
-  return List::create(Named("i") = i_vec, Named("j") = j_vec, Named("x") = x_vec);
+  SparseMatrix<double> b_mat(n_row, xd.size());
+  b_mat.setFromTriplets(b_list.begin(), b_list.end());
+  return b_mat;
 }
 
 // [[Rcpp::export]]
-List rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_idx) {
+Eigen::SparseMatrix<double> rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_idx) {
   // Compute number of nonzero elements for H. We do so by computing nonzeros
   // per column (falling factorial basis vector)
   int n_row = xd.size(), n_col = col_idx.size(), N = n_col * n_row;
   for (int j = 0; j < n_col; j++) N -= col_idx[j];
 
   // Now construct H in sparse triplet format
-  IntegerVector i_vec (N);
-  IntegerVector j_vec (N);
-  NumericVector x_vec (N);
+  std::vector<T> h_list;
+  h_list.reserve(N);
   int l = 0;
+  double x;
   for (int j = 0; j < n_col; j++) {
     for (int i = col_idx[j]; i < n_row; i++) {
-      i_vec[l] = i;
-      j_vec[l] = j;
-      x_vec[l] = hxj(k, xd, xd[i], col_idx[j]);
+      x = hxj(k, xd, xd[i], col_idx[j]);
 
       // Discrete integration weighting
       if (di_weighting && col_idx[j] >= k+1) {
-        x_vec[l] *= (xd[col_idx[j]] - xd[col_idx[j]-k-1]) / (k+1);
+        x *= (xd[col_idx[j]] - xd[col_idx[j]-k-1]) / (k+1);
       }
+      h_list.push_back(T(i, j, x));
       l++;
     }
   }
 
-  return List::create(Named("i") = i_vec, Named("j") = j_vec, Named("x") = x_vec);
+  SparseMatrix<double> h_mat(n_row, n_col);
+  h_mat.setFromTriplets(h_list.begin(), h_list.end());
+  return h_mat;
 }
 
 // [[Rcpp::export]]
-List rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx) {
+Eigen::SparseMatrix<double> rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx) {
   // Compute number of nonzero elements for N. We do so by computing nonzeros
   // per column (discrete B-spline basis vector)
   int n_row = xd.size() - k - 1, n_col = knot_idx.size(), N = 0;
@@ -105,14 +114,22 @@ List rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx
     }
   }
 
-  return List::create(Named("i") = i_vec, Named("j") = j_vec, Named("x") = x_vec);
+  // Convert arrays into triplets
+  std::vector<T> n_list;
+  n_list.reserve(N);
+  for (int i = 0; i < N; i++) {
+    n_list.push_back(T(i_vec[i], j_vec[i], x_vec[i]));
+  }
+  SparseMatrix<double> n_mat(n_row, n_col);
+  n_mat.setFromTriplets(n_list.begin(), n_list.end());
+  return n_mat;
 }
 
 /******************************************************************************/
 // Evaluation of falling factorial basis at arbitrary query points
 
 // [[Rcpp::export]]
-List rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx) {
+Eigen::SparseMatrix<double> rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx) {
   // Compute number of nonzero elements for H. We do so by computing nonzeros
   // per column (falling factorial basis vector). Along the way we compute the
   // index of the smallest nonzero evaluation per column
@@ -130,18 +147,17 @@ List rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx
   }
 
   // Now construct H in sparse triplet format
-  IntegerVector i_vec (N);
-  IntegerVector j_vec (N);
-  NumericVector x_vec (N);
+  std::vector<T> n_list;
+  n_list.reserve(N);
   int l = 0;
   for (int j = 0; j < n_col; j++) {
     for (int i = I[j]; i < n_row; i++) {
-      i_vec[l] = i;
-      j_vec[l] = j;
-      x_vec[l] = hxj(k, xd, x[i], col_idx[j]);
+      n_list.push_back(T(i, j, hxj(k, xd, x[i], col_idx[j])));
       l++;
     }
   }
 
-  return List::create(Named("i") = i_vec, Named("j") = j_vec, Named("x") = x_vec);
+  SparseMatrix<double> n_mat(n_row, n_col);
+  n_mat.setFromTriplets(n_list.begin(), n_list.end());
+  return n_mat;
 }

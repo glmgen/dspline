@@ -34,9 +34,7 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
   n = length(xd)
   if (is.null(col_idx)) col_idx = 1:n
   else check_range(col_idx, 1:n)
-  obj = rcpp_h_eval(k, xd, x, col_idx-1)
-  Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
-                       dims = c(length(x), length(col_idx)))
+  rcpp_h_eval(k, xd, x, col_idx-1)
 }
 
 #' Evaluate N basis

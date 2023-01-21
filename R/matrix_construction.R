@@ -68,9 +68,7 @@ d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
   n = length(xd)
   if (is.null(row_idx)) row_idx = 1:(n-k)
   else check_range(row_idx, 1:(n-k))
-  obj = rcpp_b_mat(k, xd, tf_weighting, row_idx-1, TRUE)
-  Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
-                       dims = c(length(row_idx), n))
+  rcpp_b_mat(k, xd, tf_weighting, row_idx-1, TRUE)
 }
 
 #' Construct B matrix
@@ -153,9 +151,7 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
   n = length(xd)
   if (is.null(row_idx)) row_idx = 1:n
   else check_range(row_idx, 1:n)
-  obj = rcpp_b_mat(k, xd, tf_weighting, row_idx-1, FALSE)
-  Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
-                       dims = c(length(row_idx), n))
+  rcpp_b_mat(k, xd, tf_weighting, row_idx-1, FALSE)
 }
 
 #' Construct H matrix
@@ -264,9 +260,7 @@ h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
   n = length(xd)
   if (is.null(col_idx)) col_idx = 1:n
   else check_range(col_idx, 1:n)
-  obj = rcpp_h_mat(k, xd, di_weighting, col_idx-1)
-  Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
-                       dims = c(n, length(col_idx)))
+  rcpp_h_mat(k, xd, di_weighting, col_idx-1)
 }
 
 #' Construct N matrix
@@ -341,8 +335,6 @@ n_mat <- function(k, xd, normalized = TRUE, knot_idx = NULL) {
   knot_idx = c(knot_idx, n:(n+k)) 
   xd = c(xd, max(xd) + (1:(k+1)) * max(diff(xd)))
   
-  obj = rcpp_n_mat(k, xd, normalized, knot_idx-1) 
-  Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
-                       dims = c(n, length(knot_idx)))
+  rcpp_n_mat(k, xd, normalized, knot_idx-1) 
 
 }

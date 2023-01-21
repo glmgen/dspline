@@ -91,7 +91,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_b_mat
-List rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only);
+Eigen::SparseMatrix<double> rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only);
 RcppExport SEXP _dspline_rcpp_b_mat(SEXP kSEXP, SEXP xdSEXP, SEXP tf_weightingSEXP, SEXP row_idxSEXP, SEXP d_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -106,7 +106,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_h_mat
-List rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_idx);
+Eigen::SparseMatrix<double> rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_idx);
 RcppExport SEXP _dspline_rcpp_h_mat(SEXP kSEXP, SEXP xdSEXP, SEXP di_weightingSEXP, SEXP col_idxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -120,7 +120,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_n_mat
-List rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx);
+Eigen::SparseMatrix<double> rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx);
 RcppExport SEXP _dspline_rcpp_n_mat(SEXP kSEXP, SEXP xdSEXP, SEXP normalizedSEXP, SEXP knot_idxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -134,7 +134,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_h_eval
-List rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx);
+Eigen::SparseMatrix<double> rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx);
 RcppExport SEXP _dspline_rcpp_h_eval(SEXP kSEXP, SEXP xdSEXP, SEXP xSEXP, SEXP col_idxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
