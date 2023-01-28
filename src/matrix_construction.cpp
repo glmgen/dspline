@@ -147,17 +147,17 @@ Eigen::SparseMatrix<double> rcpp_h_eval(int k, NumericVector xd, NumericVector x
   }
 
   // Now construct H in sparse triplet format
-  std::vector<T> n_list;
-  n_list.reserve(N);
+  std::vector<T> h_list;
+  h_list.reserve(N);
   int l = 0;
   for (int j = 0; j < n_col; j++) {
     for (int i = I[j]; i < n_row; i++) {
-      n_list.push_back(T(i, j, hxj(k, xd, x[i], col_idx[j])));
+      h_list.push_back(T(i, j, hxj(k, xd, x[i], col_idx[j])));
       l++;
     }
   }
 
-  SparseMatrix<double> n_mat(n_row, n_col);
-  n_mat.setFromTriplets(n_list.begin(), n_list.end());
-  return n_mat;
+  SparseMatrix<double> h_mat(n_row, n_col);
+  h_mat.setFromTriplets(h_list.begin(), h_list.end());
+  return h_mat;
 }
