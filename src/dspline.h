@@ -4,8 +4,8 @@
 #include <Rcpp.h>
 #include <RcppEigen.h>
 #include <Eigen/Sparse>
+typedef Eigen::Triplet<double> T;
 using namespace Rcpp; 
-using Eigen::SparseMatrix;
 
 /******************************************************************************/
 // Simple utilities
@@ -59,7 +59,7 @@ double hxj(int k, NumericVector xd, double x, int j);
 /******************************************************************************/
 // Workhorse for computing discrete B-spline evaluations
 
-void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVector i_vec, IntegerVector j_vec, NumericVector x_vec, int& l);
+void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, std::vector<T>& n_list, Eigen::VectorXd& max_vals);
 
 /******************************************************************************/
 // Interpolation within polynomial and discrete spline spaces

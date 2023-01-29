@@ -12,6 +12,7 @@ typedef Eigen::Triplet<double> T;
 
 using namespace Rcpp;
 using Eigen::SparseMatrix;
+using Eigen::VectorXd;
 
 // [[Rcpp::export]]
 Eigen::SparseMatrix<double> rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only) {
@@ -97,31 +98,25 @@ Eigen::SparseMatrix<double> rcpp_n_mat(int k, NumericVector xd, bool normalized,
   }
 
   // Now construct N in sparse triplet format
-  IntegerVector i_vec (N);
-  IntegerVector j_vec (N);
-  NumericVector x_vec (N);
-  int l = 0, l_last;
-  for (int j = 0; j < n_col; j++) {
-    l_last = l; // Save this in case we need it later for the normalization
-
-    // Solve a linear system to get the appropriate basis vector N_j, store it
-    // in the triplet list, and update the counter l by reference
-    nj(k, xd, knot_idx, j, i_vec, j_vec, x_vec, l);
-
-    if (normalized) {
-      double max = *std::max_element(x_vec.begin() + l_last, x_vec.begin() + l);
-      for (int p = l_last; p < l; p++) x_vec[p] = x_vec[p] / max;
-    }
-  }
-
-  // Convert arrays into triplets
   std::vector<T> n_list;
   n_list.reserve(N);
-  for (int i = 0; i < N; i++) {
-    n_list.push_back(T(i_vec[i], j_vec[i], x_vec[i]));
+  VectorXd max_vals(n_col);
+  for (int j = 0; j < n_col; j++) {
+    // Solve a linear system to get the appropriate basis vector N_j, store it
+    // in the triplet list
+    nj(k, xd, knot_idx, j, n_list, max_vals);
   }
+
   SparseMatrix<double> n_mat(n_row, n_col);
   n_mat.setFromTriplets(n_list.begin(), n_list.end());
+  // Rescale columns to have largest value 1 if necessary
+  if (normalized) {
+    // Canonical matrix-vector broadcasting in Eigen is done via arrays
+    // (see, e.g., https://eigen.tuxfamily.org/dox/group__TutorialArrayClass.html).
+    // However, sparse matrices cannot be converted to arrays, so here we
+    // perform column scaling via right-multiplication by a diagonal matrix.
+    n_mat = n_mat * max_vals.cwiseInverse().asDiagonal();
+  }
   return n_mat;
 }
 
