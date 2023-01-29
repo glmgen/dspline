@@ -85,6 +85,7 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
 #' 
 #' @seealso [n_mat()] for constructing evaluations of the discrete B-spline
 #'   basis at the design points.  
+#' @importClassesFrom Matrix dgCMatrix
 #' @export
 n_eval <- function(k, xd, x, normalized = TRUE, knot_idx = NULL, N = NULL) {
   if (is.null(N)) {

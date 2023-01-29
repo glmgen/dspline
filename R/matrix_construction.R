@@ -60,6 +60,7 @@
 #'   Section 6.1.
 #' @seealso [b_mat()] for constructing the extended discrete derivative matrix,
 #'   and [d_mat_mult()] for multiplying by the discrete derivative matrix. 
+#' @importClassesFrom Matrix dgCMatrix
 #' @export
 d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
   check_nonneg_int(k)
@@ -143,6 +144,7 @@ d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #'   Section 6.2.
 #' @seealso [d_mat()] for constructing the discrete derivative matrix, and
 #'   [b_mat_mult()] for multiplying by the extended discrete derivative matrix.  
+#' @importClassesFrom Matrix dgCMatrix
 #' @export
 b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
   check_nonneg_int(k)
@@ -252,6 +254,7 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #' @seealso [h_mat_mult()] for multiplying by the falling factorial basis
 #'   matrix and [hx_mat()] for constructing evaluations of the falling factorial
 #'   basis at arbitrary query points.    
+#' @importClassesFrom Matrix dgCMatrix
 #' @export
 h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
   check_nonneg_int(k)
@@ -318,6 +321,7 @@ h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
 #'   Sections 7, 8.2, and 8.3.
 #' @seealso [nx_mat()] for constructing evaluations of the discrete B-spline
 #'   basis at arbitrary query points.    
+#' @importClassesFrom Matrix dgCMatrix
 #' @export
 n_mat <- function(k, xd, normalized = TRUE, knot_idx = NULL) { 
   check_nonneg_int(k)
