@@ -41,6 +41,14 @@ rcpp_h_eval <- function(k, xd, x, col_idx) {
     .Call('_dspline_rcpp_h_eval', PACKAGE = 'dspline', k, xd, x, col_idx)
 }
 
+rcpp_n_eval <- function(k, xd, x, normalized, knot_idx) {
+    .Call('_dspline_rcpp_n_eval', PACKAGE = 'dspline', k, xd, x, normalized, knot_idx)
+}
+
+rcpp_n_eval_precomputed <- function(k, xd, x, knot_idx, n_mat) {
+    .Call('_dspline_rcpp_n_eval_precomputed', PACKAGE = 'dspline', k, xd, x, knot_idx, n_mat)
+}
+
 rcpp_dot_b_mat_mult <- function(v, k, xd, tf_weighting, transpose, inverse) {
     invisible(.Call('_dspline_rcpp_dot_b_mat_mult', PACKAGE = 'dspline', v, k, xd, tf_weighting, transpose, inverse))
 }

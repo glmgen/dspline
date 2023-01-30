@@ -14,6 +14,8 @@ using namespace Rcpp;
 using Eigen::SparseMatrix;
 using Eigen::VectorXd;
 
+#define DOUBLE_INF std::numeric_limits<double>::infinity()
+
 // [[Rcpp::export]]
 Eigen::SparseMatrix<double> rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only) {
   // Compute number of nonzero elements for D. We do so by computing nonzeros
@@ -155,4 +157,52 @@ Eigen::SparseMatrix<double> rcpp_h_eval(int k, NumericVector xd, NumericVector x
   SparseMatrix<double> h_mat(n_row, n_col);
   h_mat.setFromTriplets(h_list.begin(), h_list.end());
   return h_mat;
+}
+
+/******************************************************************************/
+// Evaluation of discrete spline basis at arbitrary query points
+
+// [[Rcpp::export]]
+Eigen::SparseMatrix<double> rcpp_n_eval(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx) {
+  int n_xd = xd.size();
+  int n_knot_idx = knot_idx.size();
+  double max_diff = Rcpp::max(xd[Rcpp::seq(1, n_xd-1)]-xd[Rcpp::seq(0, n_xd-2)]);
+  IntegerVector ext_knot_idx(n_knot_idx+k+1);
+  NumericVector ext_xd(n_xd+k+1);
+  ext_knot_idx[Rcpp::seq(0, n_knot_idx-1)] = knot_idx;
+  ext_knot_idx[Rcpp::seq(n_knot_idx, n_knot_idx+k)] = Rcpp::seq(n_xd-1, n_xd+k-1);
+  ext_xd[Rcpp::seq(0, n_xd-1)] = xd;
+  // Compiler doesn't understand that cumsum will yield a NumericVector
+  // and refuses to assign its output to ext_xd
+  NumericVector extra_knots = Rcpp::cumsum(Rcpp::rep(max_diff, k+1));
+  ext_xd[Rcpp::seq(n_xd, n_xd+k)] = extra_knots + Rcpp::max(xd);
+
+  Eigen::SparseMatrix<double> n_mat = rcpp_n_mat(k, ext_xd, normalized, ext_knot_idx);
+  return rcpp_n_eval_precomputed(k, xd, x, knot_idx, n_mat);
+}
+
+// [[Rcpp::export]]
+Eigen::SparseMatrix<double> rcpp_n_eval_precomputed(int k, NumericVector xd, NumericVector x, IntegerVector knot_idx, Eigen::SparseMatrix<double> n_mat) {
+  int n_row = x.size();
+  int n_col = n_mat.cols();
+  std::vector<T> n_list;
+  // n_list.reserve(N);
+  for (int j = 0; j < n_col; j++) {
+    double lower = (j >= k+1) ? xd[knot_idx[j-k-1]] : -DOUBLE_INF;
+    double upper = (j <= n_col-k-2) ? xd[knot_idx[j]] : DOUBLE_INF;
+    LogicalVector mask = ((lower <= x) & (x <= upper));
+    // Compiler doesn't understand that Rcpp::seq can be coerced to IntegerVector
+    // and refuses to allow subsetting
+    IntegerVector tmp = Rcpp::seq(0, mask.size()-1);
+    IntegerVector I = tmp[mask];
+    Eigen::VectorXd vx = n_mat.col(j);
+    NumericVector vals = rcpp_dspline_interp(Rcpp::wrap(vx), k, xd, x[I], true);
+    for (int i = 0; i < I.size(); i++) {
+      n_list.push_back(T(I[i], j, vals[i]));
+    }
+  }
+
+  SparseMatrix<double> n_evals(n_row, n_col);
+  n_evals.setFromTriplets(n_list.begin(), n_list.end());
+  return n_evals;
 }

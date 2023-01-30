@@ -44,9 +44,12 @@ Eigen::SparseMatrix<double> rcpp_h_mat(int k, NumericVector xd, bool di_weightin
 Eigen::SparseMatrix<double> rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx);
 
 /******************************************************************************/
-// Evaluation of falling factorial at arbitrary query points
+// Evaluation of falling factorial and discrete B-spline at arbitrary query points
 
 Eigen::SparseMatrix<double> rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx);
+Eigen::SparseMatrix<double> rcpp_n_eval(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx);
+Eigen::SparseMatrix<double> rcpp_n_eval_precomputed(int k, NumericVector xd, NumericVector x, IntegerVector knot_idx, Eigen::SparseMatrix<double> n_mat);
+
 
 /******************************************************************************/
 // Basis and weight functions 
