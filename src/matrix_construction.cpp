@@ -22,8 +22,8 @@ V concat(V x, V y) {
   int n_x = x.size();
   int n_y = y.size();
   V xy(n_x+n_y);
-  xy[Rcpp::seq(0, n_x-1)] = x;
-  xy[Rcpp::seq(n_x, n_x+n_y-1)] = y;
+  xy[Rcpp::Range(0, n_x-1)] = x;
+  xy[Rcpp::Range(n_x, n_x+n_y-1)] = y;
   return xy;
 }
 
@@ -105,12 +105,12 @@ Eigen::SparseMatrix<double> rcpp_n_mat(int k, NumericVector xd, bool normalized,
   // Add k+1 boundary knots (cf. Tibshirani, 2020, Section 8.2)
   int n = xd.size();
   int n_knots = knot_idx.size();
-  double max_diff = Rcpp::max(xd[Rcpp::seq(1, n-1)]-xd[Rcpp::seq(0, n-2)]);
+  double max_diff = Rcpp::max(xd[Rcpp::Range(1, n-1)]-xd[Rcpp::Range(0, n-2)]);
   NumericVector extra_knots = Rcpp::cumsum(Rcpp::rep(max_diff, k+1));
   extra_knots = extra_knots + Rcpp::max(xd);
   NumericVector ext_xd = concat<NumericVector>(xd, extra_knots);
   IntegerVector ext_knot_idx = concat<IntegerVector>(knot_idx,
-      Rcpp::seq(n-1, n+k-1));
+      Rcpp::Range(n-1, n+k-1));
 
   // Compute number of nonzero elements for N. We do so by computing nonzeros
   // per column (discrete B-spline basis vector)
@@ -200,9 +200,9 @@ Eigen::SparseMatrix<double> rcpp_n_eval_precomputed(int k, NumericVector xd, Num
     double lower = (j >= k+1) ? xd[knot_idx[j-k-1]] : -DOUBLE_INF;
     double upper = (j <= n_col-k-2) ? xd[knot_idx[j]] : DOUBLE_INF;
     LogicalVector mask = ((lower <= x) & (x <= upper));
-    // Compiler doesn't understand that Rcpp::seq can be coerced to
+    // Compiler doesn't understand that a Rcpp::Range can be coerced to
     // IntegerVector and refuses to allow subsetting
-    IntegerVector tmp = Rcpp::seq(0, mask.size()-1);
+    IntegerVector tmp = Rcpp::Range(0, mask.size()-1);
     IntegerVector I = tmp[mask];
     Eigen::VectorXd vx = n_mat.col(j);
     NumericVector vals = rcpp_dspline_interp(Rcpp::wrap(vx), k, xd, x[I], true);
