@@ -16,6 +16,18 @@ using Eigen::VectorXd;
 
 #define DOUBLE_INF std::numeric_limits<double>::infinity()
 
+// Concatenate two Vectors
+template<typename V>
+V concat(V x, V y) {
+  int n_x = x.size();
+  int n_y = y.size();
+  V xy(n_x+n_y);
+  xy[Rcpp::seq(0, n_x-1)] = x;
+  xy[Rcpp::seq(n_x, n_x+n_y-1)] = y;
+  return xy;
+}
+
+
 // [[Rcpp::export]]
 Eigen::SparseMatrix<double> rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only) {
   // Compute number of nonzero elements for D. We do so by computing nonzeros
@@ -164,20 +176,16 @@ Eigen::SparseMatrix<double> rcpp_h_eval(int k, NumericVector xd, NumericVector x
 
 // [[Rcpp::export]]
 Eigen::SparseMatrix<double> rcpp_n_eval(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx) {
-  int n_xd = xd.size();
+  int n = xd.size();
   int n_knot_idx = knot_idx.size();
-  double max_diff = Rcpp::max(xd[Rcpp::seq(1, n_xd-1)]-xd[Rcpp::seq(0, n_xd-2)]);
-  IntegerVector ext_knot_idx(n_knot_idx+k+1);
-  NumericVector ext_xd(n_xd+k+1);
-  ext_knot_idx[Rcpp::seq(0, n_knot_idx-1)] = knot_idx;
-  ext_knot_idx[Rcpp::seq(n_knot_idx, n_knot_idx+k)] = Rcpp::seq(n_xd-1, n_xd+k-1);
-  ext_xd[Rcpp::seq(0, n_xd-1)] = xd;
-  // Compiler doesn't understand that cumsum will yield a NumericVector
-  // and refuses to assign its output to ext_xd
+  double max_diff = Rcpp::max(xd[Rcpp::seq(1, n-1)]-xd[Rcpp::seq(0, n-2)]);
+  IntegerVector ext_knot_idx = concat<IntegerVector>(knot_idx, Rcpp::seq(n-1, n+k-1));
   NumericVector extra_knots = Rcpp::cumsum(Rcpp::rep(max_diff, k+1));
-  ext_xd[Rcpp::seq(n_xd, n_xd+k)] = extra_knots + Rcpp::max(xd);
+  extra_knots = extra_knots + Rcpp::max(xd);
+  NumericVector ext_xd = concat<NumericVector>(xd, extra_knots);
 
-  Eigen::SparseMatrix<double> n_mat = rcpp_n_mat(k, ext_xd, normalized, ext_knot_idx);
+  Eigen::SparseMatrix<double> n_mat = rcpp_n_mat(k, ext_xd, normalized,
+      ext_knot_idx);
   return rcpp_n_eval_precomputed(k, xd, x, knot_idx, n_mat);
 }
 
@@ -191,8 +199,8 @@ Eigen::SparseMatrix<double> rcpp_n_eval_precomputed(int k, NumericVector xd, Num
     double lower = (j >= k+1) ? xd[knot_idx[j-k-1]] : -DOUBLE_INF;
     double upper = (j <= n_col-k-2) ? xd[knot_idx[j]] : DOUBLE_INF;
     LogicalVector mask = ((lower <= x) & (x <= upper));
-    // Compiler doesn't understand that Rcpp::seq can be coerced to IntegerVector
-    // and refuses to allow subsetting
+    // Compiler doesn't understand that Rcpp::seq can be coerced to
+    // IntegerVector and refuses to allow subsetting
     IntegerVector tmp = Rcpp::seq(0, mask.size()-1);
     IntegerVector I = tmp[mask];
     Eigen::VectorXd vx = n_mat.col(j);
