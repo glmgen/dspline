@@ -336,9 +336,6 @@ n_mat <- function(k, xd, normalized = TRUE, knot_idx = NULL) {
     check_sorted(knot_idx)
   }
 
-  knot_idx = c(knot_idx, n:(n+k)) 
-  xd = c(xd, max(xd) + (1:(k+1)) * max(diff(xd)))
-  
   rcpp_n_mat(k, xd, normalized, knot_idx-1) 
 
 }

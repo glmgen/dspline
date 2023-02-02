@@ -102,13 +102,23 @@ Eigen::SparseMatrix<double> rcpp_h_mat(int k, NumericVector xd, bool di_weightin
 
 // [[Rcpp::export]]
 Eigen::SparseMatrix<double> rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx) {
+  // Add k+1 boundary knots (cf. Tibshirani, 2020, Section 8.2)
+  int n = xd.size();
+  int n_knots = knot_idx.size();
+  double max_diff = Rcpp::max(xd[Rcpp::seq(1, n-1)]-xd[Rcpp::seq(0, n-2)]);
+  NumericVector extra_knots = Rcpp::cumsum(Rcpp::rep(max_diff, k+1));
+  extra_knots = extra_knots + Rcpp::max(xd);
+  NumericVector ext_xd = concat<NumericVector>(xd, extra_knots);
+  IntegerVector ext_knot_idx = concat<IntegerVector>(knot_idx,
+      Rcpp::seq(n-1, n+k-1));
+
   // Compute number of nonzero elements for N. We do so by computing nonzeros
   // per column (discrete B-spline basis vector)
-  int n_row = xd.size() - k - 1, n_col = knot_idx.size(), N = 0;
+  int n_row = n, n_col = n_knots+k+1, N = 0;
   for (int j = 0; j < n_col; j++) {
-    if (j < k+1) N += knot_idx[j] + 1; // First k+1 functions
-    else if (j < n_col-k-1) N += knot_idx[j] - knot_idx[j-k-1] + 1;
-    else N += n_row - knot_idx[j-k-1]; // Last k+1 functions
+    if (j < k+1) N += ext_knot_idx[j] + 1; // First k+1 functions
+    else if (j < n_col-k-1) N += ext_knot_idx[j] - ext_knot_idx[j-k-1] + 1;
+    else N += n_row - ext_knot_idx[j-k-1]; // Last k+1 functions
   }
 
   // Now construct N in sparse triplet format
@@ -118,7 +128,7 @@ Eigen::SparseMatrix<double> rcpp_n_mat(int k, NumericVector xd, bool normalized,
   for (int j = 0; j < n_col; j++) {
     // Solve a linear system to get the appropriate basis vector N_j, store it
     // in the triplet list
-    nj(k, xd, knot_idx, j, n_list, max_vals);
+    nj(k, ext_xd, ext_knot_idx, j, n_list, max_vals);
   }
 
   SparseMatrix<double> n_mat(n_row, n_col);
@@ -176,17 +186,7 @@ Eigen::SparseMatrix<double> rcpp_h_eval(int k, NumericVector xd, NumericVector x
 
 // [[Rcpp::export]]
 Eigen::SparseMatrix<double> rcpp_n_eval(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx) {
-  int n = xd.size();
-  int n_knot_idx = knot_idx.size();
-  double max_diff = Rcpp::max(xd[Rcpp::seq(1, n-1)]-xd[Rcpp::seq(0, n-2)]);
-  IntegerVector ext_knot_idx = concat<IntegerVector>(knot_idx,
-      Rcpp::seq(n-1, n+k-1));
-  NumericVector extra_knots = Rcpp::cumsum(Rcpp::rep(max_diff, k+1));
-  extra_knots = extra_knots + Rcpp::max(xd);
-  NumericVector ext_xd = concat<NumericVector>(xd, extra_knots);
-
-  Eigen::SparseMatrix<double> n_mat = rcpp_n_mat(k, ext_xd, normalized,
-      ext_knot_idx);
+  Eigen::SparseMatrix<double> n_mat = rcpp_n_mat(k, xd, normalized, knot_idx);
   return rcpp_n_eval_precomputed(k, xd, x, knot_idx, n_mat);
 }
 
