@@ -109,8 +109,7 @@ Eigen::SparseMatrix<double> rcpp_n_mat(int k, NumericVector xd, bool normalized,
   NumericVector extra_knots = Rcpp::cumsum(Rcpp::rep(max_diff, k+1));
   extra_knots = extra_knots + Rcpp::max(xd);
   NumericVector ext_xd = concat<NumericVector>(xd, extra_knots);
-  IntegerVector ext_knot_idx = concat<IntegerVector>(knot_idx,
-      Rcpp::Range(n-1, n+k-1));
+  IntegerVector ext_knot_idx = concat<IntegerVector>(knot_idx, Rcpp::Range(n-1, n+k-1));
 
   // Compute number of nonzero elements for N. We do so by computing nonzeros
   // per column (discrete B-spline basis vector)
