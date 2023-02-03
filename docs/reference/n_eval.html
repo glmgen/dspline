@@ -84,7 +84,7 @@ default is <code>NULL</code>, which is taken to mean <code>(k+1):(n-1)</code>.</
 <dt>N</dt>
 <dd><p>Matrix of discrete B-spline evaluations at the design points. The
 default is <code>NULL</code>, which means that this is precomputed before constructing
-the matrix of discrete B-spline evaluations at the query points. If <code>Nd</code> is
+the matrix of discrete B-spline evaluations at the query points. If <code>N</code> is
 non-<code>NULL</code>, then the argument <code>normalized</code> will be ignored (as this would
 have only been used to construct N at the design points).</p></dd>
 
@@ -110,9 +110,9 @@ $$
 <p>Unlike the falling factorial basis, the discrete B-spline basis is not
 generally available in closed-form. Therefore, the current function (unlike
 <code><a href="h_eval.html">h_eval()</a></code>) will first check if it should precompute the evaluations of the
-discrete B-spline basis at the design points. If the argument <code>Nd</code> is
+discrete B-spline basis at the design points. If the argument <code>N</code> is
 non-<code>NULL</code>, then it will use this as the matrix of evaluations at the
-design points; if <code>Nd</code> is <code>NULL</code>, then it will call <code><a href="n_mat.html">n_mat()</a></code> to produce
+design points; if <code>N</code> is <code>NULL</code>, then it will call <code><a href="n_mat.html">n_mat()</a></code> to produce
 such a matrix, and will pass to this function the arguments <code>normalized</code>
 and <code>knot_idx</code> accordingly.</p>
 <p>After obtaining the matrix of discrete B-spline evaluations at the design
@@ -133,7 +133,7 @@ basis at the design points.</p></div>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Ryan Tibshirani.</p>
+  <p></p><p>Developed by Addison Hu, Ryan Tibshirani.</p>
 </div>
 
 <div class="pkgdown">
