@@ -2,6 +2,9 @@
 #define DSPLINE_H
 
 #include <Rcpp.h>
+#include <RcppEigen.h>
+#include <Eigen/Sparse>
+typedef Eigen::Triplet<double> T;
 using namespace Rcpp; 
 
 /******************************************************************************/
@@ -36,14 +39,17 @@ NumericVector rcpp_h_mat_mult(NumericVector v, int k, NumericVector xd, bool di_
 /******************************************************************************/
 // Construction of discrete derivative and discrete spline basis matrices
 
-List rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only);
-List rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_idx);
-List rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx);
+Eigen::SparseMatrix<double> rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only);
+Eigen::SparseMatrix<double> rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_idx);
+Eigen::SparseMatrix<double> rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx);
 
 /******************************************************************************/
-// Evaluation of falling factorial at arbitrary query points
+// Evaluation of falling factorial and discrete B-spline at arbitrary query points
 
-List rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx);
+Eigen::SparseMatrix<double> rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx);
+Eigen::SparseMatrix<double> rcpp_n_eval(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx);
+Eigen::SparseMatrix<double> rcpp_n_eval_precomputed(int k, NumericVector xd, NumericVector x, IntegerVector knot_idx, Eigen::SparseMatrix<double> n_mat);
+
 
 /******************************************************************************/
 // Basis and weight functions 
@@ -56,7 +62,7 @@ double hxj(int k, NumericVector xd, double x, int j);
 /******************************************************************************/
 // Workhorse for computing discrete B-spline evaluations
 
-void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVector i_vec, IntegerVector j_vec, NumericVector x_vec, int& l);
+void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, std::vector<T>& n_list, Eigen::VectorXd& max_vals);
 
 /******************************************************************************/
 // Interpolation within polynomial and discrete spline spaces

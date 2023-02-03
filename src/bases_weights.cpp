@@ -73,18 +73,16 @@ using Eigen::SparseMatrix;
 using Eigen::SparseQR;
 using Eigen::VectorXd;
 
-void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVector i_vec, IntegerVector j_vec, NumericVector x_vec, int& l) {
+void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, std::vector<T>& n_list, Eigen::VectorXd& max_vals) {
   int n_row = xd.size() - k - 1;
   int t = knot_idx[j_col]; // Last knot
   VectorXd x;
+  max_vals[j_col] = 1; // First element added will be 1.
 
   // First k+1 basis vectors
   if (j_col < k+1) {
     // Add entry where the basis vector equals 1
-    i_vec[l] = j_col;
-    j_vec[l] = j_col;
-    x_vec[l] = 1;
-    l++;
+    n_list.push_back(T(j_col, j_col, 1));
 
     // Add remaining entries only if t-k >= j_col+1
     if (t-k >= j_col+1) {
@@ -126,10 +124,8 @@ void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVecto
       // Step 3: record vector x in the list
       for (int q = 0; q < t-k-j_col; q++) {
         if (J[q] < n_row) {
-          i_vec[l] = J[q];
-          j_vec[l] = j_col;
-          x_vec[l] = x[q];
-          l++;
+          n_list.push_back(T(J[q], j_col, x[q]));
+          max_vals[j_col] = (x[q] > max_vals[j_col]) ? x[q] : max_vals[j_col];
         }
       }
     }
@@ -142,10 +138,7 @@ void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVecto
     int t2 = knot_idx[j_col-k];
 
     // Add entry where basis vector equals 1
-    i_vec[l] = t2;
-    j_vec[l] = j_col;
-    x_vec[l] = 1;
-    l++;
+    n_list.push_back(T(t2, j_col, 1));
 
     // Add more entries between first and second knot
     if (t2-1 >= t1+1) {
@@ -182,10 +175,8 @@ void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVecto
       // Step 3: record vector x in the list
       for (int q = 0; q < t2-t1-1; q++) {
         if (J[q] < n_row) {
-          i_vec[l] = J[q];
-          j_vec[l] = j_col;
-          x_vec[l] = x[q];
-          l++;
+          n_list.push_back(T(J[q], j_col, x[q]));
+          max_vals[j_col] = (x[q] > max_vals[j_col]) ? x[q] : max_vals[j_col];
         }
       }
     }
@@ -238,10 +229,8 @@ void nj(int k, NumericVector xd, IntegerVector knot_idx, int j_col, IntegerVecto
       // Step 3: record vector x in the list
       for (int q = 0; q < t-k-t2; q++) {
         if (J[q] < n_row) {
-          i_vec[l] = J[q];
-          j_vec[l] = j_col;
-          x_vec[l] = x[q];
-          l++;
+          n_list.push_back(T(J[q], j_col, x[q]));
+          max_vals[j_col] = (x[q] > max_vals[j_col]) ? x[q] : max_vals[j_col];
         }
       }
     }

@@ -91,7 +91,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_b_mat
-List rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only);
+Eigen::SparseMatrix<double> rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only);
 RcppExport SEXP _dspline_rcpp_b_mat(SEXP kSEXP, SEXP xdSEXP, SEXP tf_weightingSEXP, SEXP row_idxSEXP, SEXP d_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -106,7 +106,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_h_mat
-List rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_idx);
+Eigen::SparseMatrix<double> rcpp_h_mat(int k, NumericVector xd, bool di_weighting, IntegerVector col_idx);
 RcppExport SEXP _dspline_rcpp_h_mat(SEXP kSEXP, SEXP xdSEXP, SEXP di_weightingSEXP, SEXP col_idxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -120,7 +120,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_n_mat
-List rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx);
+Eigen::SparseMatrix<double> rcpp_n_mat(int k, NumericVector xd, bool normalized, IntegerVector knot_idx);
 RcppExport SEXP _dspline_rcpp_n_mat(SEXP kSEXP, SEXP xdSEXP, SEXP normalizedSEXP, SEXP knot_idxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -134,7 +134,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_h_eval
-List rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx);
+Eigen::SparseMatrix<double> rcpp_h_eval(int k, NumericVector xd, NumericVector x, IntegerVector col_idx);
 RcppExport SEXP _dspline_rcpp_h_eval(SEXP kSEXP, SEXP xdSEXP, SEXP xSEXP, SEXP col_idxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -144,6 +144,36 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type col_idx(col_idxSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_h_eval(k, xd, x, col_idx));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_n_eval
+Eigen::SparseMatrix<double> rcpp_n_eval(int k, NumericVector xd, NumericVector x, bool normalized, IntegerVector knot_idx);
+RcppExport SEXP _dspline_rcpp_n_eval(SEXP kSEXP, SEXP xdSEXP, SEXP xSEXP, SEXP normalizedSEXP, SEXP knot_idxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< bool >::type normalized(normalizedSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type knot_idx(knot_idxSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_n_eval(k, xd, x, normalized, knot_idx));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_n_eval_precomputed
+Eigen::SparseMatrix<double> rcpp_n_eval_precomputed(int k, NumericVector xd, NumericVector x, IntegerVector knot_idx, Eigen::SparseMatrix<double> n_mat);
+RcppExport SEXP _dspline_rcpp_n_eval_precomputed(SEXP kSEXP, SEXP xdSEXP, SEXP xSEXP, SEXP knot_idxSEXP, SEXP n_matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xd(xdSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type knot_idx(knot_idxSEXP);
+    Rcpp::traits::input_parameter< Eigen::SparseMatrix<double> >::type n_mat(n_matSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_n_eval_precomputed(k, xd, x, knot_idx, n_mat));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -236,6 +266,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_dspline_rcpp_h_mat", (DL_FUNC) &_dspline_rcpp_h_mat, 4},
     {"_dspline_rcpp_n_mat", (DL_FUNC) &_dspline_rcpp_n_mat, 4},
     {"_dspline_rcpp_h_eval", (DL_FUNC) &_dspline_rcpp_h_eval, 4},
+    {"_dspline_rcpp_n_eval", (DL_FUNC) &_dspline_rcpp_n_eval, 5},
+    {"_dspline_rcpp_n_eval_precomputed", (DL_FUNC) &_dspline_rcpp_n_eval_precomputed, 5},
     {"_dspline_rcpp_dot_b_mat_mult", (DL_FUNC) &_dspline_rcpp_dot_b_mat_mult, 6},
     {"_dspline_rcpp_dot_h_mat_mult", (DL_FUNC) &_dspline_rcpp_dot_h_mat_mult, 6},
     {"_dspline_rcpp_d_mat_mult", (DL_FUNC) &_dspline_rcpp_d_mat_mult, 5},

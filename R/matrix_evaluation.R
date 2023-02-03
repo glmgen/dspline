@@ -34,9 +34,7 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
   n = length(xd)
   if (is.null(col_idx)) col_idx = 1:n
   else check_range(col_idx, 1:n)
-  obj = rcpp_h_eval(k, xd, x, col_idx-1)
-  Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, index1 = FALSE,
-                       dims = c(length(x), length(col_idx)))
+  rcpp_h_eval(k, xd, x, col_idx-1)
 }
 
 #' Evaluate N basis
@@ -87,47 +85,28 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
 #' 
 #' @seealso [n_mat()] for constructing evaluations of the discrete B-spline
 #'   basis at the design points.  
+#' @importClassesFrom Matrix dgCMatrix
 #' @export
 n_eval <- function(k, xd, x, normalized = TRUE, knot_idx = NULL, N = NULL) {
-  if (is.null(N)) {
-    N = n_mat(k, xd, normalized, knot_idx)
+  check_nonneg_int(k)
+  check_length(xd, k+1, ">=")
+  check_sorted(xd)
+  n = length(xd)
+  if (is.null(knot_idx)) {
+    knot_idx = (k+1):(n-1)
   }
   else {
-    check_nonneg_int(k)
-    check_length(xd, k+1, ">=")
-    check_sorted(xd)
-    n = length(xd)
-    if (is.null(knot_idx)) {
-      knot_idx = (k+1):(n-1)
-    }
-    else {
-      check_range(knot_idx, (k+1):(n-1))
-      check_sorted(knot_idx)
-    }
+    check_range(knot_idx, (k+1):(n-1))
+    check_sorted(knot_idx)
+  }
+  check_sorted(x)
+  if (is.null(N)) {
+    rcpp_n_eval(k, xd, x, normalized, knot_idx-1)
+  } else {
     if (ncol(N) != length(knot_idx)+k+1) {
       rlang::abort("`length(knot_idx) + k + 1` must equal `ncol(N)`.")
     }
+    rcpp_n_eval_precomputed(k, xd, x, knot_idx-1, N)
   }
-  check_sorted(x)
-
-  # Go ahead and do the interpolation in R. Otherwise we have to pass in the
-  # sparse matrix N into Rcpp and there's not a clean way to do that without
-  # some amount of extra work 
-  obj = list(i = vector("list", ncol(N)),
-             j = vector("list", ncol(N)),
-             x = vector("list", ncol(N)))
-  for (j in 1:ncol(N)) {
-    lower = ifelse(j >= k+2, xd[knot_idx[j-k-1]], -Inf)
-    upper = ifelse(j <= ncol(N)-k-1, xd[knot_idx[j]], Inf)
-    I = which(lower <= x & x <= upper)
-    obj$i[[j]] = I
-    obj$j[[j]] = rep(j, length(I))
-    obj$x[[j]] = dspline_interp(N[,j], k, xd, x[I])
-  }
-  obj$i = unlist(obj$i)
-  obj$j = unlist(obj$j)
-  obj$x = unlist(obj$x)
-  Matrix::sparseMatrix(i = obj$i, j = obj$j, x = obj$x, 
-                       dims = c(length(x), ncol(N)))
 }
 
