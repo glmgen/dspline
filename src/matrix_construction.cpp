@@ -6,6 +6,7 @@
 #include <Eigen/Sparse>
 #include "dspline.h"
 
+// [[Rcpp::interfaces(r, cpp)]]
 // [[Rcpp::depends(RcppEigen)]]
 
 typedef Eigen::Triplet<double> T;
