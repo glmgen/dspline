@@ -69,3 +69,7 @@ rcpp_h_mat_mult <- function(v, k, xd, di_weighting, transpose, inverse) {
     .Call('_dspline_rcpp_h_mat_mult', PACKAGE = 'dspline', v, k, xd, di_weighting, transpose, inverse)
 }
 
+# Register entry points for exported C++ functions
+methods::setLoadAction(function(ns) {
+    .Call('_dspline_RcppExport_registerCCallable', PACKAGE = 'dspline')
+})
