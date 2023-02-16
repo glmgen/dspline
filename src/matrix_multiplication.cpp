@@ -3,6 +3,9 @@
 
 #include <Rcpp.h>
 #include "dspline.h"
+
+// [[Rcpp::interfaces(r, cpp)]]
+
 using namespace Rcpp;
 
 // [[Rcpp::export]]
