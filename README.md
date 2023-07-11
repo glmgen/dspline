@@ -17,14 +17,13 @@ within the space of discrete splines can be done in *constant-time*.
 - They are intimately connected to trend filtering (they provide the basis
   representation that underlies the trend filtering estimator). 
 
-For more background, see the paper:
+For more background, see the monograph:
   ["Divided differences, falling factorials, and discrete splines:
   Another look at trend filtering and related
-  problems"](https://www.stat.cmu.edu/~ryantibs/papers/dspline.pdf).
+  problems"](https://www.stat.berkeley.edu/~ryantibs/papers/dspline.pdf).
 
 The `dspline` package provides tools for computations with discrete splines. The
 core routines are written in C++ for efficiency. See the
-[reference index](https://ryantibs.github.io/dspline/reference/index.html) for a
+[reference index](https://glmgen.github.io/dspline/reference/index.html) for a
 summary of the tools that are available.
 <!-- and the getting started guide and vignettes a for examples. -->
-
