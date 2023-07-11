@@ -3,13 +3,13 @@ destination: docs/
 home:
   links:
     - text: Discrete splines paper
-      href: https://www.stat.cmu.edu/~ryantibs/papers/dspline.pdf
+      href: https://www.stat.berkeley.edu/~ryantibs/papers/dspline.pdf
 
 repo:
   url:
-    home: https://github.com/ryantibs/dspline/tree/main/
-    source: https://github.com/ryantibs/dspline/blob/main/
-    issue: https://github.com/ryantibs/dspline/issues
+    home: https://github.com/glmgen/dspline/tree/main/
+    source: https://github.com/glmgen/dspline/blob/main/
+    issue: https://github.com/glmgen/dspline/issues
     user: https://github.com/
 
 reference:
