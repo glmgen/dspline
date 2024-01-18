@@ -252,7 +252,7 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #'   discrete splines: Another look at trend filtering and related problems",
 #'   Section 6.3.
 #' @seealso [h_mat_mult()] for multiplying by the falling factorial basis
-#'   matrix and [hx_mat()] for constructing evaluations of the falling factorial
+#'   matrix and [h_eval()] for constructing evaluations of the falling factorial
 #'   basis at arbitrary query points.    
 #' @importClassesFrom Matrix dgCMatrix
 #' @export
@@ -319,7 +319,7 @@ h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
 #' @references Tibshirani (2020), "Divided differences, falling factorials, and
 #'   discrete splines: Another look at trend filtering and related problems",
 #'   Sections 7, 8.2, and 8.3.
-#' @seealso [nx_mat()] for constructing evaluations of the discrete B-spline
+#' @seealso [h_eval()] for constructing evaluations of the discrete B-spline
 #'   basis at arbitrary query points.    
 #' @importClassesFrom Matrix dgCMatrix
 #' @export

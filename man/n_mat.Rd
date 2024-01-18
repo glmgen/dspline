@@ -66,6 +66,6 @@ discrete splines: Another look at trend filtering and related problems",
 Sections 7, 8.2, and 8.3.
 }
 \seealso{
-\code{\link[=nx_mat]{nx_mat()}} for constructing evaluations of the discrete B-spline
+\code{\link[=h_eval]{h_eval()}} for constructing evaluations of the discrete B-spline
 basis at arbitrary query points.
 }

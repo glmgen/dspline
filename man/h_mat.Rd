@@ -111,6 +111,6 @@ Section 6.3.
 }
 \seealso{
 \code{\link[=h_mat_mult]{h_mat_mult()}} for multiplying by the falling factorial basis
-matrix and \code{\link[=hx_mat]{hx_mat()}} for constructing evaluations of the falling factorial
+matrix and \code{\link[=h_eval]{h_eval()}} for constructing evaluations of the falling factorial
 basis at arbitrary query points.
 }
