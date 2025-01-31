@@ -221,6 +221,16 @@ test_that("Interpolation", {
   y3 = as.numeric(predict.tf.fitted(x, v, xd, k))
   expect_equal(y1, y2, tolerance = tol)
   expect_equal(y2, y3, tolerance = tol)
+  # "Wide query" requesting that xd be echoed back as well:
+  xd_wq = xd
+  x_wq = c(x, xd)
+  v_wq = v
+  y1_wq = dspline_interp(v_wq, k, xd_wq, x_wq, implicit = TRUE)
+  y2_wq = dspline_interp(v_wq, k, xd_wq, x_wq, implicit = FALSE)
+  y3_wq = as.numeric(predict.tf.fitted(x_wq, v_wq, xd_wq, k))
+  expect_equal(y1_wq, y2_wq, tolerance = tol)
+  expect_equal(y2_wq, y3_wq, tolerance = tol)
+  expect_equal(y3_wq, c(y3, v), tolerance = tol)
 })
 
 test_that("Newton interpolation", {

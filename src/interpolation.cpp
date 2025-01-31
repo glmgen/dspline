@@ -67,7 +67,7 @@ NumericVector rcpp_dspline_interp(NumericVector v, int k, NumericVector xd, Nume
     for (int i = 0; i < nx; i++) {
       // Trivial case where x is one of the design points
       if (xd[J[i]] == x[i]) {
-        f[i] = v[i];
+        f[i] = v[J[i]];
         continue;
       }
 
