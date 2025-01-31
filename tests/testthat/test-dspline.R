@@ -214,7 +214,7 @@ test_that("Interpolation", {
   n = 10
   k = 2
   xd = sort(runif(n))
-  x = seq(0, 1, length=100)
+  x = seq(0, 1, length.out=100)
   v = xd^2 + 0.05 * rnorm(n)
   y1 = dspline_interp(v, k, xd, x, implicit = TRUE)
   y2 = dspline_interp(v, k, xd, x, implicit = FALSE)
@@ -238,7 +238,7 @@ test_that("Newton interpolation", {
   n = k+1
   xd = sort(runif(n))
   v = xd^k
-  x = seq(0, 1, length=100)
+  x = seq(0, 1, length.out=100)
   y1 = dspline_interp(v, k, xd, x, implicit = TRUE)
   y2 = dspline_interp(v, k, xd, x, implicit = FALSE)
   y3 = newton_interp(v, xd, x)

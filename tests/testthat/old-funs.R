@@ -108,13 +108,13 @@ evalH = function(x0, k, jj, x=1:n/n) {
 library(Matrix)
 
 Id = function(n) {
-  return(bandSparse(n, k=0, diag=list(rep(1,n))))
+  return(bandSparse(n, k=0, diagonals=list(rep(1,n))))
 }
 
 # These are the "right" ones based on divided diffs
 getB = function(n, k, x=1:n/n) {
   I = Id(n)
-  D = bandSparse(n, k=c(-1,0), diag=list(rep(-1,n-1), rep(1,n)))
+  D = bandSparse(n, k=c(-1,0), diagonals=list(rep(-1,n-1), rep(1,n)))
   B = I
   for (i in Seq(1,k)) {
     wts = c(rep(1,i), i/(x[(i+1):n]-x[1:(n-i)]))
@@ -298,7 +298,7 @@ dbs.Bmat = function(k, x, a=NULL, b=NULL, xleft=NULL) {
         getD(k+2,k+1,z)[k+2] * tnp(v)(X(i+1))
     }
   }
-  return(bandSparse(n, k=0, diag=list(bvec)))
+  return(bandSparse(n, k=0, diagonals=list(bvec)))
 }
 
 # Faster and more stable way of evaluating DB-splines at the design
