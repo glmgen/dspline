@@ -231,6 +231,16 @@ test_that("Interpolation", {
   expect_equal(y1_wq, y2_wq, tolerance = tol)
   expect_equal(y2_wq, y3_wq, tolerance = tol)
   expect_equal(y3_wq, c(y3, v), tolerance = tol)
+  # "Wide all" situation with design points also including both the "true" query
+  # and "true" design points, with NAs in v:
+  xd_wa = c(x, xd)
+  x_wa = c(x, xd)
+  v_wa = c(rep(NA, length(x)), v)
+  o_wa = order(xd_wa)
+  xd_wa <- xd_wa[o_wa]
+  v_wa <- v_wa[o_wa]
+  expect_error(dspline_interp(v_wa, k, xd_wa, x_wa),
+               regexp = "`v` must not have any NAs")
 })
 
 test_that("Newton interpolation", {

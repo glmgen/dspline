@@ -71,6 +71,9 @@ dspline_interp <- function(v, k, xd, x, implicit = TRUE) {
   check_sorted(xd)
   check_length(xd, k+1, ">=")
   check_length(v, length(xd))
+  check_no_na(x)
+  check_no_na(xd)
+  check_no_na(v)
   rcpp_dspline_interp(v, k, xd, x, implicit)
 }
 

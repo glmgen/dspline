@@ -61,4 +61,12 @@ check_nonneg_int <- function(x) {
     rlang::abort(sprintf("`%s` must be a nonnegative integer.", args[1]))
   }
 }
-  
+
+check_no_na <- function(x,
+                        x_arg = rlang::caller_arg(x), call = rlang::caller_call(),
+                        ...) {
+  if (anyNA(x)) {
+    rlang::abort(sprintf("`%s` must not have any NAs.", x_arg), call = call,
+                 ...)
+  }
+}
