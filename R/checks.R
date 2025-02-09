@@ -62,9 +62,10 @@ check_nonneg_int <- function(x) {
   }
 }
 
-check_no_na <- function(x,
-                        x_arg = rlang::caller_arg(x), call = rlang::caller_call(),
-                        ...) {
+check_no_nas <- function(x,
+                         x_arg = rlang::caller_arg(x),
+                         call = rlang::caller_call(),
+                         ...) {
   if (anyNA(x)) {
     rlang::abort(sprintf("`%s` must not have any NAs.", x_arg), call = call,
                  ...)

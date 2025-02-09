@@ -136,7 +136,7 @@ test_that("Multiply by D matrix", {
 
 test_that("Multiply by B matrix", {
   n = 10
-k = 2
+  k = 2
   xd = sort(runif(n))
   v = rnorm(n)
   a1 = as.numeric(b_mat(k, xd) %*% v)
@@ -214,13 +214,14 @@ test_that("Interpolation", {
   n = 10
   k = 2
   xd = sort(runif(n))
-  x = seq(0, 1, length.out=100)
+  x = seq(0, 1, length=100)
   v = xd^2 + 0.05 * rnorm(n)
   y1 = dspline_interp(v, k, xd, x, implicit = TRUE)
   y2 = dspline_interp(v, k, xd, x, implicit = FALSE)
   y3 = as.numeric(predict.tf.fitted(x, v, xd, k))
   expect_equal(y1, y2, tolerance = tol)
   expect_equal(y2, y3, tolerance = tol)
+  
   # "Wide query" requesting that xd be echoed back as well:
   xd_wq = xd
   x_wq = c(x, xd)
@@ -231,6 +232,7 @@ test_that("Interpolation", {
   expect_equal(y1_wq, y2_wq, tolerance = tol)
   expect_equal(y2_wq, y3_wq, tolerance = tol)
   expect_equal(y3_wq, c(y3, v), tolerance = tol)
+  
   # "Wide all" situation with design points also including both the "true" query
   # and "true" design points, with NAs in v:
   xd_wa = c(x, xd)
@@ -240,7 +242,7 @@ test_that("Interpolation", {
   xd_wa <- xd_wa[o_wa]
   v_wa <- v_wa[o_wa]
   expect_error(dspline_interp(v_wa, k, xd_wa, x_wa),
-               regexp = "`v` must not have any NAs")
+               regexp = "`v` must not have any NAs.")
 })
 
 test_that("Newton interpolation", {
@@ -248,7 +250,7 @@ test_that("Newton interpolation", {
   n = k+1
   xd = sort(runif(n))
   v = xd^k
-  x = seq(0, 1, length.out=100)
+  x = seq(0, 1, length=100)
   y1 = dspline_interp(v, k, xd, x, implicit = TRUE)
   y2 = dspline_interp(v, k, xd, x, implicit = FALSE)
   y3 = newton_interp(v, xd, x)
