@@ -4,6 +4,10 @@
 # dspline
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/glmgen/dspline/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/glmgen/dspline/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/dspline)](https://CRAN.R-project.org/package=dspline)
 <!-- badges: end -->
 
 These are *not* B-splines:
@@ -35,6 +39,11 @@ splines. The core routines are written in C++ for efficiency. See the
 for a summary of the tools that are available.
 
 ## Installation
+
+``` r
+# Install released version from CRAN
+install.packages("dspline")
+```
 
 You can install the development version of dspline from
 [GitHub](https://github.com/) with:
