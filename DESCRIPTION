@@ -4,7 +4,7 @@ Version: 1.0.1
 Authors@R: c(
     person("Logan", "Brooks", role = "ctb"),
     person("Addison", "Hu", role = "aut"),
-    person("Ryan", "Tibshirani", , "ryantibs@gmail.com", role = c("aut", "cre"))
+    person("Ryan", "Tibshirani", , "ryantibs@gmail.com", role = c("aut", "cre", "cph"))
   )
 Description: Discrete splines are a class of univariate piecewise
     polynomial functions with close connections to divided differences and
@@ -29,3 +29,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+BugReports: https://github.com/glmgen/dspline/issues
