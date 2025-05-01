@@ -1,3 +1,9 @@
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#0054AD"
+    danger: "#A6081A"
+
 url: https://glmgen.github.io/dspline/
 
 home:
