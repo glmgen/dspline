@@ -2,28 +2,30 @@ Package: dspline
 Title: Tools for Computations with Discrete Splines
 Version: 1.0.2
 Authors@R: c(
-   person("Logan", "Brooks", role = "ctb"),
-   person("Addison", "Hu", role = "aut"),
-   person("Ryan", "Tibshirani", role = c("aut", "cre"), email = "ryantibs@gmail.com"))
-Description: Discrete splines are a class of univariate piecewise polynomial 
-    functions with close connections to divided differences and Newton 
-    interpolation. Tools for computations relating to discrete splines --- 
-    discrete differentiation and integration, various matrix computations with 
-    discrete derivative or discrete spline bases matrices, and 
-	interpolation within discrete spline spaces --- are provided.
+    person("Logan", "Brooks", role = "ctb"),
+    person("Addison", "Hu", role = "aut"),
+    person("Ryan", "Tibshirani", , "ryantibs@gmail.com", role = c("aut", "cre"))
+  )
+Description: Discrete splines are a class of univariate piecewise
+    polynomial functions with close connections to divided differences and
+    Newton interpolation. Tools for computations relating to discrete
+    splines --- discrete differentiation and integration, various matrix
+    computations with discrete derivative or discrete spline bases
+    matrices, and interpolation within discrete spline spaces --- are
+    provided.
 License: MIT + file LICENSE
+URL: https://github.com/glmgen/dspline, https://glmgen.github.io/dspline/
+Imports: 
+    Matrix,
+    Rcpp,
+    rlang
+Suggests: 
+    testthat (>= 3.0.0)
+LinkingTo: 
+    Rcpp,
+    RcppEigen
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-LinkingTo: 
-    Rcpp,
-    RcppEigen
-Imports: 
-    Matrix,
-	Rcpp,
-    rlang
-Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
-URL: https://glmgen.github.io/dspline/
