@@ -8,13 +8,15 @@ Authors@R: c(
   )
 Description: Discrete splines are a class of univariate piecewise
     polynomial functions with close connections to divided differences and
-    Newton interpolation. Tools for computations relating to discrete
-    splines --- discrete differentiation and integration, various matrix
-    computations with discrete derivative or discrete spline bases
-    matrices, and interpolation within discrete spline spaces --- are
-    provided.
+    Newton interpolation. Tools for efficient computations relating to
+    discrete splines are provided here. These tools include discrete
+    differentiation and integration, various matrix computations with
+    discrete derivative or discrete spline bases matrices, and
+    interpolation within discrete spline spaces. Many of these techniques
+    are described in Tibshirani (2020) <arxiv:2003.03886>.
 License: MIT + file LICENSE
 URL: https://github.com/glmgen/dspline, https://glmgen.github.io/dspline/
+BugReports: https://github.com/glmgen/dspline/issues
 Imports: 
     Matrix,
     Rcpp,
@@ -29,4 +31,3 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-BugReports: https://github.com/glmgen/dspline/issues
