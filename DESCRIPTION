@@ -1,18 +1,16 @@
 Package: dspline
-Title: Tools for computations with discrete splines
-Version: 1.0.1
+Title: Tools for Computations with Discrete Splines
+Version: 1.0.2
 Authors@R: c(
-   person("Logan", "Brooks", 
-           role = "ctb"),
-   person("Addison", "Hu", 
-           role = "aut"),
-   person("Ryan", "Tibshirani", 
-          role = c("aut", "cre"),
-          email = "ryantibs@gmail.com"))
-Description: This package provides tools for computations relating to discrete
-    splines, such as discrete differentiation and integration, various matrix 
-		computations with discrete derivative or discrete spline bases matrices, and 
-		interpolation within discrete spline spaces.  
+   person("Logan", "Brooks", role = "ctb"),
+   person("Addison", "Hu", role = "aut"),
+   person("Ryan", "Tibshirani", role = c("aut", "cre"), email = "ryantibs@gmail.com"))
+Description: Discrete splines are a class of univariate piecewise polynomial 
+    functions with close connections to divided differences and Newton 
+    interpolation. Tools for computations relating to discrete splines --- 
+    discrete differentiation and integration, various matrix computations with 
+    discrete derivative or discrete spline bases matrices, and 
+	interpolation within discrete spline spaces --- are provided.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -23,9 +21,9 @@ LinkingTo:
     RcppEigen
 Imports: 
     Matrix,
-		Rcpp,
-		RcppEigen,
+	Rcpp,
     rlang
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+URL: https://glmgen.github.io/dspline/
