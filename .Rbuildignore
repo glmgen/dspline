@@ -1,1 +1,10 @@
 ^LICENSE\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^make\.R$
+^make$
+^README\.Rmd$
+^\.github$
