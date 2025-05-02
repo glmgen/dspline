@@ -80,6 +80,14 @@ row-subsetted version. This is because both the rows corresponding to the
 knots in the discrete spline space and the complementary set of roles play
 a role in computing the solution. See Section 8.1 of Tibshirani (2020).
 }
+\examples{
+xd <- 1:99 / 100
+v <- sin(2 * pi * xd) + rnorm(99, 0, .2)
+res <- dspline_solve(v, 2, xd, 1:9 * 10)
+plot(xd, v, pch = 16)
+lines(xd, res$fit, col = "cornflowerblue")
+lines(xd, sin(2 * pi * xd), col = "firebrick")
+}
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and
 discrete splines: Another look at trend filtering and related problems",

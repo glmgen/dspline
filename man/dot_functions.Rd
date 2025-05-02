@@ -38,6 +38,9 @@ see details for more information. The default is \code{FALSE}.}
 Multiplication by such a weighted H gives discrete integrals at the
 design points; see details for more information. The default is \code{FALSE}.}
 }
+\value{
+None. These functions \emph{overwrite} their input.
+}
 \description{
 Each "dot" function accepts arguments as in its "non-dot"
 counterpart, but peforms computations in place, overwriting the first input
@@ -78,3 +81,10 @@ Overwrites \code{v} with \code{H \%*\% v}, where \code{H} is the falling factori
 matrix as returned by \code{h_mat()}. See also \code{\link[=h_mat_mult]{h_mat_mult()}}.
 }
 
+\examples{
+v <- sort(runif(10))
+v
+b_mat_mult(v, 2, 1:10)
+.b_mat_mult(v, 2, 1:10, FALSE, FALSE, FALSE)
+v
+}

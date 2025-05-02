@@ -60,6 +60,11 @@ help file for \code{\link[=h_mat]{h_mat()}}), the DB-spline basis matrix, which 
 sets \eqn{T} that are proper subsets of \eqn{x_{(k+1):(n-1)}}.
 Specification of the knot set \eqn{T} is done via the argument \code{knot_idx}.
 }
+\examples{
+n_mat(2, 1:10, knot_idx = c(3, 4, 7))
+n_mat(2, 1:10, FALSE, knot_idx = c(3, 4, 7))
+n_mat(2, 1:10)
+}
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and
 discrete splines: Another look at trend filtering and related problems",

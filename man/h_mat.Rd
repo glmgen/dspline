@@ -38,22 +38,22 @@ where \eqn{h^k_1, \ldots, h^k_n} are the falling factorial basis functions,
 defined as:
 \deqn{
   \begin{aligned}
-  h^k_j(x) &= \frac{1}{(j-1)!} \prod_{\ell=1}^{j-1}(x-x_\ell), 
+  h^k_j(x) &= \frac{1}{(j-1)!} \prod_{\ell=1}^{j-1}(x-x_\ell),
   \quad j=1,\ldots,k+1, \\
-  h^k_j(x) &= \frac{1}{k!} \prod_{\ell=j-k}^{j-1} (x-x_\ell) \cdot  
-  1\{x > x_{j-1}\}, \quad j=k+2,\ldots,n. 
+  h^k_j(x) &= \frac{1}{k!} \prod_{\ell=j-k}^{j-1} (x-x_\ell) \cdot
+  1\{x > x_{j-1}\}, \quad j=k+2,\ldots,n.
   \end{aligned}
   }
 
 The matrix \eqn{H^k_n} can also be constructed recursively, as follows. We
 first define the \eqn{n \times n} lower triangular matrix of 1s:
 \deqn{
-  L_n = 
-  \left[\begin{array}{rrrr} 
+  L_n =
+  \left[\begin{array}{rrrr}
   1 & 0 & \ldots & 0 \\
   1 & 1 & \ldots & 0 \\
   \vdots & & & \\
-  1 & 1 & \ldots & 1 
+  1 & 1 & \ldots & 1
   \end{array}\right],
   }
 and for \eqn{k \geq 1}, define the \eqn{n \times n} extended diagonal
@@ -65,7 +65,7 @@ is then given by the recursion:
   \begin{aligned}
   H^0_n &= L_n, \\
   H^k_n &= H^{k-1}_n Z^k_n
-  \left[\begin{array}{cc} 
+  \left[\begin{array}{cc}
   I_k & 0 \\
   0 & L_{n-k}
   \end{array}\right],
@@ -103,6 +103,12 @@ gives more information.
 \strong{not} form \eqn{H^k_n} with the current function and then carry out the
 multiplication, but instead use \code{\link[=h_mat_mult]{h_mat_mult()}}, as the latter will be
 \strong{much} more efficient (quadratic-time versus linear-time).
+}
+\examples{
+h_mat(2, 1:10)
+h_mat(2, 1:10 / 5)
+h_mat(2, 1:10 / 5, TRUE)
+h_mat(2, 1:10, col_idx = 2:5)
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

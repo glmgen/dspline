@@ -33,7 +33,13 @@
 #' @section `.h_mat_mult()`:
 #' Overwrites `v` with `H %*% v`, where `H` is the falling factorial basis
 #'   matrix as returned by `h_mat()`. See also [h_mat_mult()].
-#'
+#' @return None. These functions *overwrite* their input.
+#' @examples
+#' v <- sort(runif(10))
+#' v
+#' b_mat_mult(v, 2, 1:10)
+#' .b_mat_mult(v, 2, 1:10, FALSE, FALSE, FALSE)
+#' v
 NULL
 
 #' @rdname dot_functions

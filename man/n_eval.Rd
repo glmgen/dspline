@@ -59,6 +59,12 @@ After obtaining the matrix of discrete B-spline evaluations at the design
 points, the fast interpolation scheme from \code{\link[=dspline_interp]{dspline_interp()}} is used to
 produce evaluations at the query points.
 }
+\examples{
+xd <- 1:9 / 10
+x <- 1:8 / 10 + 0.05
+n_mat(2, xd, knot_idx = c(3, 4, 7))
+n_eval(2, xd, x, knot_idx = c(3, 4, 7))
+}
 \seealso{
 \code{\link[=n_mat]{n_mat()}} for constructing evaluations of the discrete B-spline
 basis at the design points.

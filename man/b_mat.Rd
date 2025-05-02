@@ -34,16 +34,16 @@ It has dimension \eqn{n \times n}, and is banded with bandwidth \eqn{k+1}.
 It can be constructed recursively, as follows. For \eqn{k \geq 1}, we first
 define the \eqn{n \times n} extended difference matrix \eqn{\bar{B}_{n,k}}:
 \deqn{
-  \bar{B}_{n,k} = 
+  \bar{B}_{n,k} =
   \left[\begin{array}{rrrrrrrrr}
   1 & 0 & \ldots & 0 & & & & \\
   0 & 1 & \ldots & 0 & & & & \\
   \vdots & & & & & & & \\
   0 & 0 & \ldots & 1 & & & & \\
-  & & & -1 & 1 & 0 & \ldots & 0 & 0 \\ 
+  & & & -1 & 1 & 0 & \ldots & 0 & 0 \\
   & & & 0 & -1 & 1 & \ldots & 0 & 0 \\
   & & & \vdots & & & & & \\
-  & & & 0 & 0 & 0 & \ldots & -1 & 1 
+  & & & 0 & 0 & 0 & \ldots & -1 & 1
   \end{array}\right]
   \begin{array}{ll}
   \left.\vphantom{\begin{array}{c} 1 \\ 0 \\ \vdots \\ 0 \end{array}}
@@ -54,13 +54,13 @@ define the \eqn{n \times n} extended difference matrix \eqn{\bar{B}_{n,k}}:
   }
 We also define the \eqn{n \times n} extended diagonal weight matrix
 \eqn{Z^k_n} to have first \eqn{k} diagonal entries equal to 1 and last
-\eqn{n-k} diagonal entries equal to \eqn{(x_{i+k} - x_i) / k}, \eqn{i = 
+\eqn{n-k} diagonal entries equal to \eqn{(x_{i+k} - x_i) / k}, \eqn{i =
   1,\ldots,n-k}. The \eqn{k}th order extended discrete derivative matrix
 \eqn{B^k_n} is then given by the recursion:
 \deqn{
   \begin{aligned}
   B^1_n &= (Z^1_n)^{-1} \bar{B}_{n,1}, \\
-  B^k_n &= (Z^k_n)^{-1} \bar{B}_{n,k} \, B^{k-1}_n, 
+  B^k_n &= (Z^k_n)^{-1} \bar{B}_{n,k} \, B^{k-1}_n,
   \quad \text{for $k \geq 2$}.
   \end{aligned}
   }
@@ -78,6 +78,12 @@ forming \eqn{B^k_n} with the current function and then carrying out the
 multiplication, one should instead use \code{\link[=b_mat_mult]{b_mat_mult()}}, as this will be more
 efficient (both will be linear time, but the latter saves the cost of
 forming any matrix in the first place).
+}
+\examples{
+b_mat(2, 1:10)
+b_mat(2, 1:10 / 5)
+b_mat(2, 1:10 / 5, TRUE)
+b_mat(2, 1:10, row_idx = 2:5)
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

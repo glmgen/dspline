@@ -37,6 +37,12 @@ row with entries:
   h^k_j(x), \; j = 1, \ldots, n.
   }
 }
+\examples{
+xd <- 1:9 / 10
+x <- 1:8 / 10 + 0.05
+h_mat(2, xd)
+h_eval(2, xd, x)
+}
 \seealso{
 \code{\link[=h_mat]{h_mat()}} for constructing evaluations of the falling factorial
 basis at the design points.

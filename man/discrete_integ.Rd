@@ -38,15 +38,15 @@ that:
 in a more explicit form, as follows. Acting on a function \eqn{f} of order
 \eqn{k}, and evaluated at a query point \eqn{x}, it yields:
 \deqn{
-  (S^k_n f)(x) = 
+  (S^k_n f)(x) =
   \begin{cases}
   \displaystyle
   \sum_{j=1}^k h^{k-1}_j(x) \cdot f(x_j) +
-  \sum_{j=k+1}^i h^{k-1}_j(x) \cdot \frac{x_j-x_{j-k}}{k} \cdot f(x_j) 
+  \sum_{j=k+1}^i h^{k-1}_j(x) \cdot \frac{x_j-x_{j-k}}{k} \cdot f(x_j)
   + h^{k-1}_{i+1}(x) \cdot \frac{x-x_{i-k+1}}{k} \cdot f(x) & \\
-  & \hspace{-75pt} \text{if $x \in (x_i,x_{i+1}]$, $i \geq k$} \\ 
+  & \hspace{-75pt} \text{if $x \in (x_i,x_{i+1}]$, $i \geq k$} \\
   \displaystyle
-  \sum_{j=1}^i h^{k-1}_j(x) \cdot f(x_j) \,+\, h^{k-1}_{i+1}(x) \cdot f(x) 
+  \sum_{j=1}^i h^{k-1}_j(x) \cdot f(x_j) \,+\, h^{k-1}_{i+1}(x) \cdot f(x)
   & \hspace{-75pt} \text{if $x \in (x_i,x_{i+1}]$, $i <  k$} \\
   f(x) & \hspace{-75pt} \text{if $x \leq x_1$},
   \end{cases}
@@ -66,6 +66,12 @@ relationship to discrete differentiation), see Section 3.2 of Tibshirani
 which could be achieved by taking \code{x = xd} in the current function, one
 should instead use \code{\link[=h_mat_mult]{h_mat_mult()}} with \code{di_weighting = TRUE}, as this will
 be \strong{much} more efficient (quadratic-time versus linear-time).
+}
+\examples{
+xd <- 1:9
+discrete_integ(sin, 2, xd, 1:8 + 0.5)
+discrete_integ(cos, 2, xd, 1:8 + 0.5)
+discrete_integ(function(x) (x + 2)^2, 2, -5:5, c(-2.5, 2.5))
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and
