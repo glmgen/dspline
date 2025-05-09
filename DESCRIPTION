@@ -4,6 +4,7 @@ Version: 1.0.1
 Authors@R: c(
     person("Logan", "Brooks", role = "ctb"),
     person("Addison", "Hu", role = "aut"),
+    person("Daniel", "McDonald", role = "ctb"),
     person("Ryan", "Tibshirani", , "ryantibs@gmail.com", role = c("aut", "cre", "cph"))
   )
 Description: Discrete splines are a class of univariate piecewise
