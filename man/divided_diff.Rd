@@ -23,7 +23,7 @@ The divided difference of a function \eqn{f} with respect to centers
 \eqn{z_1, \ldots, z_{k+1}} is defined recursively as:
 \deqn{
   f[z_1,\ldots,z_{k+1}] = \displaystyle
-  \frac{f[z_2,\ldots,z_{k+1}] - f[z_1,\ldots,z_k]}{z_{k+1}-z_1}, 
+  \frac{f[z_2,\ldots,z_{k+1}] - f[z_1,\ldots,z_k]}{z_{k+1}-z_1},
   }
 with base case \eqn{f[z_1] = f(z_1)} (that is, divided differencing with
 respect to a single point reduces to function evaluation).
@@ -34,10 +34,15 @@ divided difference becomes a (scaled) forward difference, or equivalently a
 (scaled) backward difference,
 \deqn{
   k! \cdot f[z,\ldots,z+kh] = \displaystyle
-  \frac{1}{h^k} (F^k_h f)(z) = 
+  \frac{1}{h^k} (F^k_h f)(z) =
   \frac{1}{h^k} (B^k_h f)(z+kh),
   }
 where we use \eqn{F^k_h} and \eqn{B^k_v} to denote the forward and
 backward difference operators, respectively, of order \eqn{k} and with
 spacing \eqn{h}.
+}
+\examples{
+divided_diff(sin, 1:99 / 100 * 2 * pi)
+divided_diff(cos, 1:99 / 100 * 2 * pi)
+divided_diff(function(x) (x + 2)^2, seq(-5, 5, length.out = 100))
 }

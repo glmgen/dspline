@@ -54,7 +54,7 @@ multiplication of \eqn{v = f(x_{1:n})} by \eqn{H^k_n Z^{k+1}_n} gives order
 \eqn{k+1} discrete integrals (note the increment in order of integration
 here) of \eqn{f} at the points \eqn{x_{1:n}}:
 \deqn{
-  H^k_n Z^{k+1}_n v = (S^{k+1}_n f)(x_{1:n}). 
+  H^k_n Z^{k+1}_n v = (S^{k+1}_n f)(x_{1:n}).
   }
 
 Lastly, the matrix \eqn{H^k_n} has a special \strong{inverse relationship} to the
@@ -70,6 +70,11 @@ efficient recursive representation in terms of weighted differences, means
 that multiplying by \eqn{(H^k_n)^{-1}} or its transpose can be performed in
 \eqn{O(nk)} operations. See Section 6.2 and Appendix D of Tibshirani (2020)
 for details.
+}
+\examples{
+v <- sort(runif(10))
+as.vector(h_mat(2, 1:10) \%*\% v)
+h_mat_mult(v, 2, 1:10) # more efficient
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

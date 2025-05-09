@@ -33,10 +33,10 @@ respect to design points \eqn{x_{1:n}}, is spanned by the falling factorial
 basis functions \eqn{h^k_1, \ldots, h^k_n}, which are defined as:
 \deqn{
   \begin{aligned}
-  h^k_j(x) &= \frac{1}{(j-1)!} \prod_{\ell=1}^{j-1}(x-x_\ell), 
+  h^k_j(x) &= \frac{1}{(j-1)!} \prod_{\ell=1}^{j-1}(x-x_\ell),
   \quad j=1,\ldots,k+1, \\
-  h^k_j(x) &= \frac{1}{k!} \prod_{\ell=j-k}^{j-1} (x-x_\ell) \cdot  
-  1\{x > x_{j-1}\}, \quad j=k+2,\ldots,n. 
+  h^k_j(x) &= \frac{1}{k!} \prod_{\ell=j-k}^{j-1} (x-x_\ell) \cdot
+  1\{x > x_{j-1}\}, \quad j=k+2,\ldots,n.
   \end{aligned}
   }
 Their span is a space of piecewise polynomials of degree \eqn{k} with knots
@@ -74,6 +74,15 @@ derivative being equal to zero (a \eqn{O(k)} computational cost). This is
 generally a more efficient and stable scheme for interpolation. See Section
 5.4 of Tibshirani (2020) for more details.
 }
+\examples{
+xd <- 1:99 / 100
+v <- sin(2 * pi * xd) + rnorm(99, 0, .2)
+res <- dspline_solve(v, 2, xd, 1:9 * 10)
+plot(xd, v, pch = 16)
+x <- 1:98 / 100 + 0.005 # locations in between `xd`
+vhat <- dspline_interp(res$fit, 2, xd, x)
+points(x, vhat, col = "firebrick")
+}
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and
 discrete splines: Another look at trend filtering and related problems",
@@ -81,6 +90,6 @@ Section 5.
 }
 \seealso{
 \code{\link[=dspline_solve]{dspline_solve()}} for the least squares projection onto a "custom"
-space of discrete splines (defined by a custom knot set \eqn{T \subseteq 
+space of discrete splines (defined by a custom knot set \eqn{T \subseteq
   x_{(k+1):(n-1)}}).
 }

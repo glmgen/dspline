@@ -69,6 +69,11 @@ means that multiplying by \eqn{(B^k_n)^{-1}} or its transpose can be
 performed in \eqn{O(nk)} operations. See Section 6.3 and Appendix D of
 Tibshirani (2020) for details.
 }
+\examples{
+v <- sort(runif(10))
+as.vector(b_mat(2, 1:10) \%*\% v)
+b_mat_mult(v, 2, 1:10) # more efficient
+}
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and
 discrete splines: Another look at trend filtering and related problems",

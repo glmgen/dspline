@@ -1,25 +1,25 @@
 #' Discrete spline projection
 #'
 #' Projects a sequence of values onto the space of discrete splines a given
-#' order, with respect to given design points, and given knot points. 
+#' order, with respect to given design points, and given knot points.
 #'
 #' @param v Vector to be values to be projected, one value per design point.
 #' @param k Order for the discrete spline space. Must be >= 0.
-#' @param xd Design points. Must be sorted in increasing order, and have length  
-#'   at least `k+1`. 
+#' @param xd Design points. Must be sorted in increasing order, and have length
+#'   at least `k+1`.
 #' @param knot_idx Vector of indices, a subset of `(k+1):(n-1)` where `n =
 #'   length(xd)`, that indicates which design points should be used as knot
-#'   points for the discrete spline space. Must be sorted in increasing order.  
+#'   points for the discrete spline space. Must be sorted in increasing order.
 #' @param basis String, one of `"N"`, `"B"`, or `"H"`, indicating which basis
 #'   representation is to be used for the least squares computation. The default
 #'   is `"N"`, the discrete B-spline basis. See details for more information.
-#' @param mat Matrix to use for the least squares computation. If missing, the 
+#' @param mat Matrix to use for the least squares computation. If missing, the
 #'   default, then the matrix will be formed according to the `basis` argument.
 #'   See details for more information.
 #' @return List with components `sol`: the least squares solution; `fit`: the
-#'   least squares fit; and `mat`: the basis matrix used for the least squares 
+#'   least squares fit; and `mat`: the basis matrix used for the least squares
 #'   problem (only present if the input argument `mat` is missing).
-#' 
+#'
 #' @details This function minimizes the least squares criterion
 #'   \deqn{
 #'   \|v - M \beta\|_2^2
@@ -35,22 +35,22 @@
 #'   generally the **most stable and efficient** option: it leads to a banded,
 #'   well-conditioned linear system.  Bandedness means that the least squares
 #'   projection can be computed in \eqn{O(nk^2)} operations. See Section 8.4 of
-#'   Tibshirani (2020) for numerical experiments investigating conditioning. 
-#' 
+#'   Tibshirani (2020) for numerical experiments investigating conditioning.
+#'
 #' The option `"H"` means that the falling factorial basis matrix from [h_mat()]
 #'   is used, with the `col_idx` argument set appropriately. This option should
 #'   be **avoided in general** since it leads to a linear system that is neither
-#'   sparse nor well-conditioned. 
-#' 
+#'   sparse nor well-conditioned.
+#'
 #' The option `"B"` means that the extended discrete derivative matrix from
 #'   [b_mat()], with `tf_weighting = TRUE`, is used to compute the least squares
 #'   solution from projecting onto the falling factorial basis. The fact this is
 #'   possible stems from a special inverse relationship between the discrete
 #'   derivative matrix and the falling factorial basis matrix. While this option
 #'   leads to a banded linear system, this system tends to have worse
-#'   conditioning than that using the discrete B-spline representation. However, 
+#'   conditioning than that using the discrete B-spline representation. However,
 #'   it is essentially always preferable to the `"H"` option, and it produces
-#'   the same solution (coefficients in the falling factorial basis expansion). 
+#'   the same solution (coefficients in the falling factorial basis expansion).
 #'
 #' **Note 1:** the basis matrix to be used in the least squares problem can be
 #'   passed in directly via the `mat` argument (which saves on the cost of
@@ -64,13 +64,20 @@
 #'   row-subsetted version. This is because both the rows corresponding to the
 #'   knots in the discrete spline space and the complementary set of roles play
 #'   a role in computing the solution. See Section 8.1 of Tibshirani (2020).
-#' 
+#'
 #' @references Tibshirani (2020), "Divided differences, falling factorials, and
 #'   discrete splines: Another look at trend filtering and related problems",
 #'   Sections 8.1 and 8.4.
 #' @seealso [dspline_interp()] for interpolation within the "canonical" space of
 #'   discrete splines.
 #' @export
+#' @examples
+#' xd <- 1:99 / 100
+#' v <- sin(2 * pi * xd) + rnorm(99, 0, .2)
+#' res <- dspline_solve(v, 2, xd, 1:9 * 10)
+#' plot(xd, v, pch = 16)
+#' lines(xd, res$fit, col = "cornflowerblue")
+#' lines(xd, sin(2 * pi * xd), col = "firebrick")
 dspline_solve <- function(v, k, xd, knot_idx, basis = c("N", "B", "H"), mat) {
   check_nonneg_int(k)
   check_sorted(xd)

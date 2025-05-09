@@ -1,0 +1,81 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# dspline
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/glmgen/dspline/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/glmgen/dspline/actions/workflows/R-CMD-check.yaml)
+[![CRAN status](https://www.r-pkg.org/badges/version/dspline)](https://CRAN.R-project.org/package=dspline)
+<!-- badges: end -->
+
+These are *not* B-splines:
+
+```{r show-dsplines, echo=FALSE, dev='png', fig.width=7, fig.height=3, dpi=300}
+library(dspline)
+n = 50
+k = 2
+
+set.seed(11)
+e = runif(n, -1/(2.5*(n+1)), 1/(2.5*(n+1)))
+xd = 1:n/(n+1) + e
+x = seq(0, 1, length = 5*n)
+knot_idx = round(seq((k+1) + 5, (n-1) - 5, length = 4))
+N1 = n_mat(k, xd, knot_idx = knot_idx)
+N2 = n_eval(k, xd, x, knot_idx = knot_idx, N = N1)
+
+par(mar = rep(0.01, 4))
+matplot(x, N2, type = "l", lty = 1, col = 1:ncol(N2), 
+        xlim = c(0, 1), ylim = c(0, 1), axes = FALSE)
+matplot(xd, N1, type = "p", pch = 19, col = 1:ncol(N1), add = TRUE)
+abline(v = xd[knot_idx], lty = 2, lwd = 0.5, col = 8)
+```
+
+These are called *discrete* B-splines. They span a function spaced called
+**discrete splines**, which are analogous to splines, but defined in terms of 
+a suitable discrete notion of smoothness. 
+
+- Discrete splines have continuous *discrete* derivatives at their knots (rather
+  than continuous derivatives, as splines do). 
+
+- They have important computational properties, like the fact that interpolation
+within the space of discrete splines can be done in *constant-time*. 
+
+- They are intimately connected to trend filtering (they provide the basis
+  representation that underlies the trend filtering estimator). 
+
+For more background, see the monograph:
+  ["Divided differences, falling factorials, and discrete splines:
+  Another look at trend filtering and related
+  problems"](https://www.stat.berkeley.edu/~ryantibs/papers/dspline.pdf).
+
+The `dspline` package provides tools for computations with discrete splines. The
+core routines are written in C++ for efficiency. See the
+[reference index](https://glmgen.github.io/dspline/reference/index.html) for a
+summary of the tools that are available.
+
+
+## Installation
+
+``` r
+# Install released version from CRAN
+install.packages("dspline")
+```
+
+You can install the development version of dspline from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("glmgen/dspline")
+```

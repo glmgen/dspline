@@ -1,27 +1,27 @@
 #' Discrete spline interpolation
 #'
-#' Interpolates a sequence of values within the "canonical" space of discrete 
-#' splines of a given order, with respect to given design points.  
+#' Interpolates a sequence of values within the "canonical" space of discrete
+#' splines of a given order, with respect to given design points.
 #'
 #' @param v Vector to be values to be interpolated, one value per design point.
 #' @param k Order for the discrete spline space. Must be >= 0.
-#' @param xd Design points. Must be sorted in increasing order, and have length  
-#'   at least `k+1`. 
+#' @param xd Design points. Must be sorted in increasing order, and have length
+#'   at least `k+1`.
 #' @param x Query point(s), at which to perform interpolation.
 #' @param implicit Should implicit form interpolation be used? See details for
 #'   what this means. The default is `TRUE`.
 #' @return Value(s) of the unique discrete spline interpolant (defined by the
-#'   values `v` at design points `xd`) at query point(s) `x`. 
-#' 
+#'   values `v` at design points `xd`) at query point(s) `x`.
+#'
 #' @details The "canonical" space of discrete splines of degree \eqn{k}, with
 #'   respect to design points \eqn{x_{1:n}}, is spanned by the falling factorial
-#'   basis functions \eqn{h^k_1, \ldots, h^k_n}, which are defined as:  
+#'   basis functions \eqn{h^k_1, \ldots, h^k_n}, which are defined as:
 #'   \deqn{
 #'   \begin{aligned}
-#'   h^k_j(x) &= \frac{1}{(j-1)!} \prod_{\ell=1}^{j-1}(x-x_\ell), 
+#'   h^k_j(x) &= \frac{1}{(j-1)!} \prod_{\ell=1}^{j-1}(x-x_\ell),
 #'   \quad j=1,\ldots,k+1, \\
-#'   h^k_j(x) &= \frac{1}{k!} \prod_{\ell=j-k}^{j-1} (x-x_\ell) \cdot  
-#'   1\{x > x_{j-1}\}, \quad j=k+2,\ldots,n. 
+#'   h^k_j(x) &= \frac{1}{k!} \prod_{\ell=j-k}^{j-1} (x-x_\ell) \cdot
+#'   1\{x > x_{j-1}\}, \quad j=k+2,\ldots,n.
 #'   \end{aligned}
 #'   }
 #' Their span is a space of piecewise polynomials of degree \eqn{k} with knots
@@ -58,14 +58,22 @@
 #'   derivative being equal to zero (a \eqn{O(k)} computational cost). This is
 #'   generally a more efficient and stable scheme for interpolation. See Section
 #'   5.4 of Tibshirani (2020) for more details.
-#' 
+#'
 #' @references Tibshirani (2020), "Divided differences, falling factorials, and
 #'   discrete splines: Another look at trend filtering and related problems",
 #'   Section 5.
 #' @seealso [dspline_solve()] for the least squares projection onto a "custom"
-#'   space of discrete splines (defined by a custom knot set \eqn{T \subseteq 
-#'   x_{(k+1):(n-1)}}).   
+#'   space of discrete splines (defined by a custom knot set \eqn{T \subseteq
+#'   x_{(k+1):(n-1)}}).
 #' @export
+#' @examples
+#' xd <- 1:99 / 100
+#' v <- sin(2 * pi * xd) + rnorm(99, 0, .2)
+#' res <- dspline_solve(v, 2, xd, 1:9 * 10)
+#' plot(xd, v, pch = 16)
+#' x <- 1:98 / 100 + 0.005 # locations in between `xd`
+#' vhat <- dspline_interp(res$fit, 2, xd, x)
+#' points(x, vhat, col = "firebrick")
 dspline_interp <- function(v, k, xd, x, implicit = TRUE) {
   check_nonneg_int(k)
   check_sorted(xd)

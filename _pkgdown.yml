@@ -1,17 +1,21 @@
-destination: docs/
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#0054AD"
+    danger: "#A6081A"
+
+url: https://glmgen.github.io/dspline/
 
 home:
   links:
-    - text: Discrete splines paper
-      href: https://www.stat.berkeley.edu/~ryantibs/papers/dspline.pdf
-
+  - text: Discrete splines paper
+    href: https://www.stat.berkeley.edu/~ryantibs/papers/dspline.pdf
 repo:
   url:
     home: https://github.com/glmgen/dspline/tree/main/
     source: https://github.com/glmgen/dspline/blob/main/
     issue: https://github.com/glmgen/dspline/issues
     user: https://github.com/
-
 reference:
 - title: Discrete calculus
   desc: Divided differencing, discrete differentiation, and discrete integration.
@@ -39,13 +43,11 @@ reference:
   - n_eval
 - title: Interpolation
   desc: Interpolation within the "canonical" space of discrete splines.
-- contents:
-  - dspline_interp
+- contents: dspline_interp
 - title: Projection
   desc: Least squares projection onto "custom" spaces of discrete splines.
-- contents:
-  - dspline_solve
+- contents: dspline_solve
 - title: In-place computations
   desc: Divided differencing and matrix multiplication using in-place operations.
-- contents: 
-  - dot_functions
+- contents: dot_functions
+

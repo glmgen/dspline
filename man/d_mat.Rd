@@ -30,15 +30,15 @@ given design points.
 The discrete derivative matrix of order \eqn{k}, with respect to
 design points \eqn{x_1 < \ldots < x_n}, is denoted \eqn{D^k_n}. It has
 dimension \eqn{(n-k) \times n}, and is banded with bandwidth \eqn{k+1}. It
-can be constructed recursively, as follows. We first define the \eqn{(n-1) 
+can be constructed recursively, as follows. We first define the \eqn{(n-1)
   \times n} first difference matrix \eqn{\bar{D}_n}:
 \deqn{
-  \bar{D}_n = 
-  \left[\begin{array}{rrrrrr} 
+  \bar{D}_n =
+  \left[\begin{array}{rrrrrr}
   -1 & 1 & 0 & \ldots & 0 & 0 \\
   0 & -1 & 1 & \ldots & 0 & 0 \\
   \vdots & & & & & \\
-  0 & 0 & 0 & \ldots & -1 & 1 
+  0 & 0 & 0 & \ldots & -1 & 1
   \end{array}\right],
   }
 and for \eqn{k \geq 1}, define the \eqn{(n-k) \times (n-k)} diagonal weight
@@ -48,11 +48,11 @@ matrix \eqn{W^k_n} to have diagonal entries \eqn{(x_{i+k} - x_i) / k},
 \deqn{
   \begin{aligned}
   D^1_n &= (W^1_n)^{-1} \bar{D}_n, \\
-  D^k_n &= (W^k_n)^{-1} \bar{D}_{n-k+1} \, D^{k-1}_n,  
+  D^k_n &= (W^k_n)^{-1} \bar{D}_{n-k+1} \, D^{k-1}_n,
   \quad \text{for $k \geq 2$}.
   \end{aligned}
   }
-We note that \eqn{\bar{D}_{n-k+1}} above denotes the \eqn{(n-k) \times    
+We note that \eqn{\bar{D}_{n-k+1}} above denotes the \eqn{(n-k) \times
   (n-k+1)} version of the first difference matrix that is defined in the
 second-to-last display.
 
@@ -67,6 +67,12 @@ forming \eqn{D^k_n} with the current function and then carrying out the
 multiplication, one should instead use \code{\link[=d_mat_mult]{d_mat_mult()}}, as this will be more
 efficient (both will be linear time, but the latter saves the cost of
 forming any matrix in the first place).
+}
+\examples{
+d_mat(2, 1:10)
+d_mat(2, 1:10 / 5)
+d_mat(2, 1:10 / 5, TRUE)
+d_mat(2, 1:10, row_idx = 2:5)
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and
