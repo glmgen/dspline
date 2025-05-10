@@ -5,16 +5,17 @@ Authors@R: c(
     person("Logan", "Brooks", role = "ctb"),
     person("Addison", "Hu", role = "aut"),
     person("Daniel", "McDonald", role = "ctb"),
-    person("Ryan", "Tibshirani", , "ryantibs@gmail.com", role = c("aut", "cre", "cph"))
+    person("Ryan", "Tibshirani", , "ryantibs@gmail.com", 
+        role = c("aut", "cre", "cph"))
   )
-Description: Discrete splines are a class of univariate piecewise
-    polynomial functions with close connections to divided differences and
-    Newton interpolation. Tools for efficient computations relating to
-    discrete splines are provided here. These tools include discrete
-    differentiation and integration, various matrix computations with
-    discrete derivative or discrete spline bases matrices, and
-    interpolation within discrete spline spaces. Many of these techniques
-    are described in Tibshirani (2020) <arxiv:2003.03886>.
+Description: Discrete splines are a class of univariate piecewise polynomial
+    functions which are analogous to splines, but whose smoothness is defined
+    via divided differences rather than derivatives. Tools for efficient
+    computations relating to discrete splines are provided here. These tools
+    include discrete differentiation and integration, various matrix
+    computations with discrete derivative or discrete spline bases matrices, and
+    interpolation within discrete spline spaces. These techniques are described
+    in Tibshirani (2020) <arxiv:2003.03886>.
 License: MIT + file LICENSE
 URL: https://github.com/glmgen/dspline, https://glmgen.github.io/dspline/
 BugReports: https://github.com/glmgen/dspline/issues
