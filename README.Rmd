@@ -42,7 +42,7 @@ matplot(xd, N1, type = "p", pch = 19, col = 1:ncol(N1), add = TRUE)
 abline(v = xd[knot_idx], lty = 2, lwd = 0.5, col = 8)
 ```
 
-These are called *discrete* B-splines. They span a function spaced called
+These are called *discrete* B-splines. They span a function space called
 **discrete splines**, which are analogous to splines, but defined in terms of 
 a suitable discrete notion of smoothness. 
 

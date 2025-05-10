@@ -14,9 +14,9 @@ These are *not* B-splines:
 
 <img src="man/figures/README-show-dsplines-1.png" width="100%" />
 
-These are called *discrete* B-splines. They span a function spaced
-called **discrete splines**, which are analogous to splines, but defined
-in terms of a suitable discrete notion of smoothness.
+These are called *discrete* B-splines. They span a function space called
+**discrete splines**, which are analogous to splines, but defined in
+terms of a suitable discrete notion of smoothness.
 
 - Discrete splines have continuous *discrete* derivatives at their knots
   (rather than continuous derivatives, as splines do).
