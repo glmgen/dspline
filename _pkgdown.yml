@@ -1,5 +1,6 @@
 template:
   bootstrap: 5
+  math-rendering: katex
   bslib:
     primary: "#0054AD"
     danger: "#A6081A"
