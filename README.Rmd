@@ -2,7 +2,7 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd. -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -73,7 +73,8 @@ summary of the tools that are available.
 install.packages("dspline")
 ```
 
-You can install the development version of dspline from [GitHub](https://github.com/) with:
+You can install the development version of dspline from 
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
