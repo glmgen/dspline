@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Tools for Computations with Discrete Splines • dspline</title>
-<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- katex math --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script><script src="katex-auto.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -53,7 +54,7 @@
 
 <p>These are <em>not</em> B-splines:</p>
 <p><img src="reference/figures/README-show-dsplines-1.png" width="100%"></p>
-<p>These are called <em>discrete</em> B-splines. They span a function spaced called <strong>discrete splines</strong>, which are analogous to splines, but defined in terms of a suitable discrete notion of smoothness.</p>
+<p>These are called <em>discrete</em> B-splines. They span a function space called <strong>discrete splines</strong>, which are analogous to splines, but defined in terms of a suitable discrete notion of smoothness.</p>
 <ul>
 <li><p>Discrete splines have continuous <em>discrete</em> derivatives at their knots (rather than continuous derivatives, as splines do).</p></li>
 <li><p>They have important computational properties, like the fact that interpolation within the space of discrete splines can be done in <em>constant-time</em>.</p></li>
