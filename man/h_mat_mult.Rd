@@ -72,9 +72,9 @@ that multiplying by \eqn{(H^k_n)^{-1}} or its transpose can be performed in
 for details.
 }
 \examples{
-v <- sort(runif(10))
+v = sort(runif(10))
 as.vector(h_mat(2, 1:10) \%*\% v)
-h_mat_mult(v, 2, 1:10) # more efficient
+h_mat_mult(v, 2, 1:10) 
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

@@ -83,7 +83,6 @@ matrix as returned by \code{h_mat()}. See also \code{\link[=h_mat_mult]{h_mat_mu
 
 \examples{
 v = as.numeric(1:10) # Note: must be of numeric type
-v
 b_mat_mult(v, 1, 1:10) 
 v
 .b_mat_mult(v, 1, 1:10, FALSE, FALSE, FALSE)

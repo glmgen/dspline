@@ -81,7 +81,7 @@ forming any matrix in the first place).
 }
 \examples{
 b_mat(2, 1:10)
-b_mat(2, 1:10 / 5)
+b_mat(2, 1:10 / 10)
 b_mat(2, 1:10, row_idx = 4:7)
 }
 \references{

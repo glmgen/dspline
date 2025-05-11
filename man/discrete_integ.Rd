@@ -68,7 +68,7 @@ should instead use \code{\link[=h_mat_mult]{h_mat_mult()}} with \code{di_weighti
 be \strong{much} more efficient (quadratic-time versus linear-time).
 }
 \examples{
-xd = 1:10
+xd = 1:10 / 10
 discrete_integ(function(x) 1, 1, xd, xd)
 }
 \references{

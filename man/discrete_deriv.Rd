@@ -57,7 +57,7 @@ will be more efficient (both will be linear-time, but the latter functions
 will be faster).
 }
 \examples{
-xd = 1:10
+xd = 1:10 / 10
 discrete_deriv(function(x) x^2, 1, xd, xd)
 }
 \references{
