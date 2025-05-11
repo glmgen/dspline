@@ -27,8 +27,8 @@
 #'   basis at the design points.
 #' @export
 #' @examples
-#' xd <- 1:9 / 10
-#' x <- 1:8 / 10 + 0.05
+#' xd = 1:10 / 10
+#' x = 1:9 / 10 + 0.05
 #' h_mat(2, xd)
 #' h_eval(2, xd, x)
 h_eval <- function(k, xd, x, col_idx = NULL) {
@@ -93,10 +93,10 @@ h_eval <- function(k, xd, x, col_idx = NULL) {
 #' @importClassesFrom Matrix dgCMatrix
 #' @export
 #' @examples
-#' xd <- 1:9 / 10
-#' x <- 1:8 / 10 + 0.05
-#' n_mat(2, xd, knot_idx = c(3, 4, 7))
-#' n_eval(2, xd, x, knot_idx = c(3, 4, 7))
+#' xd = 1:10 / 10
+#' x = 1:9 / 10 + 0.05
+#' n_mat(2, xd, knot_idx = c(3, 5, 7))
+#' n_eval(2, xd, x, knot_idx = c(3, 5, 7))
 n_eval <- function(k, xd, x, normalized = TRUE, knot_idx = NULL, N = NULL) {
   check_nonneg_int(k)
   check_length(xd, k+1, ">=")
