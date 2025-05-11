@@ -64,7 +64,7 @@
 #' @export
 #' @examples
 #' d_mat(2, 1:10)
-#' d_mat(2, 1:10 / 5)
+#' d_mat(2, 1:10 / 10)
 #' d_mat(2, 1:10, row_idx = 2:5)
 d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
   check_nonneg_int(k)
@@ -152,7 +152,7 @@ d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #' @export
 #' @examples
 #' b_mat(2, 1:10)
-#' b_mat(2, 1:10 / 5)
+#' b_mat(2, 1:10 / 10)
 #' b_mat(2, 1:10, row_idx = 4:7)
 b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
   check_nonneg_int(k)
@@ -266,7 +266,7 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #' @export
 #' @examples
 #' h_mat(2, 1:10)
-#' h_mat(2, 1:10 / 5)
+#' h_mat(2, 1:10 / 10)
 #' h_mat(2, 1:10, col_idx = 4:7)
 h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
   check_nonneg_int(k)

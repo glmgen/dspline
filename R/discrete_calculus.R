@@ -99,7 +99,7 @@ divided_diff <- function(f, z) {
 #'   at design points.
 #' @export
 #' @examples
-#' xd = 1:10
+#' xd = 1:10 / 10
 #' discrete_deriv(function(x) x^2, 1, xd, xd)
 discrete_deriv <- function(f, k, xd, x) {
   check_nonneg_int(k)
@@ -173,7 +173,7 @@ discrete_deriv <- function(f, k, xd, x) {
 #'   points.
 #' @export
 #' @examples
-#' xd = 1:10
+#' xd = 1:10 / 10
 #' discrete_integ(function(x) 1, 1, xd, xd)
 discrete_integ <- function(f, k, xd, x) {
   check_nonneg_int(k)
