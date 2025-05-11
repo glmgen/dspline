@@ -144,17 +144,14 @@ matrix as returned by <code><a href="h_mat.html">h_mat()</a></code>. See also <c
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">v</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="co"># Note: must be of numeric type</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="b_mat_mult.html">b_mat_mult</a></span><span class="op">(</span><span class="va">v</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 1 1 1 1 1 1 1 1 1</span>
 <span class="r-in"><span><span class="va">v</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.05144628 0.19595673 0.28989230 0.53021246 0.67838043 0.68855600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.69582388 0.73531960 0.74152153 0.98053967</span>
-<span class="r-in"><span><span class="fu"><a href="b_mat_mult.html">b_mat_mult</a></span><span class="op">(</span><span class="va">v</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.05144628  0.14451046 -0.05057489  0.14638461 -0.09215220 -0.13799239</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] -0.00290770  0.03222784 -0.03329379  0.23281622</span>
-<span class="r-in"><span><span class="fu">.b_mat_mult</span><span class="op">(</span><span class="va">v</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1  2  3  4  5  6  7  8  9 10</span>
+<span class="r-in"><span><span class="fu">.b_mat_mult</span><span class="op">(</span><span class="va">v</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">v</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.05144628  0.14451046 -0.05057489  0.14638461 -0.09215220 -0.13799239</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] -0.00290770  0.03222784 -0.03329379  0.23281622</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 1 1 1 1 1 1 1 1 1</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

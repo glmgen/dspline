@@ -120,15 +120,9 @@ at design points.</p></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">xd</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span></span></span>
-<span class="r-in"><span><span class="fu">discrete_deriv</span><span class="op">(</span><span class="va">sin</span>, <span class="fl">2</span>, <span class="va">xd</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span> <span class="op">+</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.3120480 -0.9193027 -0.2875054  0.6086230  0.9451862  0.4127496 -0.4991671</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [8] -0.9521519</span>
-<span class="r-in"><span><span class="fu">discrete_deriv</span><span class="op">(</span><span class="va">cos</span>, <span class="fl">2</span>, <span class="va">xd</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span> <span class="op">+</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.93913021  0.24860745  0.90788970  0.73246236 -0.11638750 -0.85823123</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] -0.81102112 -0.01816193</span>
-<span class="r-in"><span><span class="fu">discrete_deriv</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 2</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">xd</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op">/</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="fu">discrete_deriv</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="va">xd</span>, <span class="va">xd</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.01 0.30 0.50 0.70 0.90 1.10 1.30 1.50 1.70 1.90</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

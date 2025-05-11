@@ -139,28 +139,17 @@ and <code><a href="d_mat_mult.html">d_mat_mult()</a></code> for multiplying by t
 <span class="r-out co"><span class="r-pr">#&gt;</span> [6,] .  .  .  .  .  1 -2  1  . .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [7,] .  .  .  .  .  .  1 -2  1 .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8,] .  .  .  .  .  .  .  1 -2 1</span>
-<span class="r-in"><span><span class="fu">d_mat</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op">/</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">d_mat</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op">/</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8 x 10 sparse Matrix of class "dgCMatrix"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 25 -50  25   .   .   .   .   .   .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  .  25 -50  25   .   .   .   .   .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  .   .  25 -50  25   .   .   .   .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  .   .   .  25 -50  25   .   .   .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]  .   .   .   .  25 -50  25   .   .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]  .   .   .   .   .  25 -50  25   .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7,]  .   .   .   .   .   .  25 -50  25  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [8,]  .   .   .   .   .   .   .  25 -50 25</span>
-<span class="r-in"><span><span class="fu">d_mat</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op">/</span> <span class="fl">5</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 x 10 sparse Matrix of class "dgCMatrix"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 5 -10   5   .   .   .   .   .   . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] .   5 -10   5   .   .   .   .   . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] .   .   5 -10   5   .   .   .   . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] .   .   .   5 -10   5   .   .   . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] .   .   .   .   5 -10   5   .   . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] .   .   .   .   .   5 -10   5   . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7,] .   .   .   .   .   .   5 -10   5 .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [8,] .   .   .   .   .   .   .   5 -10 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 100 -200  100    .    .    .    .    .    .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   .  100 -200  100    .    .    .    .    .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]   .    .  100 -200  100    .    .    .    .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]   .    .    .  100 -200  100    .    .    .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]   .    .    .    .  100 -200  100    .    .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]   .    .    .    .    .  100 -200  100    .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7,]   .    .    .    .    .    .  100 -200  100   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8,]   .    .    .    .    .    .    .  100 -200 100</span>
 <span class="r-in"><span><span class="fu">d_mat</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, row_idx <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 x 10 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             </span>

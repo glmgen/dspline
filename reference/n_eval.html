@@ -117,31 +117,33 @@ basis at the design points.</p></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">xd</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span> <span class="op">/</span> <span class="fl">10</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span> <span class="op">/</span> <span class="fl">10</span> <span class="op">+</span> <span class="fl">0.05</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="n_mat.html">n_mat</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">xd</span>, knot_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">xd</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op">/</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span> <span class="op">/</span> <span class="fl">10</span> <span class="op">+</span> <span class="fl">0.05</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="n_mat.html">n_mat</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">xd</span>, knot_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 6 sparse Matrix of class "dgCMatrix"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 1 .         .         .         .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] . 1.0000000 .         .         .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] . 0.3333333 0.8888889 .         .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] . .         1.0000000 0.3125000 .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] . .         0.3333333 0.9375000 .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] . .         .         1.0000000 0.2857143 .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] . .         .         0.5000000 0.8571429 .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] . .         .         0.1666667 1.0000000 0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] . .         .         .         0.7142857 0.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] . .         .         .         .         1.0000000</span>
+<span class="r-in"><span><span class="fu">n_eval</span><span class="op">(</span><span class="fl">2</span>, <span class="va">xd</span>, <span class="va">x</span>, knot_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9 x 6 sparse Matrix of class "dgCMatrix"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 1 . .         .         .         .        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] . 1 .         .         .         .        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] . . 1.0000000 .         .         .        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] . . 0.5000000 0.7142857 .         .        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] . . 0.1666667 1.0000000 0.1666667 .        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] . . .         0.8571429 0.5000000 .        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] . . .         0.2857143 1.0000000 .        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] . . .         .         0.8333333 0.3333333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] . . .         .         .         1.0000000</span>
-<span class="r-in"><span><span class="fu">n_eval</span><span class="op">(</span><span class="fl">2</span>, <span class="va">xd</span>, <span class="va">x</span>, knot_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 x 6 sparse Matrix of class "dgCMatrix"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.375  0.750 -0.12500000  .          .         .    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.125  0.750  0.37500000  .          .         .    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  .     -0.125  0.93750000  0.26785714 .         .    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  .      .      0.31250000  0.91071429 0.0625000 .    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]  .      .      0.06250000  0.98214286 0.3125000 .    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]  .      .     -0.02083333  0.62500000 0.7291667 .    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7,]  .      .      .           0.10714286 1.0000000 0.125</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [8,]  .      .      .          -0.03571429 0.5000000 0.625</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]  0.375  0.70833333 -0.11111111  .          .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] -0.125  0.87500000  0.33333333  .          .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]  .      0.12500000  1.04166667  0.11718750 .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]  .     -0.04166667  0.76388889  0.58593750 .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]  .      .           0.12500000  1.03906250 0.1071429 .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]  .      .          -0.04166667  0.82031250 0.5357143 .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]  .      .           .           0.31250000 0.9821429 0.0625000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]  .      .           .           0.06250000 0.9107143 0.3125000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]  .      .           .          -0.02083333 0.4107143 0.7291667</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
