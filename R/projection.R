@@ -72,12 +72,13 @@
 #'   discrete splines.
 #' @export
 #' @examples
-#' xd <- 1:99 / 100
-#' v <- sin(2 * pi * xd) + rnorm(99, 0, .2)
-#' res <- dspline_solve(v, 2, xd, 1:9 * 10)
-#' plot(xd, v, pch = 16)
-#' lines(xd, res$fit, col = "cornflowerblue")
-#' lines(xd, sin(2 * pi * xd), col = "firebrick")
+#' xd = 1:100 / 100
+#' knot_idx = 1:9 * 10
+#' y = sin(2 * pi * xd) + rnorm(100, 0, 0.2)
+#' yhat = res = dspline_solve(y, 2, xd, knot_idx)$fit
+#' plot(xd, y, pch = 16, col = "gray60")
+#' points(xd, yhat, col = "firebrick")
+#' abline(v = xd[knot_idx], lty = 2)
 dspline_solve <- function(v, k, xd, knot_idx, basis = c("N", "B", "H"), mat) {
   check_nonneg_int(k)
   check_sorted(xd)

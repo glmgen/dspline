@@ -135,8 +135,8 @@ Eigen::SparseMatrix<double> rcpp_n_mat(int k, NumericVector xd, bool normalized,
   n_mat.setFromTriplets(n_list.begin(), n_list.end());
   // Rescale columns to have largest value 1 if necessary
   if (normalized) {
-    // Canonical matrix-vector broadcasting in Eigen is done via arrays
-    // (see, e.g., https://eigen.tuxfamily.org/dox/group__TutorialArrayClass.html).
+    // Canonical matrix-vector broadcasting in Eigen is done via arrays (see,
+    // e.g., https://eigen.tuxfamily.org/dox/group__TutorialArrayClass.html).
     // However, sparse matrices cannot be converted to arrays, so here we
     // perform column scaling via right-multiplication by a diagonal matrix.
     n_mat = n_mat * max_vals.cwiseInverse().asDiagonal();

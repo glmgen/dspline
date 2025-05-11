@@ -68,10 +68,8 @@ should instead use \code{\link[=h_mat_mult]{h_mat_mult()}} with \code{di_weighti
 be \strong{much} more efficient (quadratic-time versus linear-time).
 }
 \examples{
-xd <- 1:9
-discrete_integ(sin, 2, xd, 1:8 + 0.5)
-discrete_integ(cos, 2, xd, 1:8 + 0.5)
-discrete_integ(function(x) (x + 2)^2, 2, -5:5, c(-2.5, 2.5))
+xd = 1:10
+discrete_integ(function(x) 1, 1, xd, xd)
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

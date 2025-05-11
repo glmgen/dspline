@@ -75,13 +75,15 @@ generally a more efficient and stable scheme for interpolation. See Section
 5.4 of Tibshirani (2020) for more details.
 }
 \examples{
-xd <- 1:99 / 100
-v <- sin(2 * pi * xd) + rnorm(99, 0, .2)
-res <- dspline_solve(v, 2, xd, 1:9 * 10)
+xd = 1:99 / 100
+knot_idx = 1:9 * 10
+v = sin(2 * pi * xd) + rnorm(99, 0, .2)
+res = dspline_solve(v, 2, xd, knot_idx)
+x = 1:98 / 100 + 0.005 
+vhat = dspline_interp(res$fit, 2, xd, x)
 plot(xd, v, pch = 16)
-x <- 1:98 / 100 + 0.005 # locations in between `xd`
-vhat <- dspline_interp(res$fit, 2, xd, x)
 points(x, vhat, col = "firebrick")
+abline(v = xd[knot_idx], lty = 2)
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

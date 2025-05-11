@@ -42,7 +42,14 @@ backward difference operators, respectively, of order \eqn{k} and with
 spacing \eqn{h}.
 }
 \examples{
-divided_diff(sin, 1:99 / 100 * 2 * pi)
-divided_diff(cos, 1:99 / 100 * 2 * pi)
-divided_diff(function(x) (x + 2)^2, seq(-5, 5, length.out = 100))
+f = runif(4)
+z = runif(4)
+divided_diff(f[1], z[1])
+f[1]
+divided_diff(f[1:2], z[1:2])
+(f[1]-f[2])/(z[1]-z[2])
+divided_diff(f[1:3], z[1:3])
+((f[1]-f[2])/(z[1]-z[2]) - (f[2]-f[3])/(z[2]-z[3])) / (z[1]-z[3]) 
+divided_diff(f, 1:4)
+diff(f, diff = 3) / factorial(3)
 }
