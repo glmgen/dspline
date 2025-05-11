@@ -35,10 +35,11 @@
 #'   matrix as returned by `h_mat()`. See also [h_mat_mult()].
 #' @return None. These functions *overwrite* their input.
 #' @examples
-#' v <- sort(runif(10))
+#' v = as.numeric(1:10) # Note: must be of numeric type
 #' v
-#' b_mat_mult(v, 2, 1:10)
-#' .b_mat_mult(v, 2, 1:10, FALSE, FALSE, FALSE)
+#' b_mat_mult(v, 1, 1:10) 
+#' v
+#' .b_mat_mult(v, 1, 1:10, FALSE, FALSE, FALSE)
 #' v
 NULL
 

@@ -31,17 +31,16 @@
 #'
 #' @export
 #' @examples
-#' m = 4 
-#' f = runif(m)
-#' z = runif(m)
+#' f = runif(4)
+#' z = runif(4)
 #' divided_diff(f[1], z[1])
 #' f[1]
 #' divided_diff(f[1:2], z[1:2])
 #' (f[1]-f[2])/(z[1]-z[2])
 #' divided_diff(f[1:3], z[1:3])
 #' ((f[1]-f[2])/(z[1]-z[2]) - (f[2]-f[3])/(z[2]-z[3])) / (z[1]-z[3]) 
-#' divided_diff(f, 1:m)
-#' diff(f, diff = m-1) / factorial(m-1)
+#' divided_diff(f, 1:4)
+#' diff(f, diff = 3) / factorial(3)
 divided_diff <- function(f, z) {
   if (is.function(f)) f = sapply(z, f)
   else check_length(f, length(z))
