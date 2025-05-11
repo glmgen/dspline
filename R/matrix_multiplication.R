@@ -51,9 +51,9 @@
 #'   matrix, and [d_mat()] for constructing the discrete derivative matrix.
 #' @export
 #' @examples
-#' v <- sort(runif(10))
+#' v = sort(runif(10))
 #' as.vector(d_mat(2, 1:10) %*% v)
-#' d_mat_mult(v, 2, 1:10) # more efficient
+#' d_mat_mult(v, 2, 1:10) 
 d_mat_mult <- function(v, k, xd, tf_weighting = FALSE, transpose = FALSE) {
   check_nonneg_int(k)
   check_sorted(xd)
@@ -126,9 +126,9 @@ d_mat_mult <- function(v, k, xd, tf_weighting = FALSE, transpose = FALSE) {
 #'   and [b_mat()] for constructing the extended discrete derivative matrix.
 #' @export
 #' @examples
-#' v <- sort(runif(10))
+#' v = sort(runif(10))
 #' as.vector(b_mat(2, 1:10) %*% v)
-#' b_mat_mult(v, 2, 1:10) # more efficient
+#' b_mat_mult(v, 2, 1:10) 
 b_mat_mult <- function(v, k, xd, tf_weighting = FALSE, transpose = FALSE,
                        inverse = FALSE) {
   check_nonneg_int(k)
@@ -202,9 +202,9 @@ b_mat_mult <- function(v, k, xd, tf_weighting = FALSE, transpose = FALSE,
 #'   points, and [h_mat()] for constructing the falling factorial basis matrix.
 #' @export
 #' @examples
-#' v <- sort(runif(10))
+#' v = sort(runif(10))
 #' as.vector(h_mat(2, 1:10) %*% v)
-#' h_mat_mult(v, 2, 1:10) # more efficient
+#' h_mat_mult(v, 2, 1:10) 
 h_mat_mult <- function(v, k, xd, di_weighting = FALSE, transpose = FALSE,
                        inverse = FALSE) {
   check_nonneg_int(k)
