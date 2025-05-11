@@ -31,9 +31,16 @@
 #'
 #' @export
 #' @examples
-#' divided_diff(sin, 1:99 / 100 * 2 * pi)
-#' divided_diff(cos, 1:99 / 100 * 2 * pi)
-#' divided_diff(function(x) (x + 2)^2, seq(-5, 5, length.out = 100))
+#' f = runif(4)
+#' z = runif(4)
+#' divided_diff(f[1], z[1])
+#' f[1]
+#' divided_diff(f[1:2], z[1:2])
+#' (f[1]-f[2])/(z[1]-z[2])
+#' divided_diff(f[1:3], z[1:3])
+#' ((f[1]-f[2])/(z[1]-z[2]) - (f[2]-f[3])/(z[2]-z[3])) / (z[1]-z[3]) 
+#' divided_diff(f, 1:4)
+#' diff(f, diff = 3) / factorial(3)
 divided_diff <- function(f, z) {
   if (is.function(f)) f = sapply(z, f)
   else check_length(f, length(z))
@@ -92,10 +99,8 @@ divided_diff <- function(f, z) {
 #'   at design points.
 #' @export
 #' @examples
-#' xd <- 1:9
-#' discrete_deriv(sin, 2, xd, 1:8 + 0.5)
-#' discrete_deriv(cos, 2, xd, 1:8 + 0.5)
-#' discrete_deriv(function(x) (x + 2)^2, 2, -5:5, c(-2.5, 2.5))
+#' xd = 1:10 / 10
+#' discrete_deriv(function(x) x^2, 1, xd, xd)
 discrete_deriv <- function(f, k, xd, x) {
   check_nonneg_int(k)
   check_sorted(xd)
@@ -168,10 +173,8 @@ discrete_deriv <- function(f, k, xd, x) {
 #'   points.
 #' @export
 #' @examples
-#' xd <- 1:9
-#' discrete_integ(sin, 2, xd, 1:8 + 0.5)
-#' discrete_integ(cos, 2, xd, 1:8 + 0.5)
-#' discrete_integ(function(x) (x + 2)^2, 2, -5:5, c(-2.5, 2.5))
+#' xd = 1:10 / 10
+#' discrete_integ(function(x) 1, 1, xd, xd)
 discrete_integ <- function(f, k, xd, x) {
   check_nonneg_int(k)
   check_sorted(xd)

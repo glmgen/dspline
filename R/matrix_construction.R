@@ -64,8 +64,7 @@
 #' @export
 #' @examples
 #' d_mat(2, 1:10)
-#' d_mat(2, 1:10 / 5)
-#' d_mat(2, 1:10 / 5, TRUE)
+#' d_mat(2, 1:10 / 10)
 #' d_mat(2, 1:10, row_idx = 2:5)
 d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
   check_nonneg_int(k)
@@ -153,9 +152,8 @@ d_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #' @export
 #' @examples
 #' b_mat(2, 1:10)
-#' b_mat(2, 1:10 / 5)
-#' b_mat(2, 1:10 / 5, TRUE)
-#' b_mat(2, 1:10, row_idx = 2:5)
+#' b_mat(2, 1:10 / 10)
+#' b_mat(2, 1:10, row_idx = 4:7)
 b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
   check_nonneg_int(k)
   check_length(xd, k+1, ">=")
@@ -268,9 +266,8 @@ b_mat <- function(k, xd, tf_weighting = FALSE, row_idx = NULL) {
 #' @export
 #' @examples
 #' h_mat(2, 1:10)
-#' h_mat(2, 1:10 / 5)
-#' h_mat(2, 1:10 / 5, TRUE)
-#' h_mat(2, 1:10, col_idx = 2:5)
+#' h_mat(2, 1:10 / 10)
+#' h_mat(2, 1:10, col_idx = 4:7)
 h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
   check_nonneg_int(k)
   check_length(xd, k+1, ">=")
@@ -339,9 +336,8 @@ h_mat <- function(k, xd, di_weighting = FALSE, col_idx = NULL) {
 #' @importClassesFrom Matrix dgCMatrix
 #' @export
 #' @examples
-#' n_mat(2, 1:10, knot_idx = c(3, 4, 7))
-#' n_mat(2, 1:10, FALSE, knot_idx = c(3, 4, 7))
-#' n_mat(2, 1:10)
+#' n_mat(2, 1:10, knot_idx = c(3, 5, 7))
+#' n_mat(2, 1:10, knot_idx = c(4, 6, 8))
 n_mat <- function(k, xd, normalized = TRUE, knot_idx = NULL) {
   check_nonneg_int(k)
   check_length(xd, k+1, ">=")
@@ -354,7 +350,5 @@ n_mat <- function(k, xd, normalized = TRUE, knot_idx = NULL) {
     check_range(knot_idx, (k+1):(n-1))
     check_sorted(knot_idx)
   }
-
   rcpp_n_mat(k, xd, normalized, knot_idx-1)
-
 }

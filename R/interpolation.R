@@ -67,13 +67,15 @@
 #'   x_{(k+1):(n-1)}}).
 #' @export
 #' @examples
-#' xd <- 1:99 / 100
-#' v <- sin(2 * pi * xd) + rnorm(99, 0, .2)
-#' res <- dspline_solve(v, 2, xd, 1:9 * 10)
-#' plot(xd, v, pch = 16)
-#' x <- 1:98 / 100 + 0.005 # locations in between `xd`
-#' vhat <- dspline_interp(res$fit, 2, xd, x)
-#' points(x, vhat, col = "firebrick")
+#' xd = 1:100 / 100
+#' knot_idx = 1:9 * 10
+#' y = sin(2 * pi * xd) + rnorm(100, 0, 0.2)
+#' yhat = dspline_solve(y, 2, xd, knot_idx)$fit
+#' x = seq(0, 1, length = 1000)
+#' fhat = dspline_interp(yhat, 2, xd, x)
+#' plot(xd, y, pch = 16, col = "gray65")
+#' lines(x, fhat, col = "firebrick", lwd = 2)
+#' abline(v = xd[knot_idx], lty = 2)
 dspline_interp <- function(v, k, xd, x, implicit = TRUE) {
   check_nonneg_int(k)
   check_sorted(xd)

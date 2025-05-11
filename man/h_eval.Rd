@@ -38,8 +38,8 @@ row with entries:
   }
 }
 \examples{
-xd <- 1:9 / 10
-x <- 1:8 / 10 + 0.05
+xd = 1:10 / 10
+x = 1:9 / 10 + 0.05
 h_mat(2, xd)
 h_eval(2, xd, x)
 }

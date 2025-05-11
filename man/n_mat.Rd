@@ -61,9 +61,8 @@ sets \eqn{T} that are proper subsets of \eqn{x_{(k+1):(n-1)}}.
 Specification of the knot set \eqn{T} is done via the argument \code{knot_idx}.
 }
 \examples{
-n_mat(2, 1:10, knot_idx = c(3, 4, 7))
-n_mat(2, 1:10, FALSE, knot_idx = c(3, 4, 7))
-n_mat(2, 1:10)
+n_mat(2, 1:10, knot_idx = c(3, 5, 7))
+n_mat(2, 1:10, knot_idx = c(4, 6, 8))
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

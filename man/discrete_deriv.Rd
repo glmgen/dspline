@@ -57,10 +57,8 @@ will be more efficient (both will be linear-time, but the latter functions
 will be faster).
 }
 \examples{
-xd <- 1:9
-discrete_deriv(sin, 2, xd, 1:8 + 0.5)
-discrete_deriv(cos, 2, xd, 1:8 + 0.5)
-discrete_deriv(function(x) (x + 2)^2, 2, -5:5, c(-2.5, 2.5))
+xd = 1:10 / 10
+discrete_deriv(function(x) x^2, 1, xd, xd)
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

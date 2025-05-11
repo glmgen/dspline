@@ -81,12 +81,13 @@ knots in the discrete spline space and the complementary set of roles play
 a role in computing the solution. See Section 8.1 of Tibshirani (2020).
 }
 \examples{
-xd <- 1:99 / 100
-v <- sin(2 * pi * xd) + rnorm(99, 0, .2)
-res <- dspline_solve(v, 2, xd, 1:9 * 10)
-plot(xd, v, pch = 16)
-lines(xd, res$fit, col = "cornflowerblue")
-lines(xd, sin(2 * pi * xd), col = "firebrick")
+xd = 1:100 / 100
+knot_idx = 1:9 * 10
+y = sin(2 * pi * xd) + rnorm(100, 0, 0.2)
+yhat = res = dspline_solve(y, 2, xd, knot_idx)$fit
+plot(xd, y, pch = 16, col = "gray60")
+points(xd, yhat, col = "firebrick")
+abline(v = xd[knot_idx], lty = 2)
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

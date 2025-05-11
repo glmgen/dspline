@@ -70,9 +70,9 @@ performed in \eqn{O(nk)} operations. See Section 6.3 and Appendix D of
 Tibshirani (2020) for details.
 }
 \examples{
-v <- sort(runif(10))
+v = sort(runif(10))
 as.vector(b_mat(2, 1:10) \%*\% v)
-b_mat_mult(v, 2, 1:10) # more efficient
+b_mat_mult(v, 2, 1:10) 
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

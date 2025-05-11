@@ -59,9 +59,9 @@ where \eqn{D^k f} is the \eqn{k}th derivative of \eqn{f}. See Section
 9.1. of Tibshirani (2020) for more details.
 }
 \examples{
-v <- sort(runif(10))
+v = sort(runif(10))
 as.vector(d_mat(2, 1:10) \%*\% v)
-d_mat_mult(v, 2, 1:10) # more efficient
+d_mat_mult(v, 2, 1:10) 
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

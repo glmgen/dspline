@@ -106,9 +106,8 @@ multiplication, but instead use \code{\link[=h_mat_mult]{h_mat_mult()}}, as the 
 }
 \examples{
 h_mat(2, 1:10)
-h_mat(2, 1:10 / 5)
-h_mat(2, 1:10 / 5, TRUE)
-h_mat(2, 1:10, col_idx = 2:5)
+h_mat(2, 1:10 / 10)
+h_mat(2, 1:10, col_idx = 4:7)
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

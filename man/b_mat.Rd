@@ -81,9 +81,8 @@ forming any matrix in the first place).
 }
 \examples{
 b_mat(2, 1:10)
-b_mat(2, 1:10 / 5)
-b_mat(2, 1:10 / 5, TRUE)
-b_mat(2, 1:10, row_idx = 2:5)
+b_mat(2, 1:10 / 10)
+b_mat(2, 1:10, row_idx = 4:7)
 }
 \references{
 Tibshirani (2020), "Divided differences, falling factorials, and

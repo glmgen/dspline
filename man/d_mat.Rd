@@ -70,8 +70,7 @@ forming any matrix in the first place).
 }
 \examples{
 d_mat(2, 1:10)
-d_mat(2, 1:10 / 5)
-d_mat(2, 1:10 / 5, TRUE)
+d_mat(2, 1:10 / 10)
 d_mat(2, 1:10, row_idx = 2:5)
 }
 \references{
