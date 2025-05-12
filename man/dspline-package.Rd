@@ -6,7 +6,7 @@
 \alias{dspline-package}
 \title{dspline: Tools for Computations with Discrete Splines}
 \description{
-Discrete splines are a class of univariate piecewise polynomial functions which are analogous to splines, but whose smoothness is defined via divided differences rather than derivatives. Tools for efficient computations relating to discrete splines are provided here. These tools include discrete differentiation and integration, various matrix computations with discrete derivative or discrete spline bases matrices, and interpolation within discrete spline spaces. These techniques are described in Tibshirani (2020) \href{https://arxiv.org/abs/2003.03886}{arXiv:2003.03886}.
+Discrete splines are a class of univariate piecewise polynomial functions which are analogous to splines, but whose smoothness is defined via divided differences rather than derivatives. Tools for efficient computations relating to discrete splines are provided here. These tools include discrete differentiation and integration, various matrix computations with discrete derivative or discrete spline bases matrices, and interpolation within discrete spline spaces. These techniques are described in Tibshirani (2020) \doi{10.48550/arXiv.2003.03886}.
 }
 \seealso{
 Useful links:
