@@ -15,7 +15,7 @@ Description: Discrete splines are a class of univariate piecewise polynomial
     include discrete differentiation and integration, various matrix
     computations with discrete derivative or discrete spline bases matrices, and
     interpolation within discrete spline spaces. These techniques are described
-    in Tibshirani (2020) <arxiv:2003.03886>.
+    in Tibshirani (2020) <doi:10.48550/arXiv.2003.03886>.
 License: MIT + file LICENSE
 URL: https://github.com/glmgen/dspline, https://glmgen.github.io/dspline/
 BugReports: https://github.com/glmgen/dspline/issues
