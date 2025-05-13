@@ -44,7 +44,7 @@ Eigen::SparseMatrix<double> rcpp_b_mat(int k, NumericVector xd, bool tf_weightin
   // Now construct D in sparse triplet format
   std::vector<T> b_list;
   b_list.reserve(N);
-  int l = 0, j_start, j_end;
+  int j_start, j_end;
   double x;
   for (int i = 0; i < n_row; i++) {
     j_start = std::max(row_idx[i] - (!d_only * k), 0);
@@ -63,7 +63,6 @@ Eigen::SparseMatrix<double> rcpp_b_mat(int k, NumericVector xd, bool tf_weightin
         }
       }
       b_list.push_back(T(i, j, x));
-      l++;
     }
   }
   SparseMatrix<double> b_mat(n_row, xd.size());
@@ -81,7 +80,6 @@ Eigen::SparseMatrix<double> rcpp_h_mat(int k, NumericVector xd, bool di_weightin
   // Now construct H in sparse triplet format
   std::vector<T> h_list;
   h_list.reserve(N);
-  int l = 0;
   double x;
   for (int j = 0; j < n_col; j++) {
     for (int i = col_idx[j]; i < n_row; i++) {
@@ -92,7 +90,6 @@ Eigen::SparseMatrix<double> rcpp_h_mat(int k, NumericVector xd, bool di_weightin
         x *= (xd[col_idx[j]] - xd[col_idx[j]-k-1]) / (k+1);
       }
       h_list.push_back(T(i, j, x));
-      l++;
     }
   }
 
@@ -168,11 +165,9 @@ Eigen::SparseMatrix<double> rcpp_h_eval(int k, NumericVector xd, NumericVector x
   // Now construct H in sparse triplet format
   std::vector<T> h_list;
   h_list.reserve(N);
-  int l = 0;
   for (int j = 0; j < n_col; j++) {
     for (int i = I[j]; i < n_row; i++) {
       h_list.push_back(T(i, j, hxj(k, xd, x[i], col_idx[j])));
-      l++;
     }
   }
 
