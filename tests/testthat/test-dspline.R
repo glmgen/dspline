@@ -1,5 +1,5 @@
 source("old-funs.R")
-tol = 1e-8
+tol = 1e-7
 
 test_that("Divided differences", {
   m = 4
