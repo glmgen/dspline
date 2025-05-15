@@ -1,5 +1,5 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd. -->
 
 # dspline
 
@@ -40,13 +40,13 @@ for a summary of the tools that are available.
 
 ## Installation
 
+To install the released version from CRAN:
+
 ``` r
-# Install released version from CRAN
 install.packages("dspline")
 ```
 
-You can install the development version of dspline from
-[GitHub](https://github.com/) with:
+To install the development version from GitHub:
 
 ``` r
 # install.packages("pak")
