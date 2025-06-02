@@ -3,13 +3,12 @@ title: Introduction to dspline
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Get started}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r, include=FALSE}
 knitr::opts_knit$set(global.par = TRUE)
-knitr::opts_chunk$set(dev = "svg")
 ``` 
 
 ```{r, include=FALSE}
