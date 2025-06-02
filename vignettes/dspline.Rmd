@@ -1,11 +1,19 @@
 ---
-title: Getting started
+title: Introduction to dspline
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting started}
+  %\VignetteIndexEntry{Get started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+```{r, include=FALSE}
+knitr::opts_knit$set(global.par = TRUE)
+``` 
+
+```{r, include=FALSE}
+par(mar = c(4.5, 4.5, 0.5, 0.5))
+```
 
 ## Overview
 
@@ -21,14 +29,6 @@ We'll load the package before diving in to these sections.
 
 ```{r}
 library(dspline)
-```
-
-```{r, include=FALSE}
-knitr::opts_knit$set(global.par = TRUE)
-``` 
-
-```{r, include=FALSE}
-par(mar = c(4.5, 4.5, 0.5, 0.5))
 ```
 
 ## Computing discrete derivatives
@@ -90,7 +90,7 @@ but using [d_mat_mult()] is more efficient. It doesn't actually form any such
 matrix internally, and instead performs a specialized routine to carry out the
 discrete derivative computations. 
 
-## Smoothing with discrete splines
+## Discrete spline smoothing
 
 Now we'll smooth some noisy data, by regressing it onto the space of discrete
 splines of cubic degree, with 9 knots which are roughly evenly-spaced among the
@@ -117,7 +117,11 @@ the default choice (corresponding to `basis = "N"`) in [dspline_solve()]. These
 have compact support, just like the usual B-spline basis. While other bases are
 available, for regression problems in which the knot points are a sparse subset
 of the design points, the discrete B-spline basis is likely the best choice in
-terms of efficiency and numerical stability.
+terms of efficiency and numerical stability. The computational cost is linear in
+the number of knots. For more details, see Section 8.1 of 
+[Tibshirani (2020)](https://www.stat.berkeley.edu/~ryantibs/papers/dspline.pdf).
+
+### Relation to trend filtering
 
 The smoothing above is done using ordinary least squares regression, with fixed
 knots and without regularization. A related and more advanced technique would be 
@@ -127,10 +131,13 @@ regression onto the space of discrete splines, by penalizing the $\ell_1$ norm
 of discrete derivatives across the design points. This has the advantage of 
 being more locally adaptive: allocating more flexibility to the fitted function
 dynamically, at parts of the input space in which such flexibility is warranted,
-rather than letting this be dictated by a given fixed knot sequence. See the 
-[trendfilter](https://github.com/glmgen/trendfilter) package for more details.
+rather than letting this be dictated by a given fixed knot sequence. To learn
+more, see the [trendfilter](https://github.com/glmgen/trendfilter) package, or
+[Tibshirani (2014)](https://www.stat.berkeley.edu/~ryantibs/papers/trendfilter.pdf)
+or Sections 1 and 2.5 of 
+[Tibshirani (2020)](https://www.stat.berkeley.edu/~ryantibs/papers/dspline.pdf).
 
-## Interpolation with discrete splines
+## Discrete spline interpolation
 
 To go from a sequence of fitted values to a fitted function, we must interpolate
 in the space of cubic discrete splines. We'll do this using [dspline_interp()].
