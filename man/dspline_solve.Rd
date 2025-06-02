@@ -84,7 +84,7 @@ a role in computing the solution. See Section 8.1 of Tibshirani (2020).
 xd = 1:100 / 100
 knot_idx = 1:9 * 10
 y = sin(2 * pi * xd) + rnorm(100, 0, 0.2)
-yhat = res = dspline_solve(y, 2, xd, knot_idx)$fit
+yhat = dspline_solve(y, 2, xd, knot_idx)$fit
 plot(xd, y, pch = 16, col = "gray60")
 points(xd, yhat, col = "firebrick")
 abline(v = xd[knot_idx], lty = 2)

@@ -23,7 +23,7 @@ check_length <- function(x, n, op = c("==", ">=", "<=")) {
 
 check_rows <- function(x, n) {
   args = as.character(as.list(match.call())[-1])
-  if (!is.matrix(x)) {
+  if (!is.matrix(x) && !inherits(x, "Matrix")) {
     rlang::abort(sprintf("`%s` must be a matrix.", args[1]))
   }
   if (nrow(x) != n) {
@@ -33,7 +33,7 @@ check_rows <- function(x, n) {
 
 check_cols <- function(x, n) {
   args = as.character(as.list(match.call())[-1])
-  if (!is.matrix(x)) {
+  if (!is.matrix(x) && !inherits(x, "Matrix")) {
     rlang::abort(sprintf("`%s` must be a matrix.", args[1]))
   }
   if (ncol(x) != n) {
