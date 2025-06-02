@@ -9,6 +9,7 @@ vignette: >
 
 ```{r, include=FALSE}
 knitr::opts_knit$set(global.par = TRUE)
+knitr::opts_chunk$set(dev = "png", dpi = 300)
 ``` 
 
 ```{r, include=FALSE}
