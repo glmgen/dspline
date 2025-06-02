@@ -85,7 +85,7 @@ derivatives.</li>
 <code class="sourceCode R"><span><span class="va">expr</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">x</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="fl">7</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fl">4</span> <span class="op">*</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">f</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="va">f</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dspline_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="dspline_files/figure-html/unnamed-chunk-4-1.png" width="2187.5"></p>
 <p>As usual, we can compute derivatives using <code><a href="https://rdrr.io/r/stats/deriv.html" class="external-link">D()</a></code>. Below,
 we show how to compute its discrete derivatives based on evaluating
 <code>f</code> at 100 design points <code>xd</code>, and multiplying
@@ -107,7 +107,7 @@ demonstrate this with both first and second derivatives.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomleft"</span>, lty <span class="op">=</span> <span class="fl">1</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">21</span><span class="op">)</span>, col <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,</span>
 <span>       legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Exact"</span>, <span class="st">"Discrete"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/rug.html" class="external-link">rug</a></span><span class="op">(</span><span class="va">xd</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dspline_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="dspline_files/figure-html/unnamed-chunk-5-1.png" width="2187.5"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Second derivatives</span></span>
 <span><span class="va">fd2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html" class="external-link">D</a></span><span class="op">(</span><span class="va">fd</span>, <span class="st">"x"</span><span class="op">)</span></span>
@@ -119,7 +119,7 @@ demonstrate this with both first and second derivatives.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomleft"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Exact"</span>, <span class="st">"Discrete"</span><span class="op">)</span>,</span>
 <span>       lty <span class="op">=</span> <span class="fl">1</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">21</span><span class="op">)</span>, col <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/rug.html" class="external-link">rug</a></span><span class="op">(</span><span class="va">xd</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dspline_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
+<p><img src="dspline_files/figure-html/unnamed-chunk-5-2.png" width="2187.5"></p>
 <p>Note that the discrete derivatives come back as a vector of length
 <code>n-k-1</code>, with <code>n</code> being the number of design
 points and <code>k</code> being the derivative order. Each discrete
@@ -157,7 +157,7 @@ evenly-spaced among the design points. This is done using the function
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">xd</span>, <span class="va">yhat</span>, col <span class="op">=</span> <span class="fl">2</span>, pch <span class="op">=</span> <span class="fl">19</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">xd</span>, <span class="va">N</span> <span class="op">*</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"l"</span>, lty <span class="op">=</span> <span class="fl">1</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/rug.html" class="external-link">rug</a></span><span class="op">(</span><span class="va">xd</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dspline_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="dspline_files/figure-html/unnamed-chunk-6-1.png" width="2187.5"></p>
 <p>As we can see, the fitted values from the regression onto the space
 of discrete splines do a qualitatively reasonable job of smoothing. The
 basis functions used here (i.e., covariates in the regression) are
@@ -204,7 +204,7 @@ interpolate in the space of cubic discrete splines. We’ll do this using
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">xd</span>, <span class="va">N</span> <span class="op">*</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"l"</span>, lty <span class="op">=</span> <span class="fl">1</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">xd</span><span class="op">[</span><span class="va">knot_idx</span><span class="op">]</span>, col <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/rug.html" class="external-link">rug</a></span><span class="op">(</span><span class="va">xd</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dspline_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="dspline_files/figure-html/unnamed-chunk-7-1.png" width="2187.5"></p>
 <p>The function plotted in as a thick red line above is a bona fide
 cubic discrete spline: it is a piecewise cubic polynomial with knots at
 the specified points (marked as vertical gray lines), and its discrete
@@ -217,12 +217,12 @@ visualized below.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">xd</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="va">n</span><span class="op">]</span>, <span class="va">dd1</span>, xlab <span class="op">=</span> <span class="st">"x"</span>, ylab <span class="op">=</span> <span class="st">"First discrete derivative"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">xd</span><span class="op">[</span><span class="va">knot_idx</span><span class="op">]</span>, col <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/rug.html" class="external-link">rug</a></span><span class="op">(</span><span class="va">xd</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dspline_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="dspline_files/figure-html/unnamed-chunk-8-1.png" width="2187.5"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">xd</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="va">n</span><span class="op">]</span>, <span class="va">dd2</span>, xlab <span class="op">=</span> <span class="st">"x"</span>, ylab <span class="op">=</span> <span class="st">"Second discrete derivative"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">xd</span><span class="op">[</span><span class="va">knot_idx</span><span class="op">]</span>, col <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/rug.html" class="external-link">rug</a></span><span class="op">(</span><span class="va">xd</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dspline_files/figure-html/unnamed-chunk-8-2.png" width="700"></p>
+<p><img src="dspline_files/figure-html/unnamed-chunk-8-2.png" width="2187.5"></p>
 </div>
 <div class="section level2">
 <h2 id="matching-derivatives">Matching derivatives<a class="anchor" aria-label="anchor" href="#matching-derivatives"></a>
@@ -240,7 +240,7 @@ constant.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">dd3</span>, type <span class="op">=</span> <span class="st">"l"</span>, ylab <span class="op">=</span> <span class="st">"Third discrete derivative"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">xd</span><span class="op">[</span><span class="va">knot_idx</span><span class="op">]</span>, col <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/rug.html" class="external-link">rug</a></span><span class="op">(</span><span class="va">xd</span><span class="op">[</span><span class="va">xd</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dspline_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p><img src="dspline_files/figure-html/unnamed-chunk-9-1.png" width="2187.5"></p>
 <p>Here we used [discrete_deriv()] to compute the discrete derivatives
 over a fine grid of locations <code>x</code> outside of the design
 points <code>xd</code>. (Note: as used earlier, the function
@@ -271,7 +271,7 @@ derivatives.</em></p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">xd</span>, <span class="va">yhat</span>, col <span class="op">=</span> <span class="fl">2</span>, pch <span class="op">=</span> <span class="fl">19</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">xd</span>, <span class="va">H</span> <span class="op">*</span> <span class="fl">80</span>, type <span class="op">=</span> <span class="st">"l"</span>, lty <span class="op">=</span> <span class="fl">1</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/rug.html" class="external-link">rug</a></span><span class="op">(</span><span class="va">xd</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dspline_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p><img src="dspline_files/figure-html/unnamed-chunk-10-1.png" width="2187.5"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Now build analytic expansion in terms of falling factorial bases functions.</span></span>
 <span><span class="co"># Unfortunately we need to separate out the terms involving inequalities, since</span></span>
@@ -312,7 +312,7 @@ derivatives.</em></p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">xd</span>, <span class="va">N</span> <span class="op">*</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"l"</span>, lty <span class="op">=</span> <span class="fl">1</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">xd</span><span class="op">[</span><span class="va">knot_idx</span><span class="op">]</span>, col <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/rug.html" class="external-link">rug</a></span><span class="op">(</span><span class="va">xd</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dspline_files/figure-html/unnamed-chunk-10-2.png" width="700"></p>
+<p><img src="dspline_files/figure-html/unnamed-chunk-10-2.png" width="2187.5"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Higher-order symbolic derivative function (from help file for D())</span></span>
 <span><span class="va">DD</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">expr</span>, <span class="va">name</span>, <span class="va">order</span> <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
@@ -339,7 +339,7 @@ derivatives.</em></p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomleft"</span>, lty <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, col <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, </span>
 <span>       legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Exact"</span>, <span class="st">"Discrete"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/rug.html" class="external-link">rug</a></span><span class="op">(</span><span class="va">xd</span><span class="op">[</span><span class="va">xd</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dspline_files/figure-html/unnamed-chunk-10-3.png" width="700"></p>
+<p><img src="dspline_files/figure-html/unnamed-chunk-10-3.png" width="2187.5"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
