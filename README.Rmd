@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 These are *not* B-splines:
 
-```{r show-dsplines, echo=FALSE, dev='png', fig.width=7, fig.height=3, dpi=300}
+```{r show-dsplines, echo=FALSE, dev="png", fig.width=7, fig.height=3, dpi=300}
 library(dspline)
 n = 50
 k = 2
