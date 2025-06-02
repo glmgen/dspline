@@ -7,3 +7,5 @@ src/*.o
 src/*.so
 src/*.dll
 docs
+/doc/
+/Meta/
