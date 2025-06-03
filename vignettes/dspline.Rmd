@@ -50,7 +50,7 @@ demonstrate this with both first and second derivatives.
 
 ```{r}
 n = 100
-xd = 1:n / (n+1)
+xd = 1:n / (n + 1)
 x = seq(0, 1, length = 1000)
 
 # First derivatives
@@ -226,23 +226,22 @@ ineq_terms = "1"
 for (j in 2:length(sol)) {
   if (j <= 4) {
     x_prod = paste(
-      sprintf("(x - %f)", xd[1:(j-1)]), 
+      sprintf("(x - %f)", xd[1:(j - 1)]), 
       collapse = " * ")
     poly_terms = c(
       poly_terms, 
-      sprintf("%f * %s / factorial(%i)", sol[j], x_prod, j-1))
+      sprintf("%f * %s / factorial(%i)", sol[j], x_prod, j - 1))
     ineq_terms = c(ineq_terms, "1")
-  }
-  else {
+  } else {
     x_prod = paste(
-      sprintf("(x - %f)", xd[knot_idx[j-4] - 2:0]), 
+      sprintf("(x - %f)", xd[knot_idx[j - 4] - 2:0]), 
       collapse = " * ")
     poly_terms = c(
       poly_terms, 
       sprintf("%f * %s / factorial(3)", sol[j], x_prod))
     ineq_terms = c(
       ineq_terms, 
-      sprintf("(x > %f)", xd[knot_idx[j-4]]))
+      sprintf("(x > %f)", xd[knot_idx[j - 4]]))
   }
 }
 
@@ -259,7 +258,7 @@ rug(xd)
 
 # Higher-order symbolic derivative function (from help file for D())
 DD = function(expr, name, order = 1) {
-   if(order == 1) D(expr, name)
+   if (order == 1) D(expr, name)
    else DD(D(expr, name), name, order - 1)
 }
 
@@ -268,8 +267,7 @@ d3 = numeric(length(x))
 for (i in 1:length(x)) {
   if (x[i] <= xd[knot_idx[1]]) {
     expr = str2expression(paste(poly_terms[1:4], collapse = " + "))
-  }
-  else {
+  } else {
     j = max(which(x[i] > xd[knot_idx])) + 4
     expr = str2expression(paste(poly_terms[1:j], collapse = " + "))
   }
