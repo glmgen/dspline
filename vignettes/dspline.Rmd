@@ -2,7 +2,7 @@
 title: Introduction to dspline
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Get started}
+  %\VignetteIndexEntry{Introduction to dspline}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
@@ -44,9 +44,9 @@ curve(f, n = 1000)
 
 As usual, we can compute derivatives using `D()`. Below, we show how to compute 
 its discrete derivatives based on evaluating `f` at 100 design points `xd`, and
-multiplying these evaluations the discrete difference operator defined over the
-design points. This is done using the function [d_mat_mult()]. We'll demonstrate
-this with both first and second derivatives. 
+multiplying these evaluations by the discrete difference operator defined over
+the design points. This is done using the function `d_mat_mult()`. We'll 
+demonstrate this with both first and second derivatives. 
 
 ```{r}
 n = 100
@@ -85,9 +85,9 @@ points numbered `k+1` through `n`. (The design points `xd` here are taken to be
 evenly-spaced, but this is not fundamental, and the design points could instead
 be at arbitrary locations.)
 
-As an alternative to [d_mat_mult()], we could form the difference operator (as a
-sparse matrix) using [d_mat()], and then do the matrix multiplication manually, 
-but using [d_mat_mult()] is more efficient. It doesn't actually form any such 
+As an alternative to `d_mat_mult()`, we could form the difference operator (as a
+sparse matrix) using `d_mat()`, and then do the matrix multiplication manually, 
+but using `d_mat_mult()` is more efficient. It doesn't actually form any such 
 matrix internally, and instead performs a specialized routine to carry out the
 discrete derivative computations. 
 
@@ -95,7 +95,7 @@ discrete derivative computations.
 
 Now we'll smooth some noisy data, by regressing it onto the space of discrete
 splines of cubic degree, with 9 knots which are roughly evenly-spaced among the
-design points. This is done using the function [dspline_solve()].
+design points. This is done using the function `dspline_solve()`.
 
 ```{r}
 y = f(xd) + rnorm(n, sd = 0.5)
@@ -114,7 +114,7 @@ rug(xd)
 As we can see, the fitted values from the regression onto the space of discrete
 splines do a qualitatively reasonable job of smoothing. The basis functions used
 here (i.e., covariates in the regression) are called discrete B-splines, and are 
-the default choice (corresponding to `basis = "N"`) in [dspline_solve()]. These
+the default choice (corresponding to `basis = "N"`) in `dspline_solve()`. These
 have compact support, just like the usual B-spline basis. While other bases are
 available, for regression problems in which the knot points are a sparse subset
 of the design points, the discrete B-spline basis is likely the best choice in
@@ -141,7 +141,7 @@ or Sections 1 and 2.5 of
 ## Discrete spline interpolation
 
 To go from a sequence of fitted values to a fitted function, we must interpolate
-in the space of cubic discrete splines. We'll do this using [dspline_interp()].
+in the space of cubic discrete splines. We'll do this using `dspline_interp()`.
 
 ```{r}
 x = seq(0, 1, length = 1000)
@@ -188,9 +188,9 @@ abline(v = xd[knot_idx], col = 8)
 rug(xd[xd > min(x)])
 ```
 
-Here we used [discrete_deriv()] to compute the discrete derivatives over a fine
+Here we used `discrete_deriv()` to compute the discrete derivatives over a fine
 grid of locations `x` outside of the design points `xd`. (Note: as used earlier,
-the function [d_mat_mult()] is a convenient way to compute discrete derivatives
+the function `d_mat_mult()` is a convenient way to compute discrete derivatives
 at the design points `xd` themselves.)
 
 A special property of a `k`th degree discrete spline is that their `k`th degree
