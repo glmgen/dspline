@@ -119,4 +119,3 @@ n_eval <- function(k, xd, x, normalized = TRUE, knot_idx = NULL, N = NULL) {
     rcpp_n_eval_precomputed(k, xd, x, knot_idx-1, N)
   }
 }
-

@@ -142,4 +142,3 @@ dspline_solve <- function(v, k, xd, knot_idx, basis = c("N", "B", "H"), mat) {
   if (!missing_mat) return(list(sol = sol, fit = fit))
   else return(list(sol = sol, fit = fit, mat = mat))
 }
-

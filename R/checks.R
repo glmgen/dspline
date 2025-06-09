@@ -11,12 +11,14 @@ check_length <- function(x, n, op = c("==", ">=", "<=")) {
   }
   else if (op == ">=") {
     if (length(x) < n) {
-      rlang::abort(sprintf("`length(%s)` must be at least `%s`.", args[1], args[2]))
+      rlang::abort(sprintf("`length(%s)` must be at least `%s`.", args[1], 
+                           args[2]))
     }
   }
   else {
     if (length(x) > n) {
-      rlang::abort(sprintf("`length(%s)` must be at most `%s`.", args[1], args[2]))
+      rlang::abort(sprintf("`length(%s)` must be at most `%s`.", args[1], 
+                           args[2]))
     }
   }
 }
