@@ -65,7 +65,6 @@ core routines are written in C++ for efficiency. See the
 [reference index](https://glmgen.github.io/dspline/reference/index.html) for a
 summary of the tools that are available.
 
-
 ## Installation
 
 To install the released version from CRAN:
