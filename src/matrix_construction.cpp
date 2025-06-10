@@ -28,7 +28,6 @@ V concat(V x, V y) {
   return xy;
 }
 
-
 // [[Rcpp::export]]
 Eigen::SparseMatrix<double> rcpp_b_mat(int k, NumericVector xd, bool tf_weighting, IntegerVector row_idx, bool d_only) {
   // Compute number of nonzero elements for D. We do so by computing nonzeros
