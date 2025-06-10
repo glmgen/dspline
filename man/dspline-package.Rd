@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Ryan Tibshirani \email{ryantibs@gmail.com}
+\strong{Maintainer}: Ryan Tibshirani \email{ryantibs@gmail.com} [copyright holder]
 
 Authors:
 \itemize{
