@@ -6,7 +6,7 @@ Authors@R: c(
     person("Addison", "Hu", role = "aut"),
     person("Daniel", "McDonald", role = "ctb"),
     person("Ryan", "Tibshirani", , "ryantibs@gmail.com", 
-        role = c("aut", "cre"))
+        role = c("aut", "cre", "cph"))
   )
 Description: Discrete splines are a class of univariate piecewise polynomial
     functions which are analogous to splines, but whose smoothness is defined
