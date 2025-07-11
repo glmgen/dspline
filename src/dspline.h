@@ -11,12 +11,18 @@ using namespace Rcpp;
 // Simple utilities
 
 int fact(int k);
-void CumSum(NumericVector v, int i);
-void RevCumSum(NumericVector v, int i);
-void Diff(NumericVector v, int i);
-void RevDiff(NumericVector v, int i);
-void GapWeight(NumericVector v, int i, NumericVector xd);
-void InvGapWeight(NumericVector v, int i, NumericVector xd);
+template<typename T>
+void CumSum(T& v, int i);
+template<typename T>
+void RevCumSum(T& v, int i);
+template<typename T>
+void Diff(T& v, int i);
+template<typename T>
+void RevDiff(T& v, int i);
+template<typename T, typename U>
+void GapWeight(T& v, int i, U& xd);
+template<typename T, typename U>
+void InvGapWeight(T& v, int i, U& xd);
 
 /******************************************************************************/
 // Divided differences, discrete derivatives, and discrete integrals 
