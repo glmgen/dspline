@@ -262,7 +262,7 @@ test_that("Construct N matrix", {
   n = 50
   k = 2
   knot_idx = sort(sample((k+1):(n-1), 4))
-  xd = sort(runif(n))
+  xd = sort(runif(n)) * n
   N1 = n_mat(k, xd, normalized = FALSE, knot_idx = knot_idx)
   N2 = dbs.evals.sk(k, xd, knot_idx)
   expect_equal(N1, N2, tolerance = tol)
@@ -312,9 +312,9 @@ test_that("Projection", {
   n = 50
   k = 2
   knot_idx = sort(sample((k+1):(n-1), 20))
-  xd = sort(runif(n))
+  xd = sort(runif(n)) * n
   v = rnorm(n)
-  
+
   obj1 = dspline_solve(v, k, xd, knot_idx = knot_idx, basis = "N")
   obj2 = dspline_solve(v, k, xd, knot_idx = knot_idx, basis = "B")
   obj3 = dspline_solve(v, k, xd, knot_idx = knot_idx, basis = "H")
