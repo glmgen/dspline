@@ -1,3 +1,7 @@
+This submission addresses the "Additional issues" results on the `noLD`
+runner: <https://www.stats.ox.ac.uk/pub/bdr/noLD/dspline.out>. Additional 
+checks were run on the Rhub Consortium runner to verify.
+
 # CRAN check results
 
 ## Test environments
@@ -11,7 +15,6 @@ R-lib:
 - {os: ubuntu-latest,   r: 'oldrel-1'}
 
 Rhub:
-
 
 |   |name           |r_version                                          |os_name                           |
 |:--|:--------------|:--------------------------------------------------|:---------------------------------|
