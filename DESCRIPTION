@@ -1,6 +1,6 @@
 Package: dspline
 Title: Tools for Computations with Discrete Splines
-Version: 1.0.2.9000
+Version: 1.0.3
 Authors@R: c(
     person("Logan", "Brooks", role = "ctb"),
     person("Addison", "Hu", role = "aut"),
