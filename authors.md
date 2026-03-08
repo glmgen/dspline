@@ -15,14 +15,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/glmgen/dspline/blob/main/DESCRIPTION)
 
-Hu A, Tibshirani R (2025). *dspline: Tools for Computations with
+Hu A, Tibshirani R (2026). *dspline: Tools for Computations with
 Discrete Splines*. R package version 1.0.3,
 <https://github.com/glmgen/dspline>.
 
     @Manual{,
       title = {dspline: Tools for Computations with Discrete Splines},
       author = {Addison Hu and Ryan Tibshirani},
-      year = {2025},
+      year = {2026},
       note = {R package version 1.0.3},
       url = {https://github.com/glmgen/dspline},
     }

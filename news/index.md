@@ -2,6 +2,8 @@
 
 ## dspline 1.0.3
 
+CRAN release: 2025-11-23
+
 - Fix failing `noLD` test on CRAN.
 
 ## dspline 1.0.2
