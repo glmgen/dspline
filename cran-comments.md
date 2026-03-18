@@ -1,28 +1,20 @@
-This submission addresses the "Additional issues" results on the `noLD`
-runner: <https://www.stats.ox.ac.uk/pub/bdr/noLD/dspline.out>. Additional 
-checks were run on the Rhub Consortium runner to verify.
-
-# CRAN check results
-
-## Test environments
-
-R-lib:
-
-- {os: macOS-latest,   r: 'release'}
-- {os: windows-latest, r: 'release'}
-- {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-- {os: ubuntu-latest,   r: 'release'}
-- {os: ubuntu-latest,   r: 'oldrel-1'}
-
-Rhub:
-
-|   |name           |r_version                                          |os_name                           |
-|:--|:--------------|:--------------------------------------------------|:---------------------------------|
-|23 |nold [noLD]    |R Under development (unstable) (2025-11-10 r88994) |Ubuntu 22.04.5 LTS                |
-
+# dspline 1.0.4
 
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
 
-R CMD check succeeded
+
+## revdepcheck results
+
+We checked 1 reverse dependencies, comparing R CMD check results across CRAN
+and dev versions of this package.
+
+* We saw 0 new problems
+* We failed to check 0 packages
+
+## CRAN Package Check Results 
+
+NOTEs on r-oldrel-macOS-arm64 and r-oldrel-macOS-x86_64.
+
+Compiled code generates `libs` ~ 4.4Mb. Total installed size ~ 6.6Mb.
