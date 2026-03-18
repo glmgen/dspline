@@ -1,5 +1,9 @@
 # Changelog
 
+## dspline 1.0.4
+
+- Recompile with new `Rcpp`.
+
 ## dspline 1.0.3
 
 CRAN release: 2025-11-23
