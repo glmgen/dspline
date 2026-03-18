@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   dspline: dspline.html
-last_built: 2026-03-18T16:22Z
+last_built: 2026-03-18T16:24Z
 urls:
   reference: https://glmgen.github.io/dspline/reference
   article: https://glmgen.github.io/dspline/articles
