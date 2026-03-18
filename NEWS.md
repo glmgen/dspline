@@ -1,3 +1,7 @@
+# dspline 1.0.4
+
+* Recompile with new `Rcpp`.
+
 # dspline 1.0.3
 
 * Fix failing `noLD` test on CRAN.
